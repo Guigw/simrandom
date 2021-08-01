@@ -1,0 +1,20 @@
+{
+    "name": "guigw/simrandom",
+    "description": "Sims random factory",
+    "type": "project",
+    "license": "GPLv3",
+    "autoload": {
+        "psr-4": {
+            "Yrial\\Simrandom\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Guigw",
+            "email": "guigw+admin@gpsnet.fr"
+        }
+    ],
+    "require": {
+      "ext-simplexml": "*"
+    }
+}

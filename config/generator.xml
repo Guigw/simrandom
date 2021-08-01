@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<generator>
+	<rooms>
+		<min>1</min>
+		<max>10</max>
+	</rooms>
+	<budget>
+		<min>50</min>
+		<max>200</max>
+	</budget>
+	<colors>
+		<color>rouge</color>
+		<color>vert</color>
+		<color>bleu</color>
+	</colors>
+</generator>
