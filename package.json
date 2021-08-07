@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "author": "Guigw <guigw+admin@gpsnet.fr>",
-  "license": " GPL-3.0-or-later",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "build": "npx webpack --config webpack.config.js"
   },
