@@ -62,9 +62,9 @@ jobs:
         run: npx webpack --config webpack.config.js
 
       - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        uses: SamKirkland/FTP-Deploy-Action@2.0.0
         with:
-          server: vhosts/sims.gpsnet.fr
+          server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
