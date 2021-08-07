@@ -9,13 +9,13 @@ class ColorsGenerator implements Randomizer
     function __construct(int $number, array $possibilities)
     {
         for ($i = 0; $i < $number; $i++) {
-            $this->colorGenerators[] = new ColorGenerator($possibilities);
+            $this->colorGenerators[] = new StringGenerator($possibilities);
         }
     }
 
     public function getRandom()
     {
-        return array_map(function(ColorGenerator $colorGenerator) {
+        return array_map(function(StringGenerator $colorGenerator) {
             return $colorGenerator->getRandom();
         }, $this->colorGenerators);
     }

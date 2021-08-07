@@ -36,8 +36,20 @@ class ConfigReader
     }
 
     public function getColorsParams(): array {
-        return array_map(function ($value) {
-            return $value;
-        }, (array)$this->config->colors->color);
+        $results = [];
+        foreach ($this->config->colors->color as $color) {
+            for($i=0;$i<$color->weight;$i++) {
+                $results[] = (string)$color->name;
+            }
+        }
+        return $results;
+    }
+
+    public function getBuildingsList(): array {
+        $results = [];
+        foreach ($this->config->buildings->building as $building) {
+            $results[] = (string)$building;
+        }
+        return $results;
     }
 }

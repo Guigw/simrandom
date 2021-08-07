@@ -1,16 +1,75 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <generator>
 	<rooms>
-		<min>1</min>
-		<max>10</max>
+		<min>3</min>
+		<max>15</max>
 	</rooms>
 	<budget>
-		<min>50</min>
-		<max>200</max>
+		<min>20000</min>
+		<max>400000</max>
 	</budget>
+	<buildings>
+		<building>Bibliothèque</building>
+		<building>Musée</building>
+		<building>Piscine</building>
+		<building>Salle de sport</building>
+		<building>Plage</building>
+		<building>Parc</building>
+		<building>Parc national</building>
+		<building>Bar</building>
+		<building>Bar cocktail</building>
+		<building>Onsen</building>
+		<building>Jardin communautaire</building>
+		<building>Espace de vente</building>
+		<building>Espace de création</building>
+		<building>Clinique vétérinaire</building>
+		<building>Conservatoire de musique, des arts dramatiques et picturaux</building>
+		<building>Observatoire astronomique</building>
+	</buildings>
 	<colors>
-		<color>rouge</color>
-		<color>vert</color>
-		<color>bleu</color>
+		<color>
+			<name>blanc</name>
+			<weight>2</weight>
+		</color>
+		<color>
+			<name>gris</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>noir</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>marron clair </name>
+			<weight>2</weight>
+		</color>
+		<color>
+			<name>jaune</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>rouge</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>bleu</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>rose mauve violet</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>vert</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>orange</name>
+			<weight>1</weight>
+		</color>
+		<color>
+			<name>marron foncé</name>
+			<weight>1</weight>
+		</color>
 	</colors>
 </generator>
