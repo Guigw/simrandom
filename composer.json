@@ -2,7 +2,7 @@
     "name": "yrial/simrandom",
     "description": "Sims random factory",
     "type": "project",
-    "license": "GPLv3",
+    "license": " GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
             "Yrial\\Simrandom\\": "src/"
