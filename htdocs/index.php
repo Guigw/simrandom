@@ -10,11 +10,12 @@ use Yrial\Simrandom\App;
         <title>Sims Randomizer</title>
     </head>
     <body>
-    <script src="./dist/main.js"></script>
+    <div id="root"></div>
     <?php
     $app = new App("../config/generator.xml");
     $app->terminate();
     ?>
+    <script src="./dist/main.js"></script>
     </body>
 </html>
 

@@ -1,9 +1,8 @@
-import _ from 'lodash';
-function component(){
-    const element = document.createElement('div');
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import App from "./App";
 
-    element.innerHTML = _.join(['<h1>Sims', 'Randomizer</h1>'], ' ');
-    return element;
-}
-
-document.body.appendChild(component());
+ReactDOM.render(
+    React.createElement(App),
+    document.getElementById("root")
+);
