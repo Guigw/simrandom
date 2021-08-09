@@ -5,18 +5,14 @@ use Exception;
 use SimpleXMLElement;
 class ConfigReader
 {
-    private SimpleXMLElement $config;
+    private $config;
 
     /**
      * @throws Exception
      */
-    public function __construct(string $path)
+    public function __construct($config)
     {
-        if (file_exists($path)) {
-            $this->config = simplexml_load_file($path);
-        } else {
-            throw new Exception('config file not found');
-        }
+        $this->config = $config;
     }
 
     public function getRoomsParam(string $name): ?int {

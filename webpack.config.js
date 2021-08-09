@@ -1,10 +1,18 @@
 const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './assets/index.ts',
-    devtool: "inline-source-map",
+    devtool : 'source-map',
     mode: "development",
+    watch: true,
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: "Caching",
+            inject: true,
+            template: "./assets/templates/index.html"
+        })
+    ],
     module: {
         rules: [
             {
@@ -37,8 +45,9 @@ module.exports = {
         extensions: ["*", ".js", ".jsx", ".ts", ".tsx"]
     },
     output: {
-        filename: 'main.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'htdocs/dist'),
-        publicPath: "/htdocs/"
+        publicPath: "/simrandom/htdocs/dist/",
+        clean: true
     }
 };

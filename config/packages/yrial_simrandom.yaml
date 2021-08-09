@@ -1,0 +1,46 @@
+yrial_simrandom:
+  generator:
+    challenges:
+      - {id: 1, name: Construction}
+    rooms:
+      min: 3
+      max: 15
+    budget:
+      min: 20000
+      max: 400000
+    buildings: ['Bibliothèque','Musée','Piscine','Salle de sport','Plage','Parc','Parc national','Bar','Bar cocktail','Onsen','Jardin communautaire','Espace de vente','Espace de création','Clinique vétérinaire','Conservatoire de musique, des arts dramatiques et picturaux','Observatoire astronomique']
+    colors:
+      blanc:
+        name: blanc
+        weight: 2
+      gris:
+        name: gris
+        weight: 1
+      noir:
+        name: noir
+        weight: 1
+      marron_clair:
+        name: marron clair
+        weight: 2
+      marron_fonce:
+        name: marron foncé
+        weight: 1
+      jaune:
+        name: jaune
+        weight: 1
+      rouge:
+        name: rouge
+        weight: 1
+      bleu:
+        name: bleu
+        weight: 1
+      rose_mauve_violet:
+        name: rose mauve violet
+        weight: 1
+      vert:
+        name: vert
+        weight: 1
+      orange:
+        name: orange
+        weight: 1
+

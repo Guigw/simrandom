@@ -3,9 +3,59 @@
     "description": "Sims random factory",
     "type": "project",
     "license": "GPL-3.0-or-later",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.2.5",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "ext-simplexml": "*",
+        "doctrine/annotations": "^1.13",
+        "symfony/console": "5.3.*",
+        "symfony/dependency-injection": "5.3.*",
+        "symfony/dotenv": "5.3.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/framework-bundle": "5.3.*",
+        "symfony/monolog-bundle": "^3.7",
+        "symfony/runtime": "5.3.*",
+        "symfony/yaml": "5.3.*"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
     "autoload": {
         "psr-4": {
             "Yrial\\Simrandom\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yrial\\Simrandom\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ]
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "5.3.*"
         }
     },
     "authors": [
@@ -14,7 +64,7 @@
             "email": "guigw+admin@gpsnet.fr"
         }
     ],
-    "require": {
-      "ext-simplexml": "*"
+    "require-dev": {
+        "symfony/maker-bundle": "^1.33"
     }
 }

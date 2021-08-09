@@ -1,11 +1,15 @@
 import * as React from 'react';
-import { Component } from 'react'
+import {Component, Fragment} from 'react'
 import "./style/App.less";
+import ChallengeSelector from './components/ChallengeSelector';
 
 class App extends Component<{}, {}>{
     render(){
         return(
-            <h1> Sims Randomizer </h1>
+            <Fragment>
+                <h1> Sims Randomizer </h1>
+                <ChallengeSelector/>
+            </Fragment>
         );
     }
 }
