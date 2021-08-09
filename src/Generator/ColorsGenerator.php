@@ -2,15 +2,21 @@
 
 namespace Yrial\Simrandom\Generator;
 
-class ColorsGenerator implements Randomizer
+class ColorsGenerator extends AbstractGenerator
 {
-    private array $colorGenerators = [];
+    private $colorGenerators = [];
 
-    function __construct(int $number, array $possibilities)
+    function __construct(array $params)
     {
+        $this->possibilities = $params;
+    }
+
+    public function setNumber(int $number): ColorsGenerator{
+        $this->colorGenerators = [];
         for ($i = 0; $i < $number; $i++) {
-            $this->colorGenerators[] = new StringGenerator($possibilities);
+            $this->colorGenerators[] = new StringGenerator($this->possibilities);
         }
+        return $this;
     }
 
     public function getRandom()

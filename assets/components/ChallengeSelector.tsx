@@ -1,26 +1,35 @@
 import * as React from 'react';
 import {Fragment, useEffect, useState} from 'react';
-import {Challenge, DefaultApi, createConfiguration} from '../gen';
+import {Challenge, DefaultApi} from '../gen';
 
-const ChallengeSelector = () => {
+type ChallengerSelectorProps = {
+    api: DefaultApi,
+    onSelect: (challenge: string) => void
+}
+
+const ChallengeSelector = ({api, onSelect}: ChallengerSelectorProps) => {
     const [list, setList] = useState<Array<Challenge> | null>(null);
     useEffect(() => {
         if (!list) {
-            let conf = createConfiguration()
-            let api = new DefaultApi(conf);
-            console.log('api.challengeGet()');
             api.challengeGet().then(items => {
                 setList(items);
+                onSelect(items[0].id.toString())
             })
         }
         return () => {
         }
     });
+
+    const selectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = event.target.value;
+        onSelect(value);
+    }
+
     if (list) {
         return (
             <Fragment>
-                <select>
-                    {list.map(item => <option value={item.id}>{item.name}</option>)}
+                <select onChange={selectChange}>
+                    {list.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </select>
                 <button onClick={() => setList(null)}>Refresh</button>
             </Fragment>

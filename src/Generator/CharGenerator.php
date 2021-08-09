@@ -5,8 +5,8 @@ namespace Yrial\Simrandom\Generator;
 class CharGenerator extends AbstractGenerator
 {
 
-    function __construct()
+    function __construct($start, $end)
     {
-        $this->possibilities = range("A", "Z");
+        $this->possibilities = range($start, $end);
     }
 }

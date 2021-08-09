@@ -21,5 +21,29 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
+    Yrial\Simrandom\Generator\ShapeLetterGenerator:
+        public: true,
+        arguments:
+            $params: '%generator.randomizers.letter%'
+
+    Yrial\Simrandom\Generator\RoomsGenerator:
+        public: true,
+        arguments:
+            $params: '%generator.randomizers.rooms%'
+
+    Yrial\Simrandom\Generator\BudgetGenerator:
+        public: true,
+        arguments:
+            $params: '%generator.randomizers.budget%'
+
+    Yrial\Simrandom\Generator\BuildingsGenerator:
+        public: true,
+        arguments:
+            $params: '%generator.randomizers.buildings%'
+
+    Yrial\Simrandom\Generator\ColorsGenerator:
+        public: true,
+        arguments:
+            $params: '%generator.randomizers.colors%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
