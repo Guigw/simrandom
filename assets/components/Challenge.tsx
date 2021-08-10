@@ -10,12 +10,17 @@ type ChallengeProps = {
 }
 
 const Challenge = ({id, api}: ChallengeProps) => {
-    interface ResultsArray {
-        [index: string]: string;
+    interface childrenStateArray {
+        [index: string]: childrenState;
     }
 
     interface DependencyArray {
         [index: string]: string;
+    }
+
+    interface childrenState {
+        result?: string,
+        active?: boolean
     }
 
     interface RandomizerValues {
@@ -23,7 +28,7 @@ const Challenge = ({id, api}: ChallengeProps) => {
         ref: RefObject<any>
     }
 
-    let results: ResultsArray = {};
+    let childrenStates: childrenStateArray = {};
     let dependencies: DependencyArray = {};
 
 
@@ -42,33 +47,49 @@ const Challenge = ({id, api}: ChallengeProps) => {
 
     const requirement = (from: string, to: string) => {
         dependencies[to] = from;
-        if (results[to]) {
-            return results[to];
+        if (childrenStates[to]) {
+            return childrenStates[to].result;
         } else {
             return "";
         }
     }
 
+    const onToggle = (name: string, active: boolean) => {
+        if (childrenStates[name]) {
+            childrenStates[name]['active'] = active;
+        } else {
+            childrenStates[name] = {active};
+        }
+    }
+
     const onResult = (name: string, result: string) => {
-        results[name] = result;
+        if (childrenStates[name]) {
+            childrenStates[name]['result'] = result;
+        } else {
+            childrenStates[name] = {result};
+        }
         //si on a une dépendance sur le randomizer
         if (dependencies[name]) {
             //on cherche la ref
-            const foundRef = randomizerList.filter(function(item: RandomizerValues){
-               return item.name === dependencies[name];
+            const foundRef = randomizerList.filter(function (item: RandomizerValues) {
+                return item.name === dependencies[name];
             });
-            if (foundRef.length){
+            if (foundRef.length) {
                 foundRef[0].ref.current.resetResult();
             }
         }
     }
 
     if (randomizerList) {
+        console.log(childrenStates)
         return (
             <Fragment>
                 <ul>
-                    {randomizerList.map(item => <Randomizer ref={item.ref} key={item.name} name={item.name} api={api} onResult={onResult}
-                                                            needRequirement={requirement}/>)}
+                    {randomizerList.map(item => <Randomizer ref={item.ref}
+                                                            activeProps={(childrenStates[item.name] && typeof childrenStates[item.name].active !== undefined) ? childrenStates[item.name].active : true}
+                                                            key={item.name} name={item.name} api={api}
+                                                            onResult={onResult}
+                                                            onToggle={onToggle} needRequirement={requirement}/>)}
                 </ul>
                 <button onClick={() => setRandomizerList(null)}>Refresh</button>
             </Fragment>
