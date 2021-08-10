@@ -10,6 +10,12 @@ type ChallengeProps = {
 }
 
 const Challenge = ({id, api}: ChallengeProps) => {
+    interface ResultsArray {
+        [index: string]: string;
+    }
+
+    let results: ResultsArray = {};
+
     const [randomizerList, setRandomizerList] = useState<Array<string> | null>(null);
     useEffect(() => {
         if (!randomizerList && id !== 0) {
@@ -17,13 +23,28 @@ const Challenge = ({id, api}: ChallengeProps) => {
                 setRandomizerList(challenge.randomizers);
             })
         }
-        return () => {}
+        return () => {
+        }
     });
+
+    const requirement = (from: string, to: string) => {
+        if (results[to]) {
+            return results[to];
+        } else {
+            return "";
+        }
+    }
+
+    const onResult = (name: string, result: string) => {
+        results[name] = result;
+    }
+
     if (randomizerList) {
         return (
             <Fragment>
                 <ul>
-                    {randomizerList.map(item => <Randomizer key={item} name={item} api={api}/>)}
+                    {randomizerList.map(item => <Randomizer key={item} name={item} api={api} onResult={onResult}
+                                                            needRequirement={requirement}/>)}
                 </ul>
                 <button onClick={() => setRandomizerList(null)}>Refresh</button>
             </Fragment>

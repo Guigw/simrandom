@@ -4,18 +4,43 @@ import * as React from "react";
 
 type RandomizerProps = {
     name: string,
-    api: DefaultApi
+    extra?: string,
+    api: DefaultApi,
+    onResult: (name: string, result: string) => void,
+    needRequirement: (from: string, to: string) => string
 }
 
-const Randomizer = ({name, api}: RandomizerProps) => {
+const Randomizer = ({name, extra, api, onResult, needRequirement}: RandomizerProps) => {
+    interface apiParams {
+        name: string,
+        number?: string
+    }
+
     const [result, setResult] = useState<string | null>(null);
+    const [extraState, setExtraState] = useState<string | null>(extra);
     useEffect(() => {
+        let mount = true;
+        let params: [string, string?] = [name];
+        if (extraState) {
+            params[1] = extraState;
+        }
         if (!result) {
-            api.randomizerNameGet(name).then(random => {
-                setResult(random.result)
-            })
+            api.randomizerNameGet(...params).then(random => {
+                if (random.result == "" && random.required) {
+                    const req = needRequirement(name, random.required);
+                    if (req != "") {
+                        setExtraState(req);
+                    }
+                } else {
+                    if (mount) {
+                        setResult(random.result);
+                        onResult(name, random.result);
+                    }
+                }
+            });
         }
         return () => {
+            mount = false
         }
     });
 

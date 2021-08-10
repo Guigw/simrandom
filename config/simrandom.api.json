@@ -76,6 +76,9 @@
           },
           "result": {
             "type": "string"
+          },
+          "required": {
+            "type": "string"
           }
         }
       }
@@ -212,7 +215,7 @@
             "in": "query",
             "description": "number for the randomizer colors",
             "schema": {
-              "type": "integer"
+              "type": "string"
             },
             "style": "simple"
           }

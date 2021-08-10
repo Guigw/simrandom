@@ -4,6 +4,7 @@ namespace Yrial\Simrandom\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Yrial\Simrandom\Generator\BudgetGenerator;
@@ -69,17 +70,20 @@ class RandomizerController extends AbstractController
     /**
      * @Route("/randomizer/colors", name="randomizer_colors", defaults={"number": 0}))
      */
-    public function colors(int $number, ColorsGenerator $colorsGenerator): Response
+    public function colors(int $number, ColorsGenerator $colorsGenerator, Request $request): Response
     {
         if (!$this->checkConfiguration('colors')) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
+        $number = $request->query->get('number') ?? 0;
         $result = array_reduce($this->getGenerator($colorsGenerator->setNumber($number), true), function (string $carry, array $color) {
-            $carry .= ", " . $color['name'];
+            $carry .= " " . $color['name'];
             return $carry;
         }, "");
 
-        return $this->json($this->formatItem('colors', $result));
+        $result = $this->formatItem('colors', $result);
+        $result->required = "rooms";
+        return $this->json($result);
     }
 
     private function getGenerator(Randomizer $generator, $active)
