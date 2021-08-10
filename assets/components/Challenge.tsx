@@ -81,7 +81,6 @@ const Challenge = ({id, api}: ChallengeProps) => {
     }
 
     if (randomizerList) {
-        console.log(childrenStates)
         return (
             <Fragment>
                 <ul>
