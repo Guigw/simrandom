@@ -1,5 +1,5 @@
 import {DefaultApi} from "../gen";
-import {useEffect, useState} from "react";
+import {useEffect, useImperativeHandle, useState, forwardRef} from "react";
 import * as React from "react";
 
 type RandomizerProps = {
@@ -10,7 +10,14 @@ type RandomizerProps = {
     needRequirement: (from: string, to: string) => string
 }
 
-const Randomizer = ({name, extra, api, onResult, needRequirement}: RandomizerProps) => {
+const Randomizer = forwardRef(({name, extra, api, onResult, needRequirement}: RandomizerProps, ref) => {
+    useImperativeHandle(ref, () => ({
+        resetResult() {
+            setResult(null);
+            setExtraState(null);
+        }
+    }))
+
     interface apiParams {
         name: string,
         number?: string
@@ -22,6 +29,7 @@ const Randomizer = ({name, extra, api, onResult, needRequirement}: RandomizerPro
         let mount = true;
         let params: [string, string?] = [name];
         if (extraState) {
+            console.log("i have extra param", extraState)
             params[1] = extraState;
         }
         if (!result) {
@@ -59,6 +67,6 @@ const Randomizer = ({name, extra, api, onResult, needRequirement}: RandomizerPro
             <button onClick={() => setResult(null)}>Refresh</button>
         </li>
     )
-}
+})
 
 export default Randomizer

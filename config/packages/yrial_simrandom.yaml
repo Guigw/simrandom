@@ -28,7 +28,9 @@ yrial_simrandom:
           weight: 1
         - name: bleu
           weight: 1
-        - name: rose mauve violet
+        - name: mauve/violet
+          weight: 1
+        - name: rose
           weight: 1
         - name: vert
           weight: 1

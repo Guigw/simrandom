@@ -76,12 +76,11 @@ class RandomizerController extends AbstractController
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
         $number = $request->query->get('number') ?? 0;
-        $result = array_reduce($this->getGenerator($colorsGenerator->setNumber($number), true), function (string $carry, array $color) {
-            $carry .= " " . $color['name'];
-            return $carry;
-        }, "");
+        $result = array_map(function (array $color) {
+            return $color['name'];
+        }, $this->getGenerator($colorsGenerator->setNumber($number), true));
 
-        $result = $this->formatItem('colors', $result);
+        $result = $this->formatItem('colors', implode(", ", $result));
         $result->required = "rooms";
         return $this->json($result);
     }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Fragment} from 'react'
+import {createRef, Fragment, MutableRefObject, RefObject} from 'react'
 import {useEffect, useState} from 'react';
 import {DefaultApi} from "../gen";
 import Randomizer from "./Randomizer";
@@ -14,13 +14,26 @@ const Challenge = ({id, api}: ChallengeProps) => {
         [index: string]: string;
     }
 
-    let results: ResultsArray = {};
+    interface DependencyArray {
+        [index: string]: string;
+    }
 
-    const [randomizerList, setRandomizerList] = useState<Array<string> | null>(null);
+    interface RandomizerValues {
+        name: string,
+        ref: RefObject<any>
+    }
+
+    let results: ResultsArray = {};
+    let dependencies: DependencyArray = {};
+
+
+    const [randomizerList, setRandomizerList] = useState<Array<RandomizerValues> | null>(null);
     useEffect(() => {
         if (!randomizerList && id !== 0) {
             api.challengeIdGet(id).then(challenge => {
-                setRandomizerList(challenge.randomizers);
+                setRandomizerList(challenge.randomizers.map(function (item: string) {
+                    return {name: item, ref: createRef()}
+                }));
             })
         }
         return () => {
@@ -28,6 +41,7 @@ const Challenge = ({id, api}: ChallengeProps) => {
     });
 
     const requirement = (from: string, to: string) => {
+        dependencies[to] = from;
         if (results[to]) {
             return results[to];
         } else {
@@ -37,13 +51,23 @@ const Challenge = ({id, api}: ChallengeProps) => {
 
     const onResult = (name: string, result: string) => {
         results[name] = result;
+        //si on a une dépendance sur le randomizer
+        if (dependencies[name]) {
+            //on cherche la ref
+            const foundRef = randomizerList.filter(function(item: RandomizerValues){
+               return item.name === dependencies[name];
+            });
+            if (foundRef.length){
+                foundRef[0].ref.current.resetResult();
+            }
+        }
     }
 
     if (randomizerList) {
         return (
             <Fragment>
                 <ul>
-                    {randomizerList.map(item => <Randomizer key={item} name={item} api={api} onResult={onResult}
+                    {randomizerList.map(item => <Randomizer ref={item.ref} key={item.name} name={item.name} api={api} onResult={onResult}
                                                             needRequirement={requirement}/>)}
                 </ul>
                 <button onClick={() => setRandomizerList(null)}>Refresh</button>
