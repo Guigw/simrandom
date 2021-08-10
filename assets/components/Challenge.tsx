@@ -83,7 +83,7 @@ const Challenge = ({id, api}: ChallengeProps) => {
     if (randomizerList) {
         return (
             <Fragment>
-                <ul>
+                <ul className={"randomizer-list"}>
                     {randomizerList.map(item => <Randomizer ref={item.ref}
                                                             activeProps={(childrenStates[item.name] && typeof childrenStates[item.name].active !== undefined) ? childrenStates[item.name].active : true}
                                                             key={item.name} name={item.name} api={api}

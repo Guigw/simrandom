@@ -1,6 +1,7 @@
 import {DefaultApi} from "../gen";
 import {useEffect, useImperativeHandle, useState, forwardRef, Fragment} from "react";
 import * as React from "react";
+import "../style/Randomizer.less";
 
 type RandomizerProps = {
     name: string,
@@ -48,9 +49,9 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
 
     const displayResult = () => {
         if (result) {
-            return (<p>{result}</p>)
+            return (<p className={"result"}>{result}</p>)
         } else {
-            return (<p>On charge</p>)
+            return (<p className={"result"}>On charge</p>)
         }
     }
 
