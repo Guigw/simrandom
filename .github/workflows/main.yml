@@ -72,11 +72,19 @@ jobs:
       - name: Use webpack
         run: npx webpack --config webpack.config.js --env production
 
+      - name: create archive
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: 'simrandom.zip'
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+
+
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
         with:
           name: simrandom
-          path: ./
+          path: ./simrandom.zip
 
       - name: Display artifacts
         uses: actions/download-artifact@v2
