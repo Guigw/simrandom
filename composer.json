@@ -57,7 +57,8 @@
         "symfony": {
             "allow-contrib": false,
             "require": "5.3.*"
-        }
+        },
+        "public-dir": "htdocs/api"
     },
     "authors": [
         {
