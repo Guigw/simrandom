@@ -39,6 +39,10 @@ jobs:
           openapi-file: config/simrandom.api.json
           config-file: config/openapi/config.json
 
+      - shell: bash
+        run: |
+          mv /github/workplace/typscript-client /home/runner/work/simrandom/simrandom/assets/gen
+
       # - name: Run test suite
       #   run: composer run-script test
       - name: Setup Node.js environment
