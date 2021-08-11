@@ -41,7 +41,7 @@ jobs:
 
       - shell: bash
         run: |
-          mv typscript-client assets/gen
+          mv typescript-client assets/gen
 
       # - name: Run test suite
       #   run: composer run-script test
