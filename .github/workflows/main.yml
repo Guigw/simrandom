@@ -76,9 +76,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: simrandom
-          path: |
-            artifact
-            !artifact/**/*.md
+          path: ./
 
       - name: Display artifacts
         uses: actions/download-artifact@v2
