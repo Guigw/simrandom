@@ -50,6 +50,11 @@ module.exports = (env) => {
             path: path.resolve(__dirname, 'htdocs/dist'),
             publicPath: "/simrandom/htdocs/dist/",
             clean: true
+        },
+        optimization: {
+            splitChunks: {
+                chunks: "all",
+            }
         }
     }
 

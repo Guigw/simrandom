@@ -37,6 +37,7 @@ jobs:
         with:
           generator: typescript
           openapi-file: config/simrandom.api.json
+          config-file: config/openapi/config.json
 
       # - name: Run test suite
       #   run: composer run-script test

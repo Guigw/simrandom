@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Simrandom API",
-    "description": "Title",
+    "description": "API for simrandom",
     "version": "1.0.0"
   },
   "servers": [
