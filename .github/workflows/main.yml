@@ -72,14 +72,18 @@ jobs:
       - name: Use webpack
         run: npx webpack --config webpack.config.js --env production
 
-      - name: FTP-Deploy-Action
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
-        env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
-          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
-          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
-          LOCAL_DIR: ./
-          REMOTE_DIR: ${{ secrets.FTP_DEPLOY_DIR }}
-          METHOD: sftp
-          PORT: 22
-          ARGS: --delete
+      - name: Display results
+        uses: actions/download-artifact@v2
+        with:
+          name: simrandom
+      #      - name: FTP-Deploy-Action
+      #        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+      #        env:
+      #          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      #          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      #          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      #          LOCAL_DIR: ./
+      #          REMOTE_DIR: ${{ secrets.FTP_DEPLOY_DIR }}
+      #          METHOD: sftp
+      #          PORT: 22
+      #          ARGS: --delete
