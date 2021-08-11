@@ -48,7 +48,7 @@ module.exports = (env) => {
         output: {
             filename: '[name].[contenthash].js',
             path: path.resolve(__dirname, 'htdocs/dist'),
-            publicPath: "/simrandom/htdocs/dist/",
+            publicPath: "/dist/",
             clean: true
         },
         optimization: {

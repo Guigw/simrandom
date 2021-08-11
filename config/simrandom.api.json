@@ -7,12 +7,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost/simrandom/htdocs/api/index.php",
+      "url": "/api/index.php",
       "description": "Development server"
-    },
-    {
-      "url": "https://simrandom.yrialinsight.com/api",
-      "description": "Production server"
     }
   ],
   "components": {

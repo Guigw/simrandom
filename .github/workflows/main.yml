@@ -77,7 +77,7 @@ jobs:
         with:
           type: 'zip'
           filename: 'simrandom.zip'
-          exclusions: '*.git* /*node_modules/* .editorconfig'
+          exclusions: '*.git* /*node_modules/* .editorconfig /*assets/* composer.* .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock'
 
 
       - name: Archive production artifacts
