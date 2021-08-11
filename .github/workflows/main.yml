@@ -41,7 +41,7 @@ jobs:
 
       - shell: bash
         run: |
-          mv /github/workplace/typscript-client /home/runner/work/simrandom/simrandom/assets/gen
+          mv typscript-client assets/gen
 
       # - name: Run test suite
       #   run: composer run-script test
