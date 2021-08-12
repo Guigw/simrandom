@@ -2,6 +2,14 @@ import {DefaultApi} from "../gen";
 import {useEffect, useImperativeHandle, useState, forwardRef, Fragment} from "react";
 import * as React from "react";
 import "../style/Randomizer.less";
+import RefreshIcon from '@material-ui/icons/Refresh';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import CommentIcon from '@material-ui/icons/Comment';
 
 type RandomizerProps = {
     name: string,
@@ -49,9 +57,9 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
 
     const displayResult = () => {
         if (result) {
-            return (<p className={"result"}>{result}</p>)
+            return (<ListItemText className={"result"}>{result}</ListItemText>)
         } else {
-            return (<p className={"result"}>On charge</p>)
+            return (<ListItemText className={"result"}>On charge</ListItemText>)
         }
     }
 
@@ -65,20 +73,32 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
             return (
                 <div>
                     {displayResult()}
-                    <button onClick={() => setResult(null)}>Refresh</button>
+                    <ListItemSecondaryAction>
+                        <IconButton aria-label="refresh" onClick={() => setResult(null)}>
+                            <RefreshIcon/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
                 </div>
             )
         }
     }
 
+    const labelId = `checkbox-list-label-${name}`;
     return (
-        <li>
-            <div>
-                <input type={"checkbox"} checked={active} onChange={toggleCheck}/>
-                <h3>{name}</h3>
-            </div>
+        <ListItem key={name} role={undefined} dense button>
+            <ListItemIcon>
+                <Checkbox
+                    edge="start"
+                    checked={active}
+                    tabIndex={-1}
+                    disableRipple
+                    inputProps={{'aria-labelledby': labelId}}
+                    onChange={toggleCheck}
+                />
+            </ListItemIcon>
+            <ListItemText id={labelId} primary={name} />
             {optionalRendering()}
-        </li>
+        </ListItem>
     )
 })
 

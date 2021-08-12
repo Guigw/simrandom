@@ -37,4 +37,4 @@ yrial_simrandom:
         - name: orange
           weight: 1
     challenges:
-      - { id: 1, name: Construction, randomizers: [ rooms, colors, budget, letter, buildings ] }
+      - { id: 1, name: Construction, randomizers: [ buildings, budget, letter, rooms, colors ] }

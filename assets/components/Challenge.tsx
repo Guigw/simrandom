@@ -3,11 +3,22 @@ import {createRef, Fragment, MutableRefObject, RefObject} from 'react'
 import {useEffect, useState} from 'react';
 import {DefaultApi} from "../gen";
 import Randomizer from "./Randomizer";
+import {Button} from "@material-ui/core";
+import {makeStyles} from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
 
 type ChallengeProps = {
     id: number,
     api: DefaultApi
 }
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+        maxWidth: 600,
+        backgroundColor: theme.palette.background.paper,
+    },
+}));
 
 const Challenge = ({id, api}: ChallengeProps) => {
     interface childrenStateArray {
@@ -31,7 +42,7 @@ const Challenge = ({id, api}: ChallengeProps) => {
     let childrenStates: childrenStateArray = {};
     let dependencies: DependencyArray = {};
 
-
+    const classes = useStyles();
     const [randomizerList, setRandomizerList] = useState<Array<RandomizerValues> | null>(null);
     useEffect(() => {
         if (!randomizerList && id !== 0) {
@@ -83,14 +94,14 @@ const Challenge = ({id, api}: ChallengeProps) => {
     if (randomizerList) {
         return (
             <Fragment>
-                <ul className={"randomizer-list"}>
+                <List className={classes.root}>
                     {randomizerList.map(item => <Randomizer ref={item.ref}
                                                             activeProps={(childrenStates[item.name] && typeof childrenStates[item.name].active !== undefined) ? childrenStates[item.name].active : true}
                                                             key={item.name} name={item.name} api={api}
                                                             onResult={onResult}
                                                             onToggle={onToggle} needRequirement={requirement}/>)}
-                </ul>
-                <button onClick={() => setRandomizerList(null)}>Refresh</button>
+                </List>
+                <Button color={'primary'} onClick={() => setRandomizerList(null)}>Refresh</Button>
             </Fragment>
         );
     } else {
