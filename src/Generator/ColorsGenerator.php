@@ -8,10 +8,15 @@ class ColorsGenerator extends AbstractGenerator
 
     function __construct(array $params)
     {
-        $this->possibilities = $params;
+        foreach ($params as $color) {
+            for ($i = 0; $i < $color['weight']; $i++) {
+                $this->possibilities[] = (string)$color['name'];
+            }
+        }
     }
 
-    public function setNumber(int $number): ColorsGenerator{
+    public function setNumber(int $number): ColorsGenerator
+    {
         $this->colorGenerators = [];
         for ($i = 0; $i < $number; $i++) {
             $this->colorGenerators[] = new StringGenerator($this->possibilities);
@@ -21,7 +26,7 @@ class ColorsGenerator extends AbstractGenerator
 
     public function getRandom()
     {
-        return array_map(function(StringGenerator $colorGenerator) {
+        return array_map(function (StringGenerator $colorGenerator) {
             return $colorGenerator->getRandom();
         }, $this->colorGenerators);
     }
