@@ -55,38 +55,29 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
         }
     });
 
-    const displayResult = () => {
-        if (result) {
-            return (<ListItemText className={"result"}>{result}</ListItemText>)
-        } else {
-            return (<ListItemText className={"result"}>On charge</ListItemText>)
-        }
-    }
-
     const toggleCheck = () => {
         setActive(!active);
         onToggle(name, !active);
     }
 
-    const optionalRendering = () => {
+    const optionalRendering = (name: string) => {
         if (active) {
             return (
-                <div>
-                    {displayResult()}
+                <ListItem  key={name + "-result"} role={undefined} dense button>
                     <ListItemSecondaryAction>
                         <IconButton aria-label="refresh" onClick={() => setResult(null)}>
                             <RefreshIcon/>
                         </IconButton>
                     </ListItemSecondaryAction>
-                </div>
+                </ListItem>
             )
         }
     }
 
     const labelId = `checkbox-list-label-${name}`;
     return (
-        <ListItem key={name} role={undefined} dense button>
-            <ListItemIcon>
+            <ListItem key={name + "-check"} role={undefined} dense button>
+                <ListItemIcon>
                 <Checkbox
                     edge="start"
                     checked={active}
@@ -95,10 +86,10 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
                     inputProps={{'aria-labelledby': labelId}}
                     onChange={toggleCheck}
                 />
-            </ListItemIcon>
-            <ListItemText id={labelId} primary={name} />
-            {optionalRendering()}
-        </ListItem>
+                </ListItemIcon>
+                <ListItemText id={labelId} primary={name} secondary={(active) ? (result ? result : "Loading") : ""}/>
+            {optionalRendering(name)}    
+            </ListItem>
     )
 })
 
