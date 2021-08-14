@@ -18,7 +18,8 @@ import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import "./style/App.less";
 import Title from "./components/Title";
 import ChallengeSelector from './components/ChallengeSelector';
@@ -141,60 +142,74 @@ export default function App() {
     }
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            type: prefersDarkMode ? 'dark' : 'light',
+          },
+        }),
+      [prefersDarkMode],
+    );
+
     return (
-        <div className={classes.root}>
-            <CssBaseline/>
-            <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                <Toolbar className={classes.toolbar}>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                        Sims Randomizer
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon/>
-                    </IconButton>
-                </div>
-                <Divider/>
-                <List><ChallengeSelector api={api} onSelect={onSelect}/></List>
-                <Divider/>
-            </Drawer>
-            <main className={classes.content}>
-                <div className={classes.appBarSpacer}/>
-                <Container maxWidth="lg" className={classes.container}>
-                    <Grid container spacing={3}>
-                        {/* Recent Orders */}
-                        <Grid item xs={12}>
-                            <Paper className={classes.paper}>
-                                <Fragment>
-                                    <Title> {selectedChallenge.name} </Title>
-                                    <Challenge id={selectedChallenge.id} api={api}/>
-                                </Fragment>
-                            </Paper>
+        <ThemeProvider theme={theme}>
+            <div className={classes.root}>
+                <CssBaseline/>
+                <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+                    <Toolbar className={classes.toolbar}>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                        >
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                            Sims Randomizer
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    classes={{
+                        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+                    }}
+                    open={open}
+                >
+                    <div className={classes.toolbarIcon}>
+                        <IconButton onClick={handleDrawerClose}>
+                            <ChevronLeftIcon/>
+                        </IconButton>
+                    </div>
+                    <Divider/>
+                    <List><ChallengeSelector api={api} onSelect={onSelect}/></List>
+                    <Divider/>
+                </Drawer>
+                <main className={classes.content}>
+                    <div className={classes.appBarSpacer}/>
+                    <Container maxWidth="lg" className={classes.container}>
+                        <Grid container spacing={3}>
+                            {/* Recent Orders */}
+                            <Grid item xs={12}>
+                                <Paper className={classes.paper}>
+                                    <Fragment>
+                                        <Title> {selectedChallenge.name} </Title>
+                                        <Challenge id={selectedChallenge.id} api={api}/>
+                                    </Fragment>
+                                </Paper>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Box pt={4}>
-                        <Copyright/>
-                    </Box>
-                </Container>
-            </main>
-        </div>
+                        <Box pt={4}>
+                            <Copyright/>
+                        </Box>
+                    </Container>
+                </main>
+            </div>
+        </ThemeProvider>
     );
 }
