@@ -19,7 +19,7 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 import "./style/App.less";
 import Title from "./components/Title";
 import ChallengeSelector from './components/ChallengeSelector';
@@ -145,13 +145,13 @@ export default function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = React.useMemo(
-      () =>
-        createTheme({
-          palette: {
-            type: prefersDarkMode ? 'dark' : 'light',
-          },
-        }),
-      [prefersDarkMode],
+        () =>
+            createTheme({
+                palette: {
+                    type: prefersDarkMode ? 'dark' : 'light',
+                },
+            }),
+        [prefersDarkMode],
     );
 
     return (

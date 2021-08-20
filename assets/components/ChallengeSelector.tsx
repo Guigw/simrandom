@@ -2,7 +2,7 @@ import * as React from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+import BusinessIcon from '@material-ui/icons/Business';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
@@ -17,7 +17,7 @@ type ChallengerSelectorProps = {
 
 const ChallengeSelector = ({api, onSelect}: ChallengerSelectorProps) => {
     const [list, setList] = useState<Array<Challenge>>([]);
-    const IconsList = [<DashboardIcon/>, <ShoppingCartIcon/>, <PeopleIcon/>, <BarChartIcon/>, <LayersIcon/>];
+    const IconsList = [<BusinessIcon/>, <ShoppingCartIcon/>, <PeopleIcon/>, <BarChartIcon/>, <LayersIcon/>];
     useEffect(() => {
         if (list.length === 0) {
             api.challengeGet().then(items => {

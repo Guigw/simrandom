@@ -15,7 +15,6 @@ type ChallengeProps = {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        maxWidth: 600,
         backgroundColor: theme.palette.background.paper,
     },
 }));
