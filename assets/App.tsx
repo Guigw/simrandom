@@ -129,7 +129,7 @@ export default function App() {
     const conf = createConfiguration();
     const api = new DefaultApi(conf);
     const classes = useStyles();
-    const [open, setOpen] = React.useState<boolean>(true);
+    const [open, setOpen] = React.useState<boolean>(false);
     const [selectedChallenge, setSelectedChallenge] = React.useState<challengeState>({id: 0, name: ""});
     const handleDrawerOpen = () => {
         setOpen(true);
