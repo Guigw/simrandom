@@ -9,6 +9,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import IconButton from "@material-ui/core/IconButton";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 type ChallengeProps = {
     id: number,
@@ -23,13 +26,8 @@ const useStyles = makeStyles((theme) => ({
     skeletonContainer: {
         display: "flex",
     },
-    skeletonTop: {
-        marginRight: "42px",
-        flexShrink: 0,
-    },
-    skeletonMid: {
-        flex: "max-content",
-        marginRight: "42px",
+    skeletonSwitch : {
+        padding: "12px",
     }
 }));
 
@@ -123,10 +121,18 @@ const Challenge = ({id, api}: ChallengeProps) => {
     } else {
         const rows = [];
         for (let i = 0; i < randomizerListCount; i++) {
-            rows.push(<ListItem key={i} role={undefined} dense button className={classes.skeletonContainer}>
-                <Skeleton className={classes.skeletonTop} variant="circle" width={24} height={24}/>
-                <ListItemText className={classes.skeletonMid} primary={<Skeleton/>} secondary={<Skeleton/>}/>
-                <Skeleton variant="circle" width={36} height={36}/>
+            rows.push(<ListItem key={i} role={undefined} dense button className={classes.skeletonContainer} divider>
+                <ListItemIcon>
+                    <Skeleton variant="rect" width={46} height={26} className={classes.skeletonSwitch}/>
+                </ListItemIcon>
+                <ListItemText primary={<Skeleton/>} secondary={<Skeleton/>}/>
+                <ListItem role={undefined} dense button>
+                    <ListItemSecondaryAction>
+                        <IconButton>
+                            <Skeleton variant="circle" width={24} height={24}/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
+                </ListItem>
             </ListItem>);
         }
         return (
