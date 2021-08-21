@@ -8,6 +8,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 type ChallengeProps = {
     id: number,
@@ -123,15 +124,18 @@ const Challenge = ({id, api}: ChallengeProps) => {
         const rows = [];
         for (let i = 0; i < randomizerListCount; i++) {
             rows.push(<ListItem key={i} role={undefined} dense button className={classes.skeletonContainer}>
-                <Skeleton className={classes.skeletonTop} variant="rect" width={24} height={24}/>
-                <Skeleton className={classes.skeletonMid} variant="rect" height={52}/>
+                <Skeleton className={classes.skeletonTop} variant="circle" width={24} height={24}/>
+                <ListItemText className={classes.skeletonMid} primary={<Skeleton/>} secondary={<Skeleton/>}/>
                 <Skeleton variant="circle" width={36} height={36}/>
             </ListItem>);
         }
         return (
-            <List className={classes.root}>
-                {rows}
-            </List>
+            <Fragment>
+                <List className={classes.root}>
+                    {rows}
+                </List>
+                <Button color={'secondary'}>Refresh</Button>
+            </Fragment>
         )
     }
 }

@@ -7,8 +7,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+import Switch from "@material-ui/core/Switch";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
+import {makeStyles} from "@material-ui/core/styles";
 
 type RandomizerProps = {
     name: string,
@@ -19,6 +21,12 @@ type RandomizerProps = {
     needRequirement: (from: string, to: string) => string
 }
 
+const useStyles = makeStyles((theme) => ({
+    randoText: {
+        minHeight: "40px",
+    },
+}));
+
 const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, needRequirement}: RandomizerProps, ref) => {
     useImperativeHandle(ref, () => ({
         resetResult() {
@@ -26,7 +34,7 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
             setExtraState(null);
         }
     }))
-
+    const classes = useStyles();
     const [result, setResult] = useState<string | null>(null);
     const [extraState, setExtraState] = useState<string | null>(null);
     const [active, setActive] = useState<boolean>(activeProps || true)
@@ -75,18 +83,15 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
 
     const labelId = `checkbox-list-label-${name}`;
     return (
-            <ListItem key={name + "-check"} role={undefined} dense button>
+            <ListItem key={name + "-check"} role={undefined} dense button divider>
                 <ListItemIcon>
-                <Checkbox
-                    edge="start"
+                <Switch
                     checked={active}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{'aria-labelledby': labelId}}
+                    size="medium"
                     onChange={toggleCheck}
                 />
                 </ListItemIcon>
-                <ListItemText id={labelId} primary={name} secondary={(active) ? (result ? result : "Loading") : ""}/>
+                <ListItemText className={classes.randoText} id={labelId} primary={name} secondary={(active) ? (result ? result : <CircularProgress size="12px" color="inherit" />) : ""}/>
             {optionalRendering(name)}    
             </ListItem>
     )
