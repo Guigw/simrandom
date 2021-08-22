@@ -108,6 +108,6 @@ class RandomizerController extends AbstractController
     private function checkConfiguration(string $name): bool
     {
         $randomizers = $this->getParameter('generator.randomizers.list');
-        return in_array($name, array_keys($randomizers));
+        return in_array($name, $randomizers);
     }
 }
