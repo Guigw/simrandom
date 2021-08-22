@@ -1,20 +1,16 @@
 import * as React from 'react';
-import {createRef, Fragment, MutableRefObject, RefObject} from 'react'
+import {createRef, Fragment, RefObject} from 'react'
 import {useEffect, useState} from 'react';
 import {DefaultApi} from "../gen";
 import Randomizer from "./Randomizer";
+import RandomizerListItem from "./RandomizerListItem";
 import {Button} from "@material-ui/core";
-import Skeleton from '@material-ui/lab/Skeleton';
 import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import IconButton from "@material-ui/core/IconButton";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 type ChallengeProps = {
     id: number,
+    randomizerCount: number,
     api: DefaultApi
 }
 
@@ -22,16 +18,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
-    },
-    skeletonContainer: {
-        display: "flex",
-    },
-    skeletonSwitch : {
-        padding: "12px",
     }
 }));
 
-const Challenge = ({id, api}: ChallengeProps) => {
+const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
     interface childrenStateArray {
         [index: string]: childrenState;
     }
@@ -55,7 +45,7 @@ const Challenge = ({id, api}: ChallengeProps) => {
 
     const classes = useStyles();
     const [randomizerList, setRandomizerList] = useState<Array<RandomizerValues> | null>(null);
-    const [randomizerListCount, setRandomizerListCount] = useState<number>(5);
+    const [randomizerListCount, setRandomizerListCount] = useState<number>(randomizerCount);
     useEffect(() => {
         if (!randomizerList && id !== 0) {
             api.challengeIdGet(id).then(challenge => {
@@ -94,7 +84,7 @@ const Challenge = ({id, api}: ChallengeProps) => {
         }
         //si on a une dépendance sur le randomizer
         if (dependencies[name]) {
-            //on cherche la ref
+            //cherchez la ref
             const foundRef = randomizerList.filter(function (item: RandomizerValues) {
                 return item.name === dependencies[name];
             });
@@ -121,19 +111,7 @@ const Challenge = ({id, api}: ChallengeProps) => {
     } else {
         const rows = [];
         for (let i = 0; i < randomizerListCount; i++) {
-            rows.push(<ListItem key={i} role={undefined} dense button className={classes.skeletonContainer} divider>
-                <ListItemIcon>
-                    <Skeleton variant="rect" width={46} height={26} className={classes.skeletonSwitch}/>
-                </ListItemIcon>
-                <ListItemText primary={<Skeleton/>} secondary={<Skeleton/>}/>
-                <ListItem role={undefined} dense button>
-                    <ListItemSecondaryAction>
-                        <IconButton>
-                            <Skeleton variant="circle" width={24} height={24}/>
-                        </IconButton>
-                    </ListItemSecondaryAction>
-                </ListItem>
-            </ListItem>);
+            rows.push(<RandomizerListItem key={i} name={i.toString()} skeleton={true}/>);
         }
         return (
             <Fragment>

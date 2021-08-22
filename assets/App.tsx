@@ -1,6 +1,6 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import {Component, Fragment} from 'react'
+import {Fragment} from 'react'
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -11,7 +11,6 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -122,7 +121,8 @@ const useStyles = makeStyles((theme) => ({
 
 interface challengeState {
     id: number,
-    name: string
+    name: string,
+    count: number
 }
 
 export default function App() {
@@ -130,18 +130,18 @@ export default function App() {
     const api = new DefaultApi(conf);
     const classes = useStyles();
     const [open, setOpen] = React.useState<boolean>(false);
-    const [selectedChallenge, setSelectedChallenge] = React.useState<challengeState>({id: 0, name: ""});
+    const [selectedChallenge, setSelectedChallenge] = React.useState<challengeState>({id: 0, name: "", count: 0});
     const handleDrawerOpen = () => {
         setOpen(true);
     };
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const onSelect = (id: number, name: string) => {
-        setSelectedChallenge({id, name});
+    const onSelect = (id: number, name: string, count: number) => {
+        if (selectedChallenge.id !== id) {
+            setSelectedChallenge({id, name, count});
+        }
     }
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const theme = React.useMemo(
@@ -199,7 +199,8 @@ export default function App() {
                                 <Paper className={classes.paper}>
                                     <Fragment>
                                         <Title> {selectedChallenge.name} </Title>
-                                        <Challenge id={selectedChallenge.id} api={api}/>
+                                        <Challenge id={selectedChallenge.id} randomizerCount={selectedChallenge.count}
+                                                   api={api}/>
                                     </Fragment>
                                 </Paper>
                             </Grid>

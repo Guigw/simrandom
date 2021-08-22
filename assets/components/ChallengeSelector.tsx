@@ -12,7 +12,7 @@ import {useEffect, useState} from "react";
 
 type ChallengerSelectorProps = {
     api: DefaultApi,
-    onSelect: (id: number, name: string) => void
+    onSelect: (id: number, name: string, count: number) => void
 }
 
 const ChallengeSelector = ({api, onSelect}: ChallengerSelectorProps) => {
@@ -22,23 +22,22 @@ const ChallengeSelector = ({api, onSelect}: ChallengerSelectorProps) => {
         if (list.length === 0) {
             api.challengeGet().then(items => {
                 setList(items);
-                onSelect(items[0].id, items[0].name)
+                onSelect(items[0].id, items[0].name, items[0].count)
             })
         }
         return () => {
         }
     });
 
-    const selectChange = (event: React.MouseEvent<HTMLDivElement>) => {
-        console.log(event.target)
-        const value = event.target;
-        //onSelect(value);
+    const selectChange = (event: React.MouseEvent<HTMLDivElement, Event>) => {
+        const {dataset} = event.currentTarget;
+        onSelect(parseInt(dataset.itemId), dataset.itemName, parseInt(dataset.itemCount));
     }
 
     return (
         <div>
             {list.map((item: Challenge, index: number) =>
-                <ListItem button key={item.id} onClick={selectChange}>
+                <ListItem button key={item.id} onClick={selectChange} data-item-id={item.id} data-item-name={item.name} data-item-count={item.count} >
                     <ListItemIcon>
                         {IconsList[index]}
                     </ListItemIcon>

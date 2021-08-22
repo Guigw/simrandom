@@ -15,7 +15,7 @@ class ChallengeController extends AbstractController
     public function index(): Response
     {
         $challenges = array_map(function ($challenge) {
-            return ['id' => $challenge['id'], 'name' => $challenge['name']];
+            return ['id' => $challenge['id'], 'name' => $challenge['name'], 'count' => count($challenge['randomizers'])];
         }, $this->getParameter('generator.challenges'));
         return $this->json(
             $challenges

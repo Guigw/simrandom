@@ -43,6 +43,10 @@
           },
           "name": {
             "type": "string"
+          },
+          "count" : {
+            "type": "integer",
+            "format": "int64"
           }
         }
       },
