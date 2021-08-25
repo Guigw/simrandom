@@ -11,7 +11,7 @@
     "ext-iconv": "*",
     "ext-json": "*",
     "ext-simplexml": "*",
-    "composer/package-versions-deprecated": "1.11.99.2",
+    "composer/package-versions-deprecated": "^1.11.",
     "doctrine/annotations": "^1.13",
     "doctrine/doctrine-bundle": "^2.4",
     "doctrine/doctrine-migrations-bundle": "^3.1",
