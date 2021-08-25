@@ -84,12 +84,20 @@ jobs:
       - name: Use webpack
         run: npx webpack --config webpack.config.js --env production
 
+      - name: init rewriting
+        shell: bash
+        run: |
+            echo $REWRITE_CONFIG >> htdocs/.htaccess
+            cat htdocs/.htaccess
+        env:
+            PROD_ENV_FILE: ${{ secrets.REWRITE_CONFIG }}
+
       - name: create archive
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           filename: 'simrandom.zip'
-          exclusions: '*.git* /*node_modules/* /*tests/* /*assets/*  .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env'
+          exclusions: '*.git* /*node_modules/* /*tests/* /*assets/*  .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env .env.prod phpunit.xml.dist'
 
 
       - name: Archive production artifacts
