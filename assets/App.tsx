@@ -1,6 +1,5 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import {Fragment} from 'react'
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,10 +19,13 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 import "./style/App.less";
-import Title from "./components/Title";
 import ChallengeSelector from './components/ChallengeSelector';
-import Challenge from './components/Challenge';
+import challengeState from "./interfaces/challengeState";
+import {Router} from '@reach/router';
 import {createConfiguration, DefaultApi} from "./gen";
+import NewChallenge from "./pages/NewChallenge";
+import SavedChallenge from "./pages/SavedChallenge";
+
 
 function Copyright() {
     return (
@@ -119,12 +121,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface challengeState {
-    id: number,
-    name: string,
-    count: number
-}
-
 export default function App() {
     const conf = createConfiguration();
     const api = new DefaultApi(conf);
@@ -197,11 +193,10 @@ export default function App() {
                             {/* Recent Orders */}
                             <Grid item xs={12}>
                                 <Paper className={classes.paper}>
-                                    <Fragment>
-                                        <Title> {selectedChallenge.name} </Title>
-                                        <Challenge id={selectedChallenge.id} randomizerCount={selectedChallenge.count}
-                                                   api={api}/>
-                                    </Fragment>
+                                    <Router>
+                                        <NewChallenge api={api} challenge={selectedChallenge} path="/"/>
+                                        <SavedChallenge api={api} path="challenge/:uuid"/>
+                                    </Router>
                                 </Paper>
                             </Grid>
                         </Grid>

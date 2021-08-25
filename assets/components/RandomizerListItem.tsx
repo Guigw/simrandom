@@ -19,7 +19,7 @@ type RandomizerListItemProps = {
     skeleton?: boolean
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     randomizerText: {
         minHeight: "40px",
     },
@@ -50,7 +50,7 @@ const RandomizerListItem = ({name, active = true, result, skeleton = false, onCh
                                         secondary={(active) ? (result ? result :
                                             <CircularProgress size="12px" color="inherit"/>) : ""}/>}
             {skeleton && <ListItemText primary={<Skeleton/>} secondary={<Skeleton/>}/>}
-            {active &&
+            {(active && onChange) &&
             <ListItem role={undefined} dense button>
                 <ListItemSecondaryAction>
                     {!skeleton &&

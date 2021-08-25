@@ -1,15 +1,17 @@
 import * as React from 'react';
 import {createRef, Fragment, RefObject} from 'react'
 import {useEffect, useState} from 'react';
-import {DefaultApi} from "../gen";
+import {DefaultApi, RandomizerResult} from "../gen";
 import Randomizer from "./Randomizer";
 import RandomizerListItem from "./RandomizerListItem";
 import {Button} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
+import ShareChallengeBox from "./ShareChallengeBox";
 
 type ChallengeProps = {
     id: number,
+    name: string,
     randomizerCount: number,
     api: DefaultApi
 }
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
+const Challenge = ({id, name, randomizerCount, api}: ChallengeProps) => {
     interface childrenStateArray {
         [index: string]: childrenState;
     }
@@ -31,6 +33,7 @@ const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
     }
 
     interface childrenState {
+        id?: number,
         result?: string,
         active?: boolean
     }
@@ -46,10 +49,14 @@ const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
     const classes = useStyles();
     const [randomizerList, setRandomizerList] = useState<Array<RandomizerValues> | null>(null);
     const [randomizerListCount, setRandomizerListCount] = useState<number>(randomizerCount);
+    const [open, setOpen] = React.useState(false);
+
     useEffect(() => {
         if (!randomizerList && id !== 0) {
             api.challengeIdGet(id).then(challenge => {
-                setRandomizerListCount(challenge.randomizers.length);
+                if (randomizerListCount !== challenge.randomizers.length) {
+                    setRandomizerListCount(challenge.randomizers.length);
+                }
                 setRandomizerList(challenge.randomizers.map(function (item: string) {
                     return {name: item, ref: createRef()}
                 }));
@@ -57,7 +64,7 @@ const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
         }
         return () => {
         }
-    });
+    }, [randomizerCount, randomizerList]);
 
     const requirement = (from: string, to: string) => {
         dependencies[to] = from;
@@ -76,17 +83,19 @@ const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
         }
     }
 
-    const onResult = (name: string, result: string) => {
-        if (childrenStates[name]) {
-            childrenStates[name]['result'] = result;
-        } else {
-            childrenStates[name] = {result};
+    const onResult = (result: RandomizerResult) => {
+        if (!childrenStates[result.title]) {
+            childrenStates[result.title] = {};
         }
+        childrenStates[result.title]['result'] = result.result;
+        childrenStates[result.title]['id'] = result.id;
+
+
         //si on a une dépendance sur le randomizer
-        if (dependencies[name]) {
+        if (dependencies[result.title]) {
             //cherchez la ref
             const foundRef = randomizerList.filter(function (item: RandomizerValues) {
-                return item.name === dependencies[name];
+                return item.name === dependencies[result.title];
             });
             if (foundRef.length) {
                 foundRef[0].ref.current.resetResult();
@@ -94,18 +103,28 @@ const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
         }
     }
 
+    const getResultChallenge = () => {
+        return ({
+            name, resultList: randomizerList.map(item => {
+                return item.ref.current.getResult().id;
+            })
+        })
+    }
 
     if (randomizerList) {
         return (
             <Fragment>
                 <List className={classes.root}>
                     {randomizerList.map(item => <Randomizer ref={item.ref}
-                                                            activeProps={(childrenStates[item.name] && typeof childrenStates[item.name].active !== undefined) ? childrenStates[item.name].active : true}
+                                                            activeProps={((Object.keys(childrenStates).length > 0 && typeof childrenStates[item.name].active !== undefined) ? childrenStates[item.name].active : true)}
                                                             key={item.name} name={item.name} api={api}
                                                             onResult={onResult}
                                                             onToggle={onToggle} needRequirement={requirement}/>)}
                 </List>
                 <Button color={'primary'} onClick={() => setRandomizerList(null)}>Refresh</Button>
+                <Button color={'primary'} onClick={() => setOpen(true)}>Share</Button>
+                <ShareChallengeBox open={open} api={api} onClose={() => setOpen(false)}
+                                   getResultChallenge={getResultChallenge}/>
             </Fragment>
         );
     } else {
@@ -119,6 +138,7 @@ const Challenge = ({id, randomizerCount, api}: ChallengeProps) => {
                     {rows}
                 </List>
                 <Button color={'secondary'}>Refresh</Button>
+                <Button color={'secondary'}>Share</Button>
             </Fragment>
         )
     }

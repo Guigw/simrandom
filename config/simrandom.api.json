@@ -34,6 +34,14 @@
           }
         }
       },
+      "ClientDataError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
       "Challenge": {
         "type": "object",
         "properties": {
@@ -44,7 +52,7 @@
           "name": {
             "type": "string"
           },
-          "count" : {
+          "count": {
             "type": "integer",
             "format": "int64"
           }
@@ -68,9 +76,57 @@
           }
         }
       },
+      "SavedChallenge": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "SavedChallengeDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "randomizers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RandomizerResult"
+            }
+          }
+        }
+      },
+      "ResultsChallenge": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "resultList": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      },
       "RandomizerResult": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
           "title": {
             "type": "string"
           },
@@ -158,6 +214,102 @@
             "required": true,
             "schema": {
               "type": "integer"
+            },
+            "style": "simple"
+          }
+        ]
+      }
+    },
+    "/challenge/save": {
+      "post": {
+        "description": "save the result of a challenge",
+        "responses": {
+          "201": {
+            "description": "uuid of the saved challenge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedChallenge"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error on details on saving challenge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientDataError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error on details of active challenge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "description": "results to save",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResultsChallenge"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/challenge/{uuid}/results": {
+      "get": {
+        "description": "load results from previous saved challenge",
+        "responses": {
+          "200": {
+            "description": "saved challenge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedChallengeDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Saved Challenge not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error on retrieve saved challenge",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GeneralError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "description": "uuid of the randomizer",
+            "required": true,
+            "schema": {
+              "type": "string"
             },
             "style": "simple"
           }

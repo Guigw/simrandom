@@ -80,6 +80,7 @@ web_modules/
 # dotenv environment variables file
 .env
 .env.test
+.env.dev
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -404,6 +405,7 @@ composer.phar
 # Assets and user uploads
 /htdocs/api/bundles/
 /htdocs/api/uploads/
+/htdocs/index.html
 
 # PHPUnit
 /app/phpunit.xml

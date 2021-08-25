@@ -1,4 +1,4 @@
-import {DefaultApi} from "../gen";
+import {DefaultApi, RandomizerResult} from "../gen";
 import {useEffect, useImperativeHandle, useState, forwardRef} from "react";
 import * as React from "react";
 import "../style/Randomizer.less";
@@ -8,7 +8,7 @@ type RandomizerProps = {
     name: string,
     activeProps?: boolean,
     api: DefaultApi,
-    onResult: (name: string, result: string) => void,
+    onResult: (result: RandomizerResult) => void,
     onToggle: (name: string, active: boolean) => void,
     needRequirement: (from: string, to: string) => string
 }
@@ -18,9 +18,12 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
         resetResult() {
             setResult(null);
             setExtraState(null);
+        },
+        getResult() {
+            return result;
         }
     }))
-    const [result, setResult] = useState<string | null>(null);
+    const [result, setResult] = useState<RandomizerResult | null>(null);
     const [extraState, setExtraState] = useState<string | null>(null);
     const [active, setActive] = useState<boolean>(activeProps || true)
     useEffect(() => {
@@ -32,12 +35,11 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
         if (!result && active) {
             api.randomizerNameGet(...params).then(random => {
                 if (random.result == "" && random.required) {
-                    const req = needRequirement(name, random.required);
-                    setExtraState(req);
+                    setExtraState(needRequirement(name, random.required));
                 } else {
                     if (mount) {
-                        setResult(random.result);
-                        onResult(name, random.result);
+                        setResult(random);
+                        onResult(random);
                     }
                 }
             });
@@ -52,7 +54,8 @@ const Randomizer = forwardRef(({name, activeProps, api, onResult, onToggle, need
         onToggle(name, !active);
     }
     return (
-        <RandomizerListItem key={name + "-check"} name={name} active={active} result={result} onChange={toggleCheck}
+        <RandomizerListItem key={name + "-check"} name={name} active={active} result={result ? result.result : null}
+                            onChange={toggleCheck}
                             onClickRefresh={() => setResult(null)}/>
     )
 })

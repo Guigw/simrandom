@@ -27,7 +27,7 @@ const ChallengeSelector = ({api, onSelect}: ChallengerSelectorProps) => {
         }
         return () => {
         }
-    });
+    }, []);
 
     const selectChange = (event: React.MouseEvent<HTMLDivElement, Event>) => {
         const {dataset} = event.currentTarget;
@@ -37,7 +37,8 @@ const ChallengeSelector = ({api, onSelect}: ChallengerSelectorProps) => {
     return (
         <div>
             {list.map((item: Challenge, index: number) =>
-                <ListItem button key={item.id} onClick={selectChange} data-item-id={item.id} data-item-name={item.name} data-item-count={item.count} >
+                <ListItem button key={item.id} onClick={selectChange} data-item-id={item.id} data-item-name={item.name}
+                          data-item-count={item.count}>
                     <ListItemIcon>
                         {IconsList[index]}
                     </ListItemIcon>

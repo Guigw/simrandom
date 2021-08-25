@@ -11,7 +11,8 @@ module.exports = (env) => {
             new HtmlWebpackPlugin({
                 title: "Caching",
                 inject: true,
-                template: "./assets/templates/index.html"
+                template: "./assets/templates/index.html",
+                filename: '../index.html'
             })
         ],
         module: {
