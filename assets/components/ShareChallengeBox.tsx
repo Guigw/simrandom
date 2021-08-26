@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {FocusEvent, useEffect, useState} from "react";
 import {DefaultApi, ResultsChallenge} from "../gen";
 import {Card, Dialog, DialogTitle, TextField} from "@material-ui/core";
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
@@ -6,6 +6,7 @@ import * as React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
 import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 type ShareChallengeBoxProps = {
     api: DefaultApi,
@@ -76,15 +77,21 @@ const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChalle
         }
     }
 
+    const onFocusField = (event: FocusEvent<HTMLInputElement>) => {
+        event.currentTarget.select();
+    }
+
     return (
         <Dialog className={classes.root} onClose={handleClose} open={open}
                 aria-labelledby="simple-dialog-title"
                 fullWidth={true}>
             <DialogTitle id="simple-dialog-title">Copy this link</DialogTitle>
             <Card>
+                {link &&
                 <TextField id="link-copy-field" label="Link" value={link?.link} variant="filled" inputProps={
-                    {readOnly: true}
-                }/>
+                    {readOnly: true, "aria-label": 'sharing link'}
+                } onFocus={onFocusField}/>
+                }
                 {(link && !copied) &&
                 <IconButton aria-label="copy" onClick={copyLinkToClip}>
                     <AssignmentReturnedIcon/>
@@ -94,6 +101,9 @@ const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChalle
                 <IconButton aria-label="copy">
                     <AssignmentTurnedInIcon/>
                 </IconButton>
+                }
+                {!link &&
+                <CircularProgress color="inherit"/>
                 }
             </Card>
         </Dialog>

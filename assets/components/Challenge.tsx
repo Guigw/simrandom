@@ -4,10 +4,12 @@ import {useEffect, useState} from 'react';
 import {DefaultApi, RandomizerResult} from "../gen";
 import Randomizer from "./Randomizer";
 import RandomizerListItem from "./RandomizerListItem";
-import {Button} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ShareChallengeBox from "./ShareChallengeBox";
+import IconButton from "@material-ui/core/IconButton";
+import CasinoIcon from '@material-ui/icons/Casino';
+import ShareIcon from '@material-ui/icons/Share';
 
 type ChallengeProps = {
     id: number,
@@ -20,6 +22,13 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
+    },
+    iconButtonsBar: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingLeft: "16px",
+        paddingRight: "16px",
     }
 }));
 
@@ -121,8 +130,14 @@ const Challenge = ({id, name, randomizerCount, api}: ChallengeProps) => {
                                                             onResult={onResult}
                                                             onToggle={onToggle} needRequirement={requirement}/>)}
                 </List>
-                <Button color={'primary'} onClick={() => setRandomizerList(null)}>Refresh</Button>
-                <Button color={'primary'} onClick={() => setOpen(true)}>Share</Button>
+                <div className={classes.iconButtonsBar}>
+                    <IconButton aria-label="Refresh" onClick={() => setRandomizerList(null)}>
+                        <CasinoIcon/>
+                    </IconButton>
+                    <IconButton aria-label="Share" onClick={() => setOpen(true)}>
+                        <ShareIcon/>
+                    </IconButton>
+                </div>
                 <ShareChallengeBox open={open} api={api} onClose={() => setOpen(false)}
                                    getResultChallenge={getResultChallenge}/>
             </Fragment>
@@ -137,8 +152,14 @@ const Challenge = ({id, name, randomizerCount, api}: ChallengeProps) => {
                 <List className={classes.root}>
                     {rows}
                 </List>
-                <Button color={'secondary'}>Refresh</Button>
-                <Button color={'secondary'}>Share</Button>
+                <div className={classes.iconButtonsBar}>
+                    <IconButton aria-label="Refresh" disabled>
+                        <CasinoIcon/>
+                    </IconButton>
+                    <IconButton aria-label="Share" disabled>
+                        <ShareIcon/>
+                    </IconButton>
+                </div>
             </Fragment>
         )
     }

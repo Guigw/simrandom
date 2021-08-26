@@ -1,6 +1,5 @@
 import {RouteComponentProps} from "@reach/router";
-import {DefaultApi} from "../gen";
-import challengeState from "./challengeState";
+import {Challenge, DefaultApi} from "../gen";
 
 export interface SavedChallengeProps extends RouteComponentProps {
     api: DefaultApi,
@@ -9,5 +8,5 @@ export interface SavedChallengeProps extends RouteComponentProps {
 
 export interface NewChallengeProps extends RouteComponentProps {
     api: DefaultApi,
-    challenge: challengeState
+    challenge: Challenge
 }

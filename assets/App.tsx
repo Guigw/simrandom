@@ -20,9 +20,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 import "./style/App.less";
 import ChallengeSelector from './components/ChallengeSelector';
-import challengeState from "./interfaces/challengeState";
 import {Router} from '@reach/router';
-import {createConfiguration, DefaultApi} from "./gen";
+import {Challenge, createConfiguration, DefaultApi} from "./gen";
 import NewChallenge from "./pages/NewChallenge";
 import SavedChallenge from "./pages/SavedChallenge";
 
@@ -126,7 +125,7 @@ export default function App() {
     const api = new DefaultApi(conf);
     const classes = useStyles();
     const [open, setOpen] = React.useState<boolean>(false);
-    const [selectedChallenge, setSelectedChallenge] = React.useState<challengeState>({id: 0, name: "", count: 0});
+    const [selectedChallenge, setSelectedChallenge] = React.useState<Challenge>({id: 0, name: "", count: 0});
     const handleDrawerOpen = () => {
         setOpen(true);
     };
