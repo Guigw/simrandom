@@ -13,7 +13,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -29,10 +28,7 @@ import SavedChallenge from "./pages/SavedChallenge";
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {'GPLv3 '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Gpsnet
-            </Link>{' '}
+            <img src={'https://www.gnu.org/graphics/lgplv3-88x31.png'} alt={'LGPLv3 Image'}/>
             {new Date().getFullYear()}
             {'.'}
         </Typography>
