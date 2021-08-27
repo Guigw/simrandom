@@ -2,54 +2,32 @@ import * as React from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {createTheme, ThemeProvider} from '@material-ui/core/styles';
 import "./style/App.less";
-import ChallengeSelector from './components/ChallengeSelector';
-import {Router} from '@reach/router';
 import {Challenge, createConfiguration, DefaultApi} from "./gen";
-import NewChallenge from "./pages/NewChallenge";
-import SavedChallenge from "./pages/SavedChallenge";
+import Main from "./components/layout/Main";
+import AppDrawer from "./components/layout/AppDrawer";
+import {Fragment, useEffect, useState} from "react";
+import {Router} from "@reach/router";
 
-
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            <img src={'https://www.gnu.org/graphics/lgplv3-88x31.png'} alt={'LGPLv3 Image'}/>
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        '& >div:last-child': {
+            width: "100%"
+        }
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -75,42 +53,7 @@ const useStyles = makeStyles((theme) => ({
     title: {
         flexGrow: 1,
     },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
-        },
-    },
-    appBarSpacer: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-    },
-    container: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-    },
+
     fixedHeight: {
         height: 240,
     },
@@ -122,6 +65,21 @@ export default function App() {
     const classes = useStyles();
     const [open, setOpen] = React.useState<boolean>(false);
     const [selectedChallenge, setSelectedChallenge] = React.useState<Challenge>({id: 0, name: "", count: 0});
+    const [list, setList] = useState<Array<Challenge>>([]);
+    useEffect(() => {
+        let mount = true;
+        if (list.length === 0) {
+            api.challengeGet().then(items => {
+                if (mount) {
+                    setList(items);
+                    onSelect(items[0].id, items[0].name, items[0].count)
+                }
+            })
+        }
+        return () => {
+            mount = false
+        }
+    }, []);
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -145,6 +103,23 @@ export default function App() {
         [prefersDarkMode],
     );
 
+    // const Appp = React.memo((props: any) => {
+    //     console.log('render Appp');
+    //     return (
+    //     <Fragment>
+    //         {props.children}
+    //     </Fragment>
+    // )}, (prevProps, nextProps) => {
+    //     // Comment below is from React documentation.
+    //     /*
+    //      return true if passing nextProps to render would return
+    //      the same result as passing prevProps to render,
+    //      otherwise return false
+    //     */
+    //     return true;
+    // });
+
+
     return (
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
@@ -165,41 +140,8 @@ export default function App() {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <Drawer
-                    variant="permanent"
-                    classes={{
-                        paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                    }}
-                    open={open}
-                >
-                    <div className={classes.toolbarIcon}>
-                        <IconButton onClick={handleDrawerClose}>
-                            <ChevronLeftIcon/>
-                        </IconButton>
-                    </div>
-                    <Divider/>
-                    <List><ChallengeSelector api={api} onSelect={onSelect}/></List>
-                    <Divider/>
-                </Drawer>
-                <main className={classes.content}>
-                    <div className={classes.appBarSpacer}/>
-                    <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={3}>
-                            {/* Recent Orders */}
-                            <Grid item xs={12}>
-                                <Paper className={classes.paper}>
-                                    <Router>
-                                        <NewChallenge api={api} challenge={selectedChallenge} path="/"/>
-                                        <SavedChallenge api={api} path="challenge/:uuid"/>
-                                    </Router>
-                                </Paper>
-                            </Grid>
-                        </Grid>
-                        <Box pt={4}>
-                            <Copyright/>
-                        </Box>
-                    </Container>
-                </main>
+                <AppDrawer open={open} handleDrawerClose={handleDrawerClose} list={list} onSelect={onSelect}/>
+                <Main api={api} challenge={selectedChallenge}/>
             </div>
         </ThemeProvider>
     );

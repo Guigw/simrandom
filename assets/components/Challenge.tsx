@@ -14,7 +14,7 @@ import ShareIcon from '@material-ui/icons/Share';
 type ChallengeProps = {
     id: number,
     name: string,
-    randomizerCount: number,
+    count: number,
     api: DefaultApi
 }
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Challenge = ({id, name, randomizerCount, api}: ChallengeProps) => {
+const Challenge = ({id, name, count, api}: ChallengeProps) => {
     interface childrenStateArray {
         [index: string]: childrenState;
     }
@@ -57,7 +57,7 @@ const Challenge = ({id, name, randomizerCount, api}: ChallengeProps) => {
 
     const classes = useStyles();
     const [randomizerList, setRandomizerList] = useState<Array<RandomizerValues> | null>(null);
-    const [randomizerListCount, setRandomizerListCount] = useState<number>(randomizerCount);
+    const [randomizerListCount, setRandomizerListCount] = useState<number>(count);
     const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const Challenge = ({id, name, randomizerCount, api}: ChallengeProps) => {
         }
         return () => {
         }
-    }, [randomizerCount, randomizerList]);
+    }, [count, randomizerList]);
 
     const requirement = (from: string, to: string) => {
         dependencies[to] = from;

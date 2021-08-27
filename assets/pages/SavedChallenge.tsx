@@ -9,21 +9,26 @@ import {default as ComponentSavedChallenge} from "../components/SavedChallenge";
 const SavedChallenge = ({api, uuid}: SavedChallengeProps) => {
     const [result, setResult] = useState<SavedChallengeDetails | null>(null);
     useEffect(() => {
-        if (!result) {
+        let mount = true
+        if (!result && uuid) {
             api.challengeUuidResultsGet(uuid).then(res => {
-                setResult(res);
+                if (mount) {
+                    setResult(res);
+                }
+
             })
         }
         return () => {
+            mount = false
         }
-    });
+    }, []);
     return (
         <React.Fragment>
             {result &&
-                <Fragment>
-                    <Title>{result.name}</Title>
-                    <ComponentSavedChallenge randomizers={result.randomizers}/>
-                </Fragment>
+            <Fragment>
+                <Title>{result.name}</Title>
+                <ComponentSavedChallenge randomizers={result.randomizers}/>
+            </Fragment>
             }
         </React.Fragment>
     )

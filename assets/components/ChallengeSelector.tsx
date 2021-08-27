@@ -7,27 +7,15 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
-import {Challenge, DefaultApi} from "../gen";
-import {useEffect, useState} from "react";
+import {Challenge} from "../gen";
 
 type ChallengerSelectorProps = {
-    api: DefaultApi,
     onSelect: (id: number, name: string, count: number) => void
+    list: Array<Challenge>
 }
 
-const ChallengeSelector = ({api, onSelect}: ChallengerSelectorProps) => {
-    const [list, setList] = useState<Array<Challenge>>([]);
+const ChallengeSelector = ({onSelect, list}: ChallengerSelectorProps) => {
     const IconsList = [<BusinessIcon/>, <ShoppingCartIcon/>, <PeopleIcon/>, <BarChartIcon/>, <LayersIcon/>];
-    useEffect(() => {
-        if (list.length === 0) {
-            api.challengeGet().then(items => {
-                setList(items);
-                onSelect(items[0].id, items[0].name, items[0].count)
-            })
-        }
-        return () => {
-        }
-    }, []);
 
     const selectChange = (event: React.MouseEvent<HTMLDivElement, Event>) => {
         const {dataset} = event.currentTarget;

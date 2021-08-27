@@ -42,21 +42,25 @@ const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChalle
     const classes = useStyles();
 
     useEffect(() => {
+        let mount = true;
         if (open) {
             const resultChallenge = getResultChallenge();
             if (!link || !equals(resultChallenge.resultList, link.resultList)) {
                 api.challengeSavePost(resultChallenge).then(saved => {
-                    setLink({
-                        resultList: resultChallenge.resultList,
-                        link: window.location.origin + '/challenge/' + saved.id
-                    })
+                    if (mount) {
+                        setLink({
+                            resultList: resultChallenge.resultList,
+                            link: window.location.origin + '/challenge/' + saved.id
+                        })
+                    }
                 })
             }
         }
 
         return () => {
+            mount = false
         }
-    })
+    }, [open, link])
 
     const equals = (a: Array<number>, b: Array<number>) => JSON.stringify(a) === JSON.stringify(b);
 
