@@ -8,7 +8,11 @@ import ChallengeSelector from "../ChallengeSelector";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Challenge} from "../../gen";
-import {RouteComponentProps} from "@reach/router";
+import {useLocation} from "react-router";
+import SaveIcon from '@material-ui/icons/Save';
+import {ListItem, ListItemIcon} from "@material-ui/core";
+import {Fragment} from "react";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const drawerWidth = 240;
 
@@ -42,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-interface AppDrawerProps extends RouteComponentProps {
+interface AppDrawerProps {
     open: boolean,
     handleDrawerClose: () => void,
     list: Array<Challenge>,
@@ -51,6 +55,9 @@ interface AppDrawerProps extends RouteComponentProps {
 
 const AppDrawer = ({open, handleDrawerClose, list, onSelect}: AppDrawerProps) => {
     const classes = useStyles();
+    const location = useLocation();
+    const selectedChallenge = location.pathname.replace('/randomize/challenge/', '');
+    const selectedSaved = location.pathname.match(/\/challenge\/\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b/i) !== null
     return (
         <Drawer
             variant="permanent"
@@ -65,8 +72,19 @@ const AppDrawer = ({open, handleDrawerClose, list, onSelect}: AppDrawerProps) =>
                 </IconButton>
             </div>
             <Divider/>
-            <List><ChallengeSelector list={list} onSelect={onSelect}/></List>
+            <List><ChallengeSelector list={list} onSelect={onSelect} selectedItem={selectedChallenge}/></List>
             <Divider/>
+            {selectedSaved && (
+                <Fragment>
+                    <ListItem>
+                        <ListItemIcon>
+                            <SaveIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Saved'}/>
+                    </ListItem>
+                    <Divider/>
+                </Fragment>
+            )}
         </Drawer>
     )
 }

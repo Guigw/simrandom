@@ -1,14 +1,15 @@
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import {RouteComponentProps, Router} from "@reach/router";
 import NewChallenge from "../../pages/NewChallenge";
 import SavedChallenge from "../../pages/SavedChallenge";
+import Home from "../../pages/Home";
 import Box from "@material-ui/core/Box";
 import Licence from "./Licence";
 import * as React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {DefaultApi, Challenge} from "../../gen";
+import {Route, Switch} from "react-router";
 
 const useStyles = makeStyles((theme) => ({
     appBarSpacer: theme.mixins.toolbar,
@@ -34,7 +35,7 @@ interface MainProps {
     challenge: Challenge,
 }
 
-const Main = ({api, challenge}: MainProps) => {
+const Main = React.memo<MainProps>(({api, challenge}: MainProps) => {
     const classes = useStyles();
     return (
         <main className={classes.content}>
@@ -44,10 +45,13 @@ const Main = ({api, challenge}: MainProps) => {
                     {/* Recent Orders */}
                     <Grid item xs={12}>
                         <Paper className={classes.paper}>
-                            <Router>
-                                <NewChallenge api={api} challenge={challenge} path="/"/>
-                                <SavedChallenge api={api} path="challenge/:uuid"/>
-                            </Router>
+                            <Switch>
+                                <Route exact path="/"
+                                       component={() => <Home/>}/>
+                                <Route path="/randomize/challenge/:name"
+                                       component={() => <NewChallenge api={api} challenge={challenge}/>}/>
+                                <Route path="/challenge/:uuid" component={() => <SavedChallenge api={api}/>}/>
+                            </Switch>
                         </Paper>
                     </Grid>
                 </Grid>
@@ -57,5 +61,7 @@ const Main = ({api, challenge}: MainProps) => {
             </Container>
         </main>
     )
-}
+}, (prevProps, nextProps) => {
+    return prevProps.challenge.id === nextProps.challenge.id;
+})
 export default Main;

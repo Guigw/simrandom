@@ -1,15 +1,21 @@
 import Title from "../components/Title";
-import Challenge from "../components/Challenge";
+import {default as ChallengeComponent} from "../components/Challenge";
 import * as React from "react";
-import {NewChallengeProps} from "../interfaces/RouteProps";
+import {Challenge, DefaultApi} from "../gen";
+import {useParams} from "react-router";
 
+interface NewChallengeProps {
+    api: DefaultApi,
+    challenge: Challenge
+}
 
 const NewChallenge = ({api, challenge}: NewChallengeProps) => {
+    const {name} = useParams<{ name?: string }>();
     return (
         <React.Fragment>
             <Title> {challenge.name} </Title>
-            <Challenge id={challenge.id} name={challenge.name} count={challenge.count} api={api}/>
+            <ChallengeComponent id={challenge.id} name={challenge.name} count={challenge.count} api={api}/>
         </React.Fragment>
     )
 }
-export default NewChallenge;
+export default NewChallenge

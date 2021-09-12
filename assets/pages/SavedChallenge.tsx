@@ -1,12 +1,16 @@
 import Title from "../components/Title";
 import * as React from "react";
-import {SavedChallengeProps} from "../interfaces/RouteProps";
 import {Fragment, useEffect, useState} from "react";
-import {SavedChallengeDetails} from "../gen";
+import {DefaultApi, SavedChallengeDetails} from "../gen";
 import {default as ComponentSavedChallenge} from "../components/SavedChallenge";
+import {useParams} from "react-router";
 
+interface SavedChallengeProps{
+    api: DefaultApi
+}
 
-const SavedChallenge = ({api, uuid}: SavedChallengeProps) => {
+const SavedChallenge = ({api}: SavedChallengeProps) => {
+    const {uuid} = useParams<{ uuid?: string }>();
     const [result, setResult] = useState<SavedChallengeDetails | null>(null);
     useEffect(() => {
         let mount = true

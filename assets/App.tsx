@@ -13,8 +13,8 @@ import "./style/App.less";
 import {Challenge, createConfiguration, DefaultApi} from "./gen";
 import Main from "./components/layout/Main";
 import AppDrawer from "./components/layout/AppDrawer";
-import {Fragment, useEffect, useState} from "react";
-import {Router} from "@reach/router";
+import {useEffect, useState} from "react";
+import {BrowserRouter} from "react-router-dom";
 
 
 const drawerWidth = 240;
@@ -103,45 +103,30 @@ export default function App() {
         [prefersDarkMode],
     );
 
-    // const Appp = React.memo((props: any) => {
-    //     console.log('render Appp');
-    //     return (
-    //     <Fragment>
-    //         {props.children}
-    //     </Fragment>
-    // )}, (prevProps, nextProps) => {
-    //     // Comment below is from React documentation.
-    //     /*
-    //      return true if passing nextProps to render would return
-    //      the same result as passing prevProps to render,
-    //      otherwise return false
-    //     */
-    //     return true;
-    // });
-
-
     return (
         <ThemeProvider theme={theme}>
             <div className={classes.root}>
                 <CssBaseline/>
-                <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                    <Toolbar className={classes.toolbar}>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                        >
-                            <MenuIcon/>
-                        </IconButton>
-                        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                            Sims Randomizer
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <AppDrawer open={open} handleDrawerClose={handleDrawerClose} list={list} onSelect={onSelect}/>
-                <Main api={api} challenge={selectedChallenge}/>
+                <BrowserRouter>
+                    <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+                        <Toolbar className={classes.toolbar}>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                            >
+                                <MenuIcon/>
+                            </IconButton>
+                            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                                Sims Randomizer
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                    <AppDrawer open={open} handleDrawerClose={handleDrawerClose} list={list} onSelect={onSelect}/>
+                    <Main api={api} challenge={selectedChallenge}/>
+                </BrowserRouter>
             </div>
         </ThemeProvider>
     );
