@@ -1,6 +1,6 @@
 import * as React from "react";
-import List from '@material-ui/core/List';
-import {makeStyles} from "@material-ui/core/styles";
+import List from '@mui/material/List';
+import { makeStyles } from '@mui/styles';
 import {RandomizerResult} from "../gen";
 import RandomizerListItem from "./RandomizerListItem";
 
@@ -8,7 +8,7 @@ type SavedChallengeProps = {
     randomizers: Array<RandomizerResult>
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme?: any) => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,

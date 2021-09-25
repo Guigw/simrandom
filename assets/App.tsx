@@ -1,25 +1,34 @@
 import * as React from 'react';
 import clsx from 'clsx';
-import {makeStyles} from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {createTheme, ThemeProvider} from '@material-ui/core/styles';
+import {makeStyles} from '@mui/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import {createTheme, ThemeProvider, Theme, StyledEngineProvider} from '@mui/material/styles';
 import "./style/App.less";
 import {Challenge, createConfiguration, DefaultApi} from "./gen";
 import Main from "./components/layout/Main";
 import AppDrawer from "./components/layout/AppDrawer";
 import {useEffect, useState} from "react";
 import {BrowserRouter} from "react-router-dom";
+import {DefaultTheme} from "@mui/styles";
+import {PaletteMode, useMediaQuery} from "@mui/material";
+import { amber, grey, lightGreen } from '@mui/material/colors';
 
+
+declare module '@mui/styles/defaultTheme' {
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface DefaultTheme extends Theme {
+
+    }
+}
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme?: any) => ({
     root: {
         display: 'flex',
         '& >div:last-child': {
@@ -35,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
+        backgroundColor: theme.palette.primary[700]
     },
     appBarShift: {
         marginLeft: drawerWidth,
@@ -59,10 +69,31 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function App() {
+const getDesignTokens = (mode: PaletteMode) => ({
+    palette: {
+        mode,
+        ...(mode === 'light'
+            ? {
+                // palette values for light mode
+                primary: amber,
+                divider: amber[200],
+                text: {
+                    primary: grey[900],
+                    secondary: grey[800],
+                },
+            }
+            : {
+                // palette values for dark mode
+                primary: lightGreen,
+                divider: lightGreen[200],
+            }),
+    },
+});
+
+const Root = () => {
+    const classes = useStyles();
     const conf = createConfiguration();
     const api = new DefaultApi(conf);
-    const classes = useStyles();
     const [open, setOpen] = React.useState<boolean>(false);
     const [selectedChallenge, setSelectedChallenge] = React.useState<Challenge>({id: 0, name: "", count: 0});
     const [list, setList] = useState<Array<Challenge>>([]);
@@ -91,43 +122,45 @@ export default function App() {
             setSelectedChallenge({id, name, count});
         }
     }
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    return (
+        <div className={classes.root}>
+            <BrowserRouter>
+                <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+                    <Toolbar className={classes.toolbar}>
+                        <IconButton
+                            edge="start"
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
+                            size="large">
+                            <MenuIcon/>
+                        </IconButton>
+                        <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
+                            Sims Randomizer
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <AppDrawer open={open} handleDrawerClose={handleDrawerClose} list={list} onSelect={onSelect}/>
+                <Main api={api} challenge={selectedChallenge}/>
+            </BrowserRouter>
+        </div>
+    );
+}
 
+export default function App() {
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = React.useMemo(
         () =>
-            createTheme({
-                palette: {
-                    type: prefersDarkMode ? 'dark' : 'light',
-                },
-            }),
+            createTheme(getDesignTokens(prefersDarkMode ? 'dark' : 'light')),
         [prefersDarkMode],
     );
-
     return (
-        <ThemeProvider theme={theme}>
-            <div className={classes.root}>
+        <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
                 <CssBaseline/>
-                <BrowserRouter>
-                    <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-                        <Toolbar className={classes.toolbar}>
-                            <IconButton
-                                edge="start"
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={handleDrawerOpen}
-                                className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-                            >
-                                <MenuIcon/>
-                            </IconButton>
-                            <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                                Sims Randomizer
-                            </Typography>
-                        </Toolbar>
-                    </AppBar>
-                    <AppDrawer open={open} handleDrawerClose={handleDrawerClose} list={list} onSelect={onSelect}/>
-                    <Main api={api} challenge={selectedChallenge}/>
-                </BrowserRouter>
-            </div>
-        </ThemeProvider>
+                <Root/>
+            </ThemeProvider>
+        </StyledEngineProvider>
     );
 }

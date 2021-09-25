@@ -1,12 +1,12 @@
 import {FocusEvent, useEffect, useState} from "react";
 import {DefaultApi, ResultsChallenge} from "../gen";
-import {Card, Dialog, DialogTitle, TextField} from "@material-ui/core";
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {Card, Dialog, DialogTitle, TextField} from "@mui/material";
+import {makeStyles} from '@mui/styles';
 import * as React from "react";
-import IconButton from "@material-ui/core/IconButton";
-import AssignmentReturnedIcon from '@material-ui/icons/AssignmentReturned';
-import AssignmentTurnedInIcon from '@material-ui/icons/AssignmentTurnedIn';
-import CircularProgress from "@material-ui/core/CircularProgress";
+import IconButton from "@mui/material/IconButton";
+import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import CircularProgress from "@mui/material/CircularProgress";
 
 type ShareChallengeBoxProps = {
     api: DefaultApi,
@@ -15,8 +15,8 @@ type ShareChallengeBoxProps = {
     onClose: () => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+const useStyles = makeStyles((theme?: any) =>
+    ({
         root: {
             '& .MuiTextField-root': {
                 margin: theme.spacing(1),
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 alignItems: 'center',
             }
         },
-    }),
+    })
 );
 
 const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChallengeBoxProps) => {
@@ -92,26 +92,26 @@ const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChalle
             <DialogTitle id="simple-dialog-title">Copy this link</DialogTitle>
             <Card>
                 {link &&
-                <TextField id="link-copy-field" label="Link" value={link?.link} variant="filled" inputProps={
+				<TextField id="link-copy-field" label="Link" value={link?.link} variant="filled" inputProps={
                     {readOnly: true, "aria-label": 'sharing link'}
                 } onFocus={onFocusField}/>
                 }
                 {(link && !copied) &&
-                <IconButton aria-label="copy" onClick={copyLinkToClip}>
-                    <AssignmentReturnedIcon/>
-                </IconButton>
+				<IconButton aria-label="copy" onClick={copyLinkToClip} size="large">
+					<AssignmentReturnedIcon/>
+				</IconButton>
                 }
                 {(link && copied) &&
-                <IconButton aria-label="copy">
-                    <AssignmentTurnedInIcon/>
-                </IconButton>
+				<IconButton aria-label="copy" size="large">
+					<AssignmentTurnedInIcon/>
+				</IconButton>
                 }
                 {!link &&
-                <CircularProgress color="inherit"/>
+				<CircularProgress color="inherit"/>
                 }
             </Card>
         </Dialog>
-    )
+    );
 }
 
 export default ShareChallengeBox

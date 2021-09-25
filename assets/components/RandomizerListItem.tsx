@@ -1,14 +1,14 @@
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Switch from "@material-ui/core/Switch";
-import ListItemText from "@material-ui/core/ListItemText";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Switch from "@mui/material/Switch";
+import ListItemText from "@mui/material/ListItemText";
+import CircularProgress from "@mui/material/CircularProgress";
+import ListItem from "@mui/material/ListItem";
 import * as React from "react";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import {makeStyles} from "@material-ui/core/styles";
-import Skeleton from "@material-ui/lab/Skeleton";
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+import IconButton from "@mui/material/IconButton";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { makeStyles } from '@mui/styles';
+import Skeleton from "@mui/material/Skeleton";
 
 type RandomizerListItemProps = {
     name: string,
@@ -44,7 +44,7 @@ const RandomizerListItem = ({name, active = true, result, skeleton = false, onCh
                     onChange={onChange}
                 />}
                 {skeleton &&
-                <Skeleton variant="rect" width={46} height={26} className={classes.skeletonSwitch}/>}
+                <Skeleton variant="rectangular" width={46} height={26} className={classes.skeletonSwitch}/>}
             </ListItemIcon>
             {!skeleton && <ListItemText className={classes.randomizerText} id={labelId} primary={name}
                                         secondary={(active) ? (result ? result :
@@ -54,17 +54,17 @@ const RandomizerListItem = ({name, active = true, result, skeleton = false, onCh
             <ListItem role={undefined} dense button>
                 <ListItemSecondaryAction>
                     {!skeleton &&
-                    <IconButton aria-label="refresh" onClick={onClickRefresh}>
+                    <IconButton aria-label="refresh" onClick={onClickRefresh} size="large">
                         <RefreshIcon/>
                     </IconButton>}
                     {skeleton &&
-                    <IconButton>
-                        <Skeleton variant="circle" width={24} height={24}/>
+                    <IconButton size="large">
+                        <Skeleton variant="circular" width={24} height={24}/>
                     </IconButton>}
                 </ListItemSecondaryAction>
             </ListItem>}
         </ListItem>
-    )
+    );
 }
 
 export default RandomizerListItem;

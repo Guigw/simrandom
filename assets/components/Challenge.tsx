@@ -4,12 +4,12 @@ import {useEffect, useState} from 'react';
 import {DefaultApi, RandomizerResult} from "../gen";
 import Randomizer from "./Randomizer";
 import RandomizerListItem from "./RandomizerListItem";
-import {makeStyles} from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
+import { makeStyles } from '@mui/styles';
+import List from '@mui/material/List';
 import ShareChallengeBox from "./ShareChallengeBox";
-import IconButton from "@material-ui/core/IconButton";
-import CasinoIcon from '@material-ui/icons/Casino';
-import ShareIcon from '@material-ui/icons/Share';
+import IconButton from "@mui/material/IconButton";
+import CasinoIcon from '@mui/icons-material/Casino';
+import ShareIcon from '@mui/icons-material/Share';
 
 type ChallengeProps = {
     id: number,
@@ -18,7 +18,7 @@ type ChallengeProps = {
     api: DefaultApi
 }
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme?: any) => ({
     root: {
         width: '100%',
         backgroundColor: theme.palette.background.paper,
@@ -131,10 +131,10 @@ const Challenge = ({id, name, count, api}: ChallengeProps) => {
                                                             onToggle={onToggle} needRequirement={requirement}/>)}
                 </List>
                 <div className={classes.iconButtonsBar}>
-                    <IconButton aria-label="Refresh" onClick={() => setRandomizerList(null)}>
+                    <IconButton aria-label="Refresh" onClick={() => setRandomizerList(null)} size="large">
                         <CasinoIcon/>
                     </IconButton>
-                    <IconButton aria-label="Share" onClick={() => setOpen(true)}>
+                    <IconButton aria-label="Share" onClick={() => setOpen(true)} size="large">
                         <ShareIcon/>
                     </IconButton>
                 </div>
@@ -153,15 +153,15 @@ const Challenge = ({id, name, count, api}: ChallengeProps) => {
                     {rows}
                 </List>
                 <div className={classes.iconButtonsBar}>
-                    <IconButton aria-label="Refresh" disabled>
+                    <IconButton aria-label="Refresh" disabled size="large">
                         <CasinoIcon/>
                     </IconButton>
-                    <IconButton aria-label="Share" disabled>
+                    <IconButton aria-label="Share" disabled size="large">
                         <ShareIcon/>
                     </IconButton>
                 </div>
             </Fragment>
-        )
+        );
     }
 }
 

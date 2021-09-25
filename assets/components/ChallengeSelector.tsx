@@ -1,17 +1,17 @@
 import * as React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import HomeWork from '@material-ui/icons/HomeWork';
-import HomeWorkOutlined from '@material-ui/icons/HomeWorkOutlined';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import HomeWork from '@mui/icons-material/HomeWork';
+import HomeWorkOutlined from '@mui/icons-material/HomeWorkOutlined';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import PeopleIcon from '@mui/icons-material/People';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import LayersIcon from '@mui/icons-material/Layers';
 import {Challenge} from "../gen";
 import {Fragment} from "react";
 import {Link} from 'react-router-dom';
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles(() => ({
     link: {

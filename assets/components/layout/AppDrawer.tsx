@@ -1,22 +1,22 @@
-import Drawer from "@material-ui/core/Drawer";
+import Drawer from "@mui/material/Drawer";
 import clsx from "clsx";
-import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import Divider from "@material-ui/core/Divider";
-import List from "@material-ui/core/List";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
 import ChallengeSelector from "../ChallengeSelector";
 import * as React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles} from '@mui/styles';
 import {Challenge} from "../../gen";
 import {useLocation} from "react-router";
-import SaveIcon from '@material-ui/icons/Save';
-import {ListItem, ListItemIcon} from "@material-ui/core";
+import SaveIcon from '@mui/icons-material/Save';
+import {ListItem, ListItemIcon} from "@mui/material";
 import {Fragment} from "react";
-import ListItemText from "@material-ui/core/ListItemText";
+import ListItemText from "@mui/material/ListItemText";
 
 const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: any) => ({
     drawerPaper: {
         position: 'relative',
         whiteSpace: 'nowrap',
@@ -67,7 +67,7 @@ const AppDrawer = ({open, handleDrawerClose, list, onSelect}: AppDrawerProps) =>
             open={open}
         >
             <div className={classes.toolbarIcon}>
-                <IconButton onClick={handleDrawerClose}>
+                <IconButton onClick={handleDrawerClose} size="large">
                     <ChevronLeftIcon/>
                 </IconButton>
             </div>
@@ -86,7 +86,7 @@ const AppDrawer = ({open, handleDrawerClose, list, onSelect}: AppDrawerProps) =>
                 </Fragment>
             )}
         </Drawer>
-    )
+    );
 }
 
 export default AppDrawer

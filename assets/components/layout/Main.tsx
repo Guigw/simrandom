@@ -1,17 +1,17 @@
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import NewChallenge from "../../pages/NewChallenge";
 import SavedChallenge from "../../pages/SavedChallenge";
 import Home from "../../pages/Home";
-import Box from "@material-ui/core/Box";
+import Box from "@mui/material/Box";
 import Licence from "./Licence";
 import * as React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
 import {DefaultApi, Challenge} from "../../gen";
 import {Route, Switch} from "react-router";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme?: any) => ({
     appBarSpacer: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
