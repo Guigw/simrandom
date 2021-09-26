@@ -12,11 +12,15 @@ import {Challenge} from "../gen";
 import {Fragment} from "react";
 import {Link} from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
+import clsx from "clsx";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme? :any) => ({
     link: {
         textDecoration: "none",
         color: "inherit",
+    },
+    itemSelected: {
+        backgroundColor: theme.palette.primary[400],
     }
 }))
 
@@ -44,7 +48,8 @@ const ChallengeSelector = ({onSelect, list, selectedItem}: ChallengerSelectorPro
         <Fragment>
             {list.map((item: Challenge, index: number) =>
                 <Link to={'/randomize/challenge/' + item.name.toLowerCase()} className={classes.link}>
-                    <ListItem button key={item.id} onClick={selectChange} data-item-id={item.id}
+                    <ListItem button key={item.id} onClick={selectChange} className={clsx((selectedItem && compName(selectedItem, item.name)) && classes.itemSelected)}
+                              data-item-id={item.id}
                               data-item-name={item.name}
                               data-item-count={item.count}>
                         <ListItemIcon>

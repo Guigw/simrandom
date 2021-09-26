@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme: any) => ({
         padding: '0 8px',
         ...theme.mixins.toolbar,
     },
+    itemSelected: {
+        backgroundColor: theme.palette.primary[400],
+    }
 }))
 
 interface AppDrawerProps {
@@ -76,12 +79,14 @@ const AppDrawer = ({open, handleDrawerClose, list, onSelect}: AppDrawerProps) =>
             <Divider/>
             {selectedSaved && (
                 <Fragment>
-                    <ListItem>
-                        <ListItemIcon>
-                            <SaveIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary={'Saved'}/>
-                    </ListItem>
+                    <List>
+                        <ListItem className={classes.itemSelected}>
+                            <ListItemIcon>
+                                <SaveIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Saved'}/>
+                        </ListItem>
+                    </List>
                     <Divider/>
                 </Fragment>
             )}
