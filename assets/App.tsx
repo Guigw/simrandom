@@ -16,7 +16,7 @@ import {useEffect, useState} from "react";
 import {BrowserRouter} from "react-router-dom";
 import {DefaultTheme} from "@mui/styles";
 import {PaletteMode, useMediaQuery} from "@mui/material";
-import { amber, grey, lightGreen } from '@mui/material/colors';
+import {amber, green, grey, lightGreen} from '@mui/material/colors';
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -75,8 +75,8 @@ const getDesignTokens = (mode: PaletteMode) => ({
         ...(mode === 'light'
             ? {
                 // palette values for light mode
-                primary: amber,
-                divider: amber[200],
+                primary: green,
+                divider: green[200],
                 text: {
                     primary: grey[900],
                     secondary: grey[800],
