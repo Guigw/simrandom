@@ -3,41 +3,30 @@
 namespace Yrial\Simrandom\Entity;
 
 use DateTimeImmutable;
-use Yrial\Simrandom\Repository\RandomizerResultRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Yrial\Simrandom\Repository\RandomizerResultRepository;
 
-/**
- * @ORM\Entity(repositoryClass=RandomizerResultRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: RandomizerResultRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class RandomizerResult
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id;
 
-    /**
-     * @ORM\Column(type="string", length=1024)
-     */
-    private $result;
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $name;
 
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    private $rollingDate;
+    #[ORM\Column(type: 'string', length: 1024)]
+    private ?string $result;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=SavedChallenge::class, inversedBy="results")
-     */
-    private $savedChallenge;
+    #[ORM\Column(type: 'datetime_immutable')]
+    private ?\DateTimeInterface $rollingDate;
+
+    #[ORM\ManyToOne(targetEntity: SavedChallenge::class, inversedBy: 'results')]
+    private ?SavedChallenge $savedChallenge;
 
 
     public function getId(): ?int
@@ -74,10 +63,7 @@ class RandomizerResult
         return $this->rollingDate;
     }
 
-    /**
-     * @ORM\PrePersist
-     * @return $this
-     */
+    #[ORM\PrePersist]
     public function setRollingDate(): self
     {
         $this->rollingDate = new DateTimeImmutable();

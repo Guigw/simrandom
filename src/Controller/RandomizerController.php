@@ -18,48 +18,38 @@ use Yrial\Simrandom\Repository\RandomizerResultRepository;
 
 class RandomizerController extends AbstractController
 {
-    private $repository;
+    private RandomizerResultRepository $repository;
 
     public function __construct(RandomizerResultRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    /**
-     * @Route("/randomizer/letter", name="randomizer_letter", methods={"GET"})
-     */
+    #[Route('/randomizer/letter', name: 'randomizer_letter', methods: ['GET'])]
     public function letter(ShapeLetterGenerator $shapeLetterGenerator): Response
     {
         return $this->getResponse('letter', $shapeLetterGenerator);
     }
 
-    /**
-     * @Route("/randomizer/rooms", name="randomizer_rooms", methods={"GET"})
-     */
+    #[Route('/randomizer/rooms', name: 'randomizer_rooms', methods: ['GET'])]
     public function rooms(RoomsGenerator $roomsGenerator): Response
     {
         return $this->getResponse('rooms', $roomsGenerator);
     }
 
-    /**
-     * @Route("/randomizer/budget", name="randomizer_budget", methods={"GET"})
-     */
+    #[Route('/randomizer/budget', name: 'randomizer_budget', methods: ['GET'])]
     public function budget(BudgetGenerator $budgetGenerator): Response
     {
         return $this->getResponse('budget', $budgetGenerator);
     }
 
-    /**
-     * @Route("/randomizer/buildings", name="randomizer_buildings", methods={"GET"})
-     */
+    #[Route('/randomizer/buildings', name: 'randomizer_buildings', methods: ['GET'])]
     public function buildings(BuildingsGenerator $buildingsGenerator): Response
     {
         return $this->getResponse('buildings', $buildingsGenerator);
     }
 
-    /**
-     * @Route("/randomizer/colors", name="randomizer_colors", defaults={"number": 0}, methods={"GET"}))
-     */
+    #[Route('/randomizer/colors', name: 'randomizer_colors', defaults: ['number' => 0], methods: ['GET'])]
     public function colors(int $number, ColorsGenerator $colorsGenerator, Request $request): Response
     {
         if (!$this->checkConfiguration('colors')) {
@@ -68,6 +58,7 @@ class RandomizerController extends AbstractController
         $result = $this->getGenerator($colorsGenerator->setNumber($request->query->get('number') ?? 0), true);
         $result = $this->formatItem('colors', implode(", ", $result));
         $result->required = "rooms";
+
         return $this->json($result);
     }
 
@@ -92,6 +83,7 @@ class RandomizerController extends AbstractController
     private function checkConfiguration(string $name): bool
     {
         $randomizers = $this->getParameter('generator.randomizers.list');
+
         return in_array($name, $randomizers);
     }
 
@@ -104,12 +96,7 @@ class RandomizerController extends AbstractController
             $entity = $this->repository->createResult($key, $value);
             $form->id = $entity->getId();
         }
-        //$form->active = (bool)$value;
-        return $form;
-    }
 
-    private function formatItems(array $rawData): array
-    {
-        return array_map([$this, "formatItem"], array_keys($rawData), $rawData);
+        return $form;
     }
 }

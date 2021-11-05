@@ -3,7 +3,6 @@
 namespace Yrial\Simrandom\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,10 +15,8 @@ class YrialSimrandomCleanSavedResultAndLinkCommand extends Command
     protected static $defaultName = 'yrial:simrandom:clean-saved-result-and-link';
     protected static $defaultDescription = 'remove unused results';
 
-    /** @var RandomizerResultRepository */
-    private $randomizerResultRepository;
-    /** @var SavedChallengeRepository */
-    private $savedChallengeRepository;
+    private RandomizerResultRepository $randomizerResultRepository;
+    private SavedChallengeRepository $savedChallengeRepository;
 
     public function __construct(RandomizerResultRepository $randomizerResultRepository, SavedChallengeRepository $savedChallengeRepository)
     {

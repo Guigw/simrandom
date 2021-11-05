@@ -3,26 +3,22 @@
 namespace Yrial\Simrandom\Form;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ResultListDTO
 {
-    /**
-     * @var ArrayCollection
-     * @Assert\Count(
-     *     min = 1,
-     *     minMessage = "You must specify at least one result id"
-     * )
-     */
-    protected $resultList = [];
+
+    #[Assert\Count(min: 1, minMessage: 'You must specify at least one result id')]
+    protected ArrayCollection $resultList;
 
     /**
      * @var string
-     * @Assert\NotBlank()
      */
-    protected $name;
+    #[Assert\NotBlank]
+    protected string $name;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->resultList = new ArrayCollection();
     }
@@ -38,7 +34,7 @@ class ResultListDTO
     /**
      * @param mixed $resultList
      */
-    public function setResultList($resultList): void
+    public function setResultList(mixed $resultList): void
     {
         $this->resultList = $resultList;
     }

@@ -12,7 +12,6 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        // TODO: Implement getConfigTreeBuilder() method.
         $treeBuilder = new TreeBuilder('yrial_simrandom');
 
         $treeBuilder->getRootNode()

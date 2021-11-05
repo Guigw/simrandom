@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import {makeStyles} from '@mui/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -7,16 +8,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {createTheme, ThemeProvider, Theme, StyledEngineProvider} from '@mui/material/styles';
+import {createTheme, StyledEngineProvider, Theme, ThemeProvider} from '@mui/material/styles';
 import "./style/App.less";
 import {Challenge, createConfiguration, DefaultApi} from "./gen";
 import Main from "./components/layout/Main";
 import AppDrawer from "./components/layout/AppDrawer";
-import {useEffect, useState} from "react";
 import {BrowserRouter} from "react-router-dom";
-import {DefaultTheme} from "@mui/styles";
 import {PaletteMode, useMediaQuery} from "@mui/material";
-import {amber, green, grey, lightGreen} from '@mui/material/colors';
+import {green, grey, lightGreen} from '@mui/material/colors';
 
 
 declare module '@mui/styles/defaultTheme' {

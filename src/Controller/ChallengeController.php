@@ -8,25 +8,21 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Uid\Uuid;
 use Yrial\Simrandom\Entity\SavedChallenge;
 use Yrial\Simrandom\Form\ResultListDTO;
 use Yrial\Simrandom\Form\Type\ResultList;
-use Yrial\Simrandom\Repository\RandomizerResultRepository;
 use Yrial\Simrandom\Repository\SavedChallengeRepository;
 
 class ChallengeController extends AbstractController
 {
-    private $savedChallengeRepository;
+    private SavedChallengeRepository $savedChallengeRepository;
 
     public function __construct(SavedChallengeRepository $savedChallengeRepository)
     {
         $this->savedChallengeRepository = $savedChallengeRepository;
     }
 
-    /**
-     * @Route("/challenge", name="challenge", methods={"GET"})
-     */
+    #[Route('/challenge', name: 'challenge', methods: ['GET'])]
     public function index(): Response
     {
         $challenges = array_map(function ($challenge) {
@@ -37,11 +33,8 @@ class ChallengeController extends AbstractController
         );
     }
 
-    /**
-     * @Route ("/challenge/{id}", name="challenge_randomizers", requirements={"page"="\d+"}, methods={"GET"})
-     * @param int $id
-     * @return Response
-     */
+
+    #[Route('/challenge/{id}', name: 'challenge_randomizers', requirements: ['page' => '\d+'], methods: ['GET'])]
     public function getRandomizerList(int $id): Response
     {
         $response = array_filter($this->getParameter('generator.challenges'), function ($challenge) use ($id) {
@@ -53,11 +46,7 @@ class ChallengeController extends AbstractController
         return $this->json($response[0]);
     }
 
-    /**
-     * @Route ("/challenge/save", name="challenge_save", methods={"POST"})
-     * @param Request $request
-     * @return Response
-     */
+    #[Route('/challenge/save', name: 'challenge_save', methods: ['POST'])]
     public function saveChallenge(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
@@ -75,12 +64,8 @@ class ChallengeController extends AbstractController
         }
     }
 
-    /**
-     * @Route ("/challenge/{id}/results", name="get_saved_challenge", methods={"GET"})
-     * @ParamConverter("challenge", class="YrialSimrandomBundle:SavedChallenge")
-     * @param SavedChallenge $challenge
-     * @return Response
-     */
+    #[Route('/challenge/{id}/results', name: 'get_saved_challenge', methods: ['GET'])]
+    #[ParamConverter('challenge', class: SavedChallenge::class)]
     public function findSavedChallenge(SavedChallenge $challenge): Response
     {
         $result = [];
