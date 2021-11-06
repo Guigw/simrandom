@@ -33,9 +33,9 @@ jobs:
       - name: Generate .env file
         shell: bash
         run: |
-          echo APP_ENV > .env.prod
-          echo APP_SECRET >> .env.prod
-          echo DB_CONNECTION_STRING >> .env.prod
+          echo $APP_ENV > .env.prod
+          echo $APP_SECRET >> .env.prod
+          echo $DB_CONNECTION_STRING >> .env.prod
           cat .env.prod
         env:
           APP_ENV: ${{ secrets.APP_ENV }}
