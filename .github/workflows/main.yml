@@ -33,10 +33,14 @@ jobs:
       - name: Generate .env file
         shell: bash
         run: |
-          echo $PROD_ENV_FILE >> .env.prod
+          echo APP_ENV > .env.prod
+          echo APP_SECRET >> .env.prod
+          echo DB_CONNECTION_STRING >> .env.prod
           cat .env.prod
         env:
-          PROD_ENV_FILE: ${{ secrets.PROD_ENV_FILE }}
+          APP_ENV: ${{ secrets.APP_ENV }}
+          APP_SECRET: ${{ secrets.APP_SECRET }}
+          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
 
       - name: Export .env vars
         run: composer dump-env prod
@@ -83,14 +87,6 @@ jobs:
 
       - name: Use webpack
         run: npx webpack --config webpack.config.js --env production
-
-      - name: init rewriting
-        shell: bash
-        run: |
-            echo $REWRITE_CONFIG >> htdocs/.htaccess
-            cat htdocs/.htaccess
-        env:
-            PROD_ENV_FILE: ${{ secrets.REWRITE_CONFIG }}
 
       - name: create archive
         uses: thedoctor0/zip-release@master
