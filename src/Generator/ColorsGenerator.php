@@ -4,9 +4,9 @@ namespace Yrial\Simrandom\Generator;
 
 class ColorsGenerator extends AbstractGenerator
 {
-    private $colorGenerators = [];
+    private array $colorGenerators = [];
 
-    function __construct(array $params)
+    public function __construct(array $params)
     {
         foreach ($params as $color) {
             for ($i = 0; $i < $color['weight']; $i++) {
@@ -24,7 +24,7 @@ class ColorsGenerator extends AbstractGenerator
         return $this;
     }
 
-    public function getRandom()
+    public function getRandom(): array
     {
         return array_map(function (StringGenerator $colorGenerator) {
             return $colorGenerator->getRandom();

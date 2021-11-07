@@ -4,7 +4,7 @@ namespace Yrial\Simrandom\Generator;
 
 abstract class AbstractGenerator implements Randomizer
 {
-    protected $possibilities;
+    protected ?array $possibilities;
 
     public function getRandom()
     {

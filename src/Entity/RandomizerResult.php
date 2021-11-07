@@ -3,6 +3,7 @@
 namespace Yrial\Simrandom\Entity;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Yrial\Simrandom\Repository\RandomizerResultRepository;
 
@@ -23,7 +24,7 @@ class RandomizerResult
     private ?string $result;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private ?\DateTimeInterface $rollingDate;
+    private ?DateTimeInterface $rollingDate;
 
     #[ORM\ManyToOne(targetEntity: SavedChallenge::class, inversedBy: 'results')]
     private ?SavedChallenge $savedChallenge;
@@ -58,7 +59,7 @@ class RandomizerResult
         return $this;
     }
 
-    public function getRollingDate(): ?\DateTimeInterface
+    public function getRollingDate(): ?DateTimeInterface
     {
         return $this->rollingDate;
     }

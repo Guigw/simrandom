@@ -4,8 +4,8 @@ namespace Yrial\Simrandom\Generator;
 
 class StringGenerator extends AbstractGenerator
 {
-    function __construct(array $possibilities)
+    public function __construct(array $params)
     {
-        $this->possibilities = $possibilities;
+        $this->possibilities = $params;
     }
 }

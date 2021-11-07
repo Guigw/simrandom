@@ -2,9 +2,10 @@
 
 namespace Yrial\Simrandom\Repository;
 
-use Yrial\Simrandom\Entity\RandomizerResult;
+use DateInterval;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Yrial\Simrandom\Entity\RandomizerResult;
 
 /**
  * @method RandomizerResult|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,14 +32,14 @@ class RandomizerResultRepository extends ServiceEntityRepository
 
     public function removeUnusedResult(): void
     {
-        $lastDay = (new \DateTimeImmutable())->sub(new \DateInterval('P1D'));
+        $lastDay = (new \DateTimeImmutable())->sub(new DateInterval('P1D'));
         $qb = $this->createQueryBuilder('r')
             ->andWhere('r.rollingDate <= :lastDay')
             ->andWhere('r.savedChallenge IS NULL')
             ->setParameter('lastDay', $lastDay);
 
         $resultsToDelete = $qb->getQuery()->getResult();
-        foreach($resultsToDelete as $entity) {
+        foreach ($resultsToDelete as $entity) {
             $this->_em->remove($entity);
         }
         $this->_em->flush();

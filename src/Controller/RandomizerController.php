@@ -50,12 +50,12 @@ class RandomizerController extends AbstractController
     }
 
     #[Route('/randomizer/colors', name: 'randomizer_colors', defaults: ['number' => 0], methods: ['GET'])]
-    public function colors(int $number, ColorsGenerator $colorsGenerator, Request $request): Response
+    public function colors(ColorsGenerator $colorsGenerator, Request $request, int $number): Response
     {
         if (!$this->checkConfiguration('colors')) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
-        $result = $this->getGenerator($colorsGenerator->setNumber($request->query->get('number') ?? 0), true);
+        $result = $colorsGenerator->setNumber($request->query->get('number') ?? $number)->getRandom();
         $result = $this->formatItem('colors', implode(", ", $result));
         $result->required = "rooms";
 
@@ -68,16 +68,7 @@ class RandomizerController extends AbstractController
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($this->formatItem($name, $this->getGenerator($randomizer, true)));
-    }
-
-    private function getGenerator(Randomizer $generator, $active)
-    {
-        if ($active) {
-            return $generator->getRandom();
-        } else {
-            return null;
-        }
+        return $this->json($this->formatItem($name, $randomizer->getRandom()));
     }
 
     private function checkConfiguration(string $name): bool
