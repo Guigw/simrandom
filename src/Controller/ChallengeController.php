@@ -8,9 +8,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Yrial\Simrandom\Attribute\OutputMapper;
 use Yrial\Simrandom\Entity\SavedChallenge;
 use Yrial\Simrandom\Form\ResultListDTO;
 use Yrial\Simrandom\Form\Type\ResultList;
+use Yrial\Simrandom\Logic\Transformer\SavedChallengeResultsMapper;
 use Yrial\Simrandom\Repository\SavedChallengeRepository;
 
 class ChallengeController extends AbstractController
@@ -66,21 +68,10 @@ class ChallengeController extends AbstractController
 
     #[Route('/challenge/{id}/results', name: 'get_saved_challenge', methods: ['GET'])]
     #[ParamConverter('challenge', class: SavedChallenge::class)]
-    public function findSavedChallenge(SavedChallenge $challenge): Response
+    #[OutputMapper(SavedChallengeResultsMapper::class)]
+    public function findSavedChallenge(SavedChallenge $challenge): SavedChallenge
     {
-        $result = [];
-        $result['id'] = $challenge->getId();
-        $result['name'] = $challenge->getName();
-        $result['count'] = count($challenge->getResults());
-        $result['randomizers'] = [];
-        foreach ($challenge->getResults() as $randomizer) {
-            $random = [];
-            $random['id'] = $randomizer->getId();
-            $random['title'] = $randomizer->getName();
-            $random['result'] = $randomizer->getResult();
-            $result['randomizers'][] = $random;
-        }
-        return $this->json($result);
+        return $challenge;
     }
 
 }
