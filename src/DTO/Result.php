@@ -8,20 +8,29 @@ use JsonSerializable;
 class Result implements JsonSerializable
 {
 
-    private int $id;
+    private ?int $id = null;
 
     private ?string $title;
 
     private ?string $result;
 
+    private ?string $required = null;
+
     #[ArrayShape(['id' => "int", 'title' => "null|string", 'result' => "null|string"])]
     public function jsonSerialize(): array
     {
-        return [
-            'id' => $this->id,
+        $return = [
             'title' => $this->title,
             'result' => $this->result
         ];
+        if ($this->id) {
+            $return['id'] = $this->id;
+        }
+        if ($this->required) {
+            $return['required'] = $this->required;
+        }
+
+        return $return;
     }
 
     /**
@@ -75,6 +84,24 @@ class Result implements JsonSerializable
     public function setResult(?string $result): Result
     {
         $this->result = $result;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRequired(): ?string
+    {
+        return $this->required;
+    }
+
+    /**
+     * @param string|null $required
+     * @return Result
+     */
+    public function setRequired(?string $required): Result
+    {
+        $this->required = $required;
         return $this;
     }
 

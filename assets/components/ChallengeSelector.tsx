@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Fragment} from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -9,9 +10,8 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import {Challenge} from "../gen";
-import {Fragment} from "react";
 import {Link} from 'react-router-dom';
-import { makeStyles } from '@mui/styles';
+import {makeStyles} from '@mui/styles';
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme? :any) => ({
@@ -47,8 +47,9 @@ const ChallengeSelector = ({onSelect, list, selectedItem}: ChallengerSelectorPro
     return (
         <Fragment>
             {list.map((item: Challenge, index: number) =>
-                <Link to={'/randomize/challenge/' + item.name.toLowerCase()} className={classes.link}>
-                    <ListItem button key={item.id} onClick={selectChange} className={clsx((selectedItem && compName(selectedItem, item.name)) && classes.itemSelected)}
+                <Link to={'/randomize/challenge/' + item.name.toLowerCase()} className={classes.link} key={item.id}>
+                    <ListItem button key={item.id} onClick={selectChange}
+                              className={clsx((selectedItem && compName(selectedItem, item.name)) && classes.itemSelected)}
                               data-item-id={item.id}
                               data-item-name={item.name}
                               data-item-count={item.count}>
