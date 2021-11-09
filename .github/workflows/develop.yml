@@ -29,6 +29,8 @@ jobs:
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v2
         with:
-          bootstrap: tests/autoload.php
+          bootstrap: vendor/autoload.php
           configuration: phpunit.xml.dist
           args: --coverage-text
+        env:
+          ACTION_BOOTSTRAP: tests/autoload.php
