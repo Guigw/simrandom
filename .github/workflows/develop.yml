@@ -32,3 +32,6 @@ jobs:
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml.dist
           php_version: 8.0.12
+          php_extensions: xdebug
+        env:
+          XDEBUG_MODE: coverage
