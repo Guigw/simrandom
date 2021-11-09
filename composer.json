@@ -77,6 +77,7 @@
     }
   ],
   "require-dev": {
+    "phpspec/prophecy-phpunit": "^2.0",
     "phpunit/phpunit": "^9.5",
     "symfony/browser-kit": "^5.3",
     "symfony/css-selector": "^5.3",

@@ -3,10 +3,7 @@
 namespace Yrial\Simrandom\Listener;
 
 use JetBrains\PhpStorm\ArrayShape;
-use ReflectionClass;
-use ReflectionException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -18,7 +15,7 @@ use Yrial\Simrandom\DTO\Result;
 use Yrial\Simrandom\Exception\MissingConfigurationException;
 use Yrial\Simrandom\Repository\RandomizerResultRepository;
 
-class RandomizerResultSubscriber implements EventSubscriberInterface
+class RandomizerResultSubscriber extends AbstractControllerSubscriber
 {
     private ?string $key;
     private ?string $required;
@@ -48,23 +45,12 @@ class RandomizerResultSubscriber implements EventSubscriberInterface
      */
     public function onKernelController(ControllerEvent $event)
     {
-        $controller = $event->getController();
-        if (is_array($controller)) {
-            try {
-                $reflectionClass = new ReflectionClass($controller[0]);
-                $method = $reflectionClass->getMethod($controller[1]);
-                //Vérification de la conf
-                if ($method && $attributes = $method->getAttributes(Configuration::class)) {
-                    $confInstance = $attributes[0]->newInstance();
-                    if (!in_array($confInstance->configuration, $this->container->getParameter('generator.randomizers.list'))) {
-                        throw new MissingConfigurationException($confInstance->configuration);
-                    }
-                    $this->key = $confInstance->configuration;
-                    $this->required ??= $confInstance->required;
-                }
-            } catch (ReflectionException $e) {
-                //Si jamais exception alors rien
+        if ($confInstance = $this->getInstance($event, Configuration::class)) {
+            if (!in_array($confInstance->configuration, $this->container->getParameter('generator.randomizers.list'))) {
+                throw new MissingConfigurationException($confInstance->configuration);
             }
+            $this->key = $confInstance->configuration;
+            $this->required ??= $confInstance->required;
         }
     }
 
