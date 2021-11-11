@@ -23,6 +23,14 @@ class KernelViewSubscriberTest extends TestCase
 {
     use ProphecyTrait;
 
+    public function testGetSubscribedEvents()
+    {
+        $results = KernelViewSubscriber::getSubscribedEvents();
+        $this->assertCount(2, $results);
+        $this->assertArrayHasKey(KernelEvents::CONTROLLER, $results);
+        $this->assertArrayHasKey(KernelEvents::VIEW, $results);
+    }
+
     public function testOnKernelViewMapperEmpty()
     {
         $mockContainer = $this->prophesize(ContainerInterface::class);
@@ -122,13 +130,5 @@ class KernelViewSubscriberTest extends TestCase
 
             }
         };
-    }
-
-    public function testGetSubscribedEvents()
-    {
-        $results = KernelViewSubscriber::getSubscribedEvents();
-        $this->assertCount(2, $results);
-        $this->assertArrayHasKey(KernelEvents::CONTROLLER, $results);
-        $this->assertArrayHasKey(KernelEvents::VIEW, $results);
     }
 }
