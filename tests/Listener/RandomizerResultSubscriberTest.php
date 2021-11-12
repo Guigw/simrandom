@@ -69,9 +69,8 @@ class RandomizerResultSubscriberTest extends TestCase
 
     public function testOnKernelController()
     {
-        $this->expectException(MissingConfigurationException::class);
         $mockContainer = $this->prophesize(ContainerInterface::class);
-        $mockContainer->getParameter(Argument::is('generator.randomizers.list'))->shouldBeCalled()->willReturn(['toto']);
+        $mockContainer->getParameter(Argument::is('generator.randomizers.list'))->shouldBeCalled()->willReturn(['titi']);
         $mockedRepo = $this->prophesize(RandomizerResultRepository::class);
         $sub = new RandomizerResultSubscriber($mockContainer->reveal(), $mockedRepo->reveal());
         $event = $this->getControllerEvent([$this->getAnonymousClass(), 'toto']);

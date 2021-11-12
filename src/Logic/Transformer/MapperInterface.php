@@ -10,11 +10,9 @@ use JsonSerializable;
  */
 interface MapperInterface
 {
-    public function getDTO(): string;
+    public static function getDTO(): string;
 
-    public function getEntity(): string;
-
-    //public function DTOToEntity(JsonSerializable $dto);
+    public static function getEntity(): string;
 
     public function EntityToDTO($entity): JsonSerializable;
 }
