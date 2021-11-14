@@ -9,11 +9,11 @@ class RandomizerResultRepositoryTest extends TestCase
 
     public function testCreateResult()
     {
-
+        $this->markTestSkipped();
     }
 
     public function testRemoveUnusedResult()
     {
-
+        $this->markTestSkipped();
     }
 }

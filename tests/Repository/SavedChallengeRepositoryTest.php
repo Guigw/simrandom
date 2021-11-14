@@ -13,6 +13,7 @@ class SavedChallengeRepositoryTest extends KernelTestCase
 
     public function testSaveChallenge()
     {
+        $this->markTestSkipped();
         $savedChallenge = new SavedChallenge();
         $savedChallenge->setName('puipoupi');
 
@@ -28,11 +29,12 @@ class SavedChallengeRepositoryTest extends KernelTestCase
 
     public function testRemoveOldLinks()
     {
-
+        $this->markTestSkipped();
     }
 
     public function testFinishedChallenge()
     {
+        $this->markTestSkipped();
 
     }
 
