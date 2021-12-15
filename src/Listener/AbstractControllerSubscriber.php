@@ -16,7 +16,7 @@ abstract class AbstractControllerSubscriber implements EventSubscriberInterface
             $method = $reflectionClass->getMethod($controller[1]);
             //Vérification de la conf
             $attributes = $method?->getAttributes($class);
-            if (is_iterable($attributes)) {
+            if (is_iterable($attributes) && count($attributes)) {
                 return $attributes[0]->newInstance();
             }
         }
