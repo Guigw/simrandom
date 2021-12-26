@@ -1,15 +1,14 @@
 import * as React from 'react';
-import {createRef, Fragment, RefObject} from 'react'
-import {useEffect, useState} from 'react';
+import {createRef, Fragment, RefObject, useEffect, useState} from 'react';
 import {DefaultApi, RandomizerResult} from "../gen";
 import Randomizer from "./Randomizer";
 import RandomizerListItem from "./RandomizerListItem";
-import { makeStyles } from '@mui/styles';
 import List from '@mui/material/List';
 import ShareChallengeBox from "./ShareChallengeBox";
 import IconButton from "@mui/material/IconButton";
 import CasinoIcon from '@mui/icons-material/Casino';
 import ShareIcon from '@mui/icons-material/Share';
+import {styled} from "@mui/material";
 
 type ChallengeProps = {
     id: number,
@@ -18,19 +17,17 @@ type ChallengeProps = {
     api: DefaultApi
 }
 
-const useStyles = makeStyles((theme?: any) => ({
-    root: {
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
-    },
-    iconButtonsBar: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingLeft: "16px",
-        paddingRight: "16px",
-    }
-}));
+const ThemedList = styled(List)(({theme}) => ({
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+}))
+const IconButtonBar = styled('div')(({theme}) => ({
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+}))
 
 const Challenge = ({id, name, count, api}: ChallengeProps) => {
     interface childrenStateArray {
@@ -55,7 +52,6 @@ const Challenge = ({id, name, count, api}: ChallengeProps) => {
     let childrenStates: childrenStateArray = {};
     let dependencies: DependencyArray = {};
 
-    const classes = useStyles();
     const [randomizerList, setRandomizerList] = useState<Array<RandomizerValues> | null>(null);
     const [randomizerListCount, setRandomizerListCount] = useState<number>(count);
     const [open, setOpen] = React.useState(false);
@@ -123,21 +119,21 @@ const Challenge = ({id, name, count, api}: ChallengeProps) => {
     if (randomizerList) {
         return (
             <Fragment>
-                <List className={classes.root}>
+                <ThemedList>
                     {randomizerList.map(item => <Randomizer ref={item.ref}
                                                             activeProps={((Object.keys(childrenStates).length > 0 && typeof childrenStates[item.name].active !== undefined) ? childrenStates[item.name].active : true)}
                                                             key={item.name} name={item.name} api={api}
                                                             onResult={onResult}
                                                             onToggle={onToggle} needRequirement={requirement}/>)}
-                </List>
-                <div className={classes.iconButtonsBar}>
+                </ThemedList>
+                <IconButtonBar>
                     <IconButton aria-label="Refresh" onClick={() => setRandomizerList(null)} size="large">
                         <CasinoIcon/>
                     </IconButton>
                     <IconButton aria-label="Share" onClick={() => setOpen(true)} size="large">
                         <ShareIcon/>
                     </IconButton>
-                </div>
+                </IconButtonBar>
                 <ShareChallengeBox open={open} api={api} onClose={() => setOpen(false)}
                                    getResultChallenge={getResultChallenge}/>
             </Fragment>
@@ -149,17 +145,17 @@ const Challenge = ({id, name, count, api}: ChallengeProps) => {
         }
         return (
             <Fragment>
-                <List className={classes.root}>
+                <ThemedList>
                     {rows}
-                </List>
-                <div className={classes.iconButtonsBar}>
+                </ThemedList>
+                <IconButtonBar>
                     <IconButton aria-label="Refresh" disabled size="large">
                         <CasinoIcon/>
                     </IconButton>
                     <IconButton aria-label="Share" disabled size="large">
                         <ShareIcon/>
                     </IconButton>
-                </div>
+                </IconButtonBar>
             </Fragment>
         );
     }

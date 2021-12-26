@@ -17,8 +17,8 @@ class ResultMapper implements MapperInterface
      */
     public function EntityToDTO($entity): JsonSerializable
     {
-        if (!is_a($entity, $this->getEntity())) {
-            throw new BadOutputMapperException($this->getDTO(), $this->getEntity(), get_class($entity));
+        if (!is_a($entity, self::getEntity())) {
+            throw new BadOutputMapperException(self::getDTO(), self::getEntity(), get_class($entity));
         }
 
         $dto = new Result();
@@ -27,12 +27,12 @@ class ResultMapper implements MapperInterface
             ->setResult($entity->getResult());
     }
 
-    public function getEntity(): string
+    public static function getEntity(): string
     {
         return RandomizerResult::class;
     }
 
-    public function getDTO(): string
+    public static function getDTO(): string
     {
         return Result::class;
     }

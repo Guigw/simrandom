@@ -16,7 +16,9 @@ class Result implements JsonSerializable
 
     private ?string $required = null;
 
-    #[ArrayShape(['id' => "int", 'title' => "null|string", 'result' => "null|string"])]
+    private const NULL_OR_STRING = "null|string";
+
+    #[ArrayShape(['id' => "int", 'title' => self::NULL_OR_STRING, 'result' => self::NULL_OR_STRING, 'required' => self::NULL_OR_STRING])]
     public function jsonSerialize(): array
     {
         $return = [

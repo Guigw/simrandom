@@ -11,17 +11,11 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import {Challenge} from "../gen";
 import {Link} from 'react-router-dom';
-import {makeStyles} from '@mui/styles';
-import clsx from "clsx";
+import {styled, useTheme} from "@mui/material";
 
-const useStyles = makeStyles((theme? :any) => ({
-    link: {
-        textDecoration: "none",
-        color: "inherit",
-    },
-    itemSelected: {
-        backgroundColor: theme.palette.primary[400],
-    }
+const CustomLink = styled(Link)(({theme}) => ({
+    textDecoration: "none",
+    color: "inherit"
 }))
 
 type ChallengerSelectorProps = {
@@ -31,7 +25,7 @@ type ChallengerSelectorProps = {
 }
 
 const ChallengeSelector = ({onSelect, list, selectedItem}: ChallengerSelectorProps) => {
-    const classes = useStyles();
+    const theme = useTheme();
     const IconsListSelected = [<HomeWork/>, <ShoppingCartIcon/>, <PeopleIcon/>, <BarChartIcon/>, <LayersIcon/>];
     const IconsList = [<HomeWorkOutlined/>, <ShoppingCartIcon/>, <PeopleIcon/>, <BarChartIcon/>, <LayersIcon/>];
 
@@ -47,9 +41,13 @@ const ChallengeSelector = ({onSelect, list, selectedItem}: ChallengerSelectorPro
     return (
         <Fragment>
             {list.map((item: Challenge, index: number) =>
-                <Link to={'/randomize/challenge/' + item.name.toLowerCase()} className={classes.link} key={item.id}>
+                <CustomLink to={'/randomize/challenge/' + item.name.toLowerCase()} key={item.id}>
                     <ListItem button key={item.id} onClick={selectChange}
-                              className={clsx((selectedItem && compName(selectedItem, item.name)) && classes.itemSelected)}
+                              sx={{
+                                  ...(selectedItem && compName(selectedItem, item.name) && {
+                                      backgroundColor: theme.palette.primary.light,
+                                  })
+                              }}
                               data-item-id={item.id}
                               data-item-name={item.name}
                               data-item-count={item.count}>
@@ -65,7 +63,7 @@ const ChallengeSelector = ({onSelect, list, selectedItem}: ChallengerSelectorPro
                         </ListItemIcon>
                         <ListItemText primary={item.name}/>
                     </ListItem>
-                </Link>
+                </CustomLink>
             )}
         </Fragment>
     );

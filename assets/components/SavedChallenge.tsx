@@ -1,30 +1,26 @@
 import * as React from "react";
 import List from '@mui/material/List';
-import { makeStyles } from '@mui/styles';
 import {RandomizerResult} from "../gen";
 import RandomizerListItem from "./RandomizerListItem";
+import {styled} from "@mui/material";
 
 type SavedChallengeProps = {
     randomizers: Array<RandomizerResult>
 }
-
-const useStyles = makeStyles((theme?: any) => ({
-    root: {
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
-    }
-}));
+const MyList = styled(List)(({theme}) => ({
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+}))
 
 const SavedChallenge = ({randomizers}: SavedChallengeProps) => {
-    const classes = useStyles();
     return (
         <div>
-            <List className={classes.root}>
+            <MyList>
                 {randomizers.map(rando => {
-                       return <RandomizerListItem key={rando.id} name={rando.title} result={rando.result}/>
+                        return <RandomizerListItem key={rando.id} name={rando.title} result={rando.result}/>
                     }
                 )}
-            </List>
+            </MyList>
         </div>
     )
 }

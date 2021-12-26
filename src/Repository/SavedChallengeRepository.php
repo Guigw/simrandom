@@ -2,11 +2,13 @@
 
 namespace Yrial\Simrandom\Repository;
 
+use DateInterval;
+use DateTimeImmutable;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Persistence\ManagerRegistry;
 use Yrial\Simrandom\Entity\RandomizerResult;
 use Yrial\Simrandom\Entity\SavedChallenge;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method SavedChallenge|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,7 +43,7 @@ class SavedChallengeRepository extends ServiceEntityRepository
     }
 
     public function removeOldLinks(): void {
-        $lastThreeMonth = (new \DateTimeImmutable())->sub(new \DateInterval('P3M'));
+        $lastThreeMonth = (new DateTimeImmutable())->sub(new DateInterval('P3M'));
         $qb = $this->createQueryBuilder('r')
             ->andWhere('r.sharingDate <= :lastMonth')
             ->setParameter('lastMonth', $lastThreeMonth);

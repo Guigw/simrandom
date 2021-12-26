@@ -7,28 +7,27 @@ import Home from "../../pages/Home";
 import Box from "@mui/material/Box";
 import Licence from "./Licence";
 import * as React from "react";
-import { makeStyles } from '@mui/styles';
-import {DefaultApi, Challenge} from "../../gen";
+import {Challenge, DefaultApi} from "../../gen";
 import {Route, Switch} from "react-router";
+import {styled, useTheme} from "@mui/material";
 
-const useStyles = makeStyles((theme?: any) => ({
-    appBarSpacer: theme.mixins.toolbar,
-    content: {
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-    },
-    container: {
-        paddingTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-    },
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-    },
-}));
+const MainContainer = styled('main')({
+    flexGrow: 1,
+    height: '100vh',
+    overflow: 'auto',
+})
+
+const SubContainer = styled(Container)(({theme}) => ({
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+}))
+
+const StyledPaper = styled(Paper)(({theme}) => ({
+    padding: theme.spacing(2),
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
+}))
 
 interface MainProps {
     api: DefaultApi,
@@ -36,15 +35,15 @@ interface MainProps {
 }
 
 const Main = React.memo<MainProps>(({api, challenge}: MainProps) => {
-    const classes = useStyles();
+    const theme = useTheme();
     return (
-        <main className={classes.content}>
-            <div className={classes.appBarSpacer}/>
-            <Container maxWidth="lg" className={classes.container}>
+        <MainContainer>
+            <Box sx={theme.mixins.toolbar}/>
+            <SubContainer maxWidth="lg">
                 <Grid container spacing={3}>
                     {/* Recent Orders */}
                     <Grid item xs={12}>
-                        <Paper className={classes.paper}>
+                        <StyledPaper>
                             <Switch>
                                 <Route exact path="/"
                                        component={() => <Home/>}/>
@@ -52,14 +51,14 @@ const Main = React.memo<MainProps>(({api, challenge}: MainProps) => {
                                        component={() => <NewChallenge api={api} challenge={challenge}/>}/>
                                 <Route path="/challenge/:uuid" component={() => <SavedChallenge api={api}/>}/>
                             </Switch>
-                        </Paper>
+                        </StyledPaper>
                     </Grid>
                 </Grid>
                 <Box pt={4}>
                     <Licence/>
                 </Box>
-            </Container>
-        </main>
+            </SubContainer>
+        </MainContainer>
     )
 }, (prevProps, nextProps) => {
     return prevProps.challenge.id === nextProps.challenge.id;

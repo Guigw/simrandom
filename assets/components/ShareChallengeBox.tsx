@@ -1,8 +1,7 @@
+import * as React from "react";
 import {FocusEvent, useEffect, useState} from "react";
 import {DefaultApi, ResultsChallenge} from "../gen";
-import {Card, Dialog, DialogTitle, TextField} from "@mui/material";
-import {makeStyles} from '@mui/styles';
-import * as React from "react";
+import {Card, Dialog, DialogTitle, styled, TextField} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
@@ -15,20 +14,16 @@ type ShareChallengeBoxProps = {
     onClose: () => void
 }
 
-const useStyles = makeStyles((theme?: any) =>
-    ({
-        root: {
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1),
-                width: 525,
-            },
-            '& .MuiCard-root': {
-                display: 'flex',
-                alignItems: 'center',
-            }
-        },
-    })
-);
+const ThemedDialog = styled(Dialog)(({theme}) => ({
+    '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: 525,
+    },
+    '& .MuiCard-root': {
+        display: 'flex',
+        alignItems: 'center',
+    }
+}))
 
 const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChallengeBoxProps) => {
 
@@ -39,7 +34,6 @@ const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChalle
 
     const [link, setLink] = useState<linkResults | null>(null);
     const [copied, setCopied] = useState<boolean>(false);
-    const classes = useStyles();
 
     useEffect(() => {
         let mount = true;
@@ -86,31 +80,31 @@ const ShareChallengeBox = ({api, getResultChallenge, open, onClose}: ShareChalle
     }
 
     return (
-        <Dialog className={classes.root} onClose={handleClose} open={open}
-                aria-labelledby="simple-dialog-title"
-                fullWidth={true}>
+        <ThemedDialog onClose={handleClose} open={open}
+                      aria-labelledby="simple-dialog-title"
+                      fullWidth={true}>
             <DialogTitle id="simple-dialog-title">Copy this link</DialogTitle>
             <Card>
                 {link &&
-				<TextField id="link-copy-field" label="Link" value={link?.link} variant="filled" inputProps={
-                    {readOnly: true, "aria-label": 'sharing link'}
-                } onFocus={onFocusField}/>
+                    <TextField id="link-copy-field" label="Link" value={link?.link} variant="filled" inputProps={
+                        {readOnly: true, "aria-label": 'sharing link'}
+                    } onFocus={onFocusField}/>
                 }
                 {(link && !copied) &&
-				<IconButton aria-label="copy" onClick={copyLinkToClip} size="large">
-					<AssignmentReturnedIcon/>
-				</IconButton>
+                    <IconButton aria-label="copy" onClick={copyLinkToClip} size="large">
+                        <AssignmentReturnedIcon/>
+                    </IconButton>
                 }
                 {(link && copied) &&
-				<IconButton aria-label="copy" size="large">
-					<AssignmentTurnedInIcon/>
-				</IconButton>
+                    <IconButton aria-label="copy" size="large">
+                        <AssignmentTurnedInIcon/>
+                    </IconButton>
                 }
                 {!link &&
-				<CircularProgress color="inherit"/>
+                    <CircularProgress color="inherit"/>
                 }
             </Card>
-        </Dialog>
+        </ThemedDialog>
     );
 }
 
