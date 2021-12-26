@@ -7,13 +7,12 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {ThemeProvider} from '@mui/material/styles';
-import "./style/App.less";
 import {Challenge, createConfiguration, DefaultApi} from "./gen";
 import Main from "./components/layout/Main";
 import AppDrawer from "./components/layout/AppDrawer";
 import {BrowserRouter} from "react-router-dom";
 import {styled, useMediaQuery} from "@mui/material";
-import theme from "./style/theme";
+import importedTheme from "./style/theme";
 
 const drawerWidth: number = 240;
 
@@ -107,7 +106,7 @@ const Root = () => {
 
 export default function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    const customTheme = React.useMemo(() => theme(prefersDarkMode ? 'dark' : 'light'), [prefersDarkMode]);
+    const customTheme = React.useMemo(() => importedTheme(prefersDarkMode ? 'dark' : 'light'), [prefersDarkMode]);
     return (
         <ThemeProvider theme={customTheme}>
             <CssBaseline enableColorScheme/>

@@ -44,9 +44,9 @@ const ChallengeSelector = ({onSelect, list, selectedItem}: ChallengerSelectorPro
                 <CustomLink to={'/randomize/challenge/' + item.name.toLowerCase()} key={item.id}>
                     <ListItem button key={item.id} onClick={selectChange}
                               sx={{
-                                  ...((selectedItem && compName(selectedItem, item.name) && {
+                                  ...(selectedItem && compName(selectedItem, item.name) && {
                                       backgroundColor: theme.palette.primary.light,
-                                  }))
+                                  })
                               }}
                               data-item-id={item.id}
                               data-item-name={item.name}
