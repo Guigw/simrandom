@@ -2,7 +2,6 @@ import Title from "../components/Title";
 import {default as ChallengeComponent} from "../components/Challenge";
 import * as React from "react";
 import {Challenge, DefaultApi} from "../gen";
-import {useParams} from "react-router";
 
 interface NewChallengeProps {
     api: DefaultApi,
@@ -10,7 +9,6 @@ interface NewChallengeProps {
 }
 
 const NewChallenge = ({api, challenge}: NewChallengeProps) => {
-    const {name} = useParams<{ name?: string }>();
     return (
         <React.Fragment>
             <Title> {challenge.name} </Title>

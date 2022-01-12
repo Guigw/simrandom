@@ -12,6 +12,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use ReflectionException;
 use ReflectionProperty;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -47,9 +48,10 @@ class ChallengeControllerTest extends TestCase
         ];
 
         $mockedChallengeRepository = $this->prophesize(SavedChallengeRepository::class);
+        $mockFormErrorIterator = $this->prophesize(FormErrorIterator::class);
         $mockedForm = $this->prophesize(FormInterface::class);
-        $mockedForm->getErrors()->shouldBeCalledOnce()->willReturn('pipoupi');
-        $mockedForm->submit(Argument::any())->shouldBeCalledOnce();
+        $mockedForm->getErrors()->shouldBeCalledOnce()->willReturn($mockFormErrorIterator->reveal());
+        $mockedForm->submit(Argument::any())->shouldBeCalledOnce()->willReturn($mockedForm);;
         $mockedForm->isSubmitted()->shouldBeCalledOnce()->willReturn(false);
         $mockedParams = $this->prophesize(FormFactoryInterface::class);
         $mockedParams->create(Argument::any(), Argument::any(), Argument::any())->willReturn($mockedForm->reveal());
@@ -61,7 +63,6 @@ class ChallengeControllerTest extends TestCase
         $request->getContent()->shouldBeCalledOnce()->willReturn(json_encode($requestBody));
         $response = $controller->saveChallenge($request->reveal());
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals('pipoupi', json_decode($response->getContent())->message);
     }
 
     /**
@@ -97,7 +98,7 @@ class ChallengeControllerTest extends TestCase
         $mockedChallengeRepository->finishedChallenge(Argument::type(ArrayCollection::class), Argument::type(SavedChallenge::class))->shouldBeCalled();
         $mockedForm = $this->prophesize(FormInterface::class);
         $mockedForm->getErrors()->shouldNotBeCalled();
-        $mockedForm->submit(Argument::any())->shouldBeCalledOnce();
+        $mockedForm->submit(Argument::any())->shouldBeCalledOnce()->willReturn($mockedForm);
         $mockedForm->isSubmitted()->shouldBeCalledOnce()->willReturn(true);
         $mockedForm->isValid()->shouldBeCalledOnce()->willReturn(true);
         $mockedForm->getData()->shouldBeCalledOnce()->willReturn($dto);
