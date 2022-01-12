@@ -20,6 +20,13 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+    Yrial\Simrandom\Listener\KernelViewSubscriber:
+        arguments:
+            $container: '@service_container'
+
+    Yrial\Simrandom\Listener\RandomizerResultSubscriber:
+        arguments:
+            $container: '@service_container'
 
     Yrial\Simrandom\Generator\ShapeLetterGenerator:
         public: true,
