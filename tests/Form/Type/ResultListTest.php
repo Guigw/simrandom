@@ -21,7 +21,7 @@ class ResultListTest extends TestCase
         $type = new ResultList();
         $mock = $this->prophesize(FormBuilderInterface::class);
         $mock->add(Argument::is('name'), Argument::is(TextType::class))->shouldBeCalledOnce()->willReturn($mock);
-        $mock->add(Argument::is('resultList'), Argument::is(EntityType::class), Argument::type('array'))->shouldBeCalledOnce();
+        $mock->add(Argument::is('resultList'), Argument::is(EntityType::class), Argument::type('array'))->shouldBeCalledOnce()->willReturn($mock);;
         $type->buildForm($mock->reveal(), []);
 
     }
@@ -33,7 +33,7 @@ class ResultListTest extends TestCase
         $mock->setDefaults(Argument::is([
             'data_class' => ResultListDTO::class,
             'csrf_protection' => false,
-        ]))->shouldBeCalledOnce();
+        ]))->shouldBeCalledOnce()->willReturn($mock);
         $type->configureOptions($mock->reveal());
     }
 }
