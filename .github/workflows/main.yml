@@ -49,7 +49,7 @@ jobs:
       # Docs: https://getcomposer.org/doc/articles/scripts.md
 
       - name: Generate typescript client
-        uses: openapi-generators/openapitools-generator-action@v1
+        uses: openapi-generators/openapitools-generator-action@v1.1.1
         with:
           generator: typescript
           openapi-file: config/simrandom.api.json
