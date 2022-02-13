@@ -91,14 +91,13 @@ jobs:
 
       - shell: bash
         run: |
-          rm -Rf var/cache/dev
+          rm -Rf var/cache/dev .git node_modules tests assets .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env .env.prod phpunit.xml.dist docker-compose.yml docker-compose.override.yml
 
       - name: create archive
         uses: thedoctor0/zip-release@master
         with:
           type: 'zip'
           filename: 'simrandom.zip'
-          exclusions: '*.git* /*node_modules/* /*tests/* /*assets/*  .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env .env.prod phpunit.xml.dist docker-compose.yml docker-compose.override.yml'
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
