@@ -49,11 +49,12 @@ jobs:
       # Docs: https://getcomposer.org/doc/articles/scripts.md
 
       - name: Generate typescript client
-        uses: triaxtec/openapitools-generator-action@v1.0.0
+        uses: openapi-generators/openapitools-generator-action@v1
         with:
           generator: typescript
           openapi-file: config/simrandom.api.json
           config-file: config/openapi/config.json
+          generator-tag: latest-release
 
       - shell: bash
         run: |
