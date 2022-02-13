@@ -94,8 +94,7 @@ jobs:
         with:
           type: 'zip'
           filename: 'simrandom.zip'
-          exclusions: '*.git* /*node_modules/* /*tests/* /*assets/*  .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env .env.prod phpunit.xml.dist docker-compose.yml docker-compose.override.yml'
-
+          exclusions: '*.git* /*node_modules/* /*tests/* /*assets/*  .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env .env.prod phpunit.xml.dist docker-compose.yml docker-compose.override.yml var/cache/*'
 
       - name: Archive production artifacts
         uses: actions/upload-artifact@v2
