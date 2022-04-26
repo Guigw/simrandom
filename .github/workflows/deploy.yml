@@ -91,14 +91,12 @@ jobs:
         run: |
           rm -Rf var/cache/dev .git .github .gitignore node_modules tests assets .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env .env.prod phpunit.xml.dist docker-compose.yml docker-compose.override.yml
 
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
+      - name: deploy file
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
         with:
-          key: ${{ secrets.SSH_DEPLOY_KEY }}
-          known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
-
-      - name: Adding Known Hosts
-        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Deploy with rsync
-        run: rsync -avnz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_DEPLOY_PATH }}
+          username: ${{ secrets.SSH_USER }}
+          server: ${{ secrets.SSH_HOST }}
+          ssh_private_key: ${{ secrets.SSH_DEPLOY_KEY }}
+          local_path: './*'
+          remote_path: ${{ secrets.SSH_DEPLOY_PATH }}
+          args: '-o ConnectTimeout=5'
