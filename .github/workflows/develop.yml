@@ -1,4 +1,4 @@
-name: PHP Composer and Tests
+name: PHP Composer and Tests on ${{ matrix.os }}
 
 on:
   push:
@@ -13,22 +13,8 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-
-        php-version:
-          - "8.1"
-
-        compiler:
-          - default
-
-        dependencies:
-          - lowest
-          - highest
-
-          - os: ubuntu-latest
-            php-version: "8.1"
-            compiler: jit
-            dependencies: highest
-
+        php:
+          - 8.1
     steps:
       - uses: actions/checkout@v2
 
