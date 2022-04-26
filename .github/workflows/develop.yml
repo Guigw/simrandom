@@ -1,4 +1,4 @@
-name: PHP Composer and Tests on ${{ matrix.os }}
+name: PHP Composer and Tests
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    name: PHP ${{ matrix.php }}-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
 
     strategy:
