@@ -11,7 +11,7 @@ class SavedChallengeResultsMapper implements MapperInterface
 {
 
     public function __construct(
-        private ResultMapper $resultMapper
+        private readonly ResultMapper $resultMapper
     )
     {
     }
