@@ -6,7 +6,28 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+
+        php-version:
+          - "8.1"
+
+        compiler:
+          - default
+
+        dependencies:
+          - lowest
+          - highest
+
+          - os: ubuntu-latest
+            php-version: "8.1"
+            compiler: jit
+            dependencies: highest
 
     steps:
       - uses: actions/checkout@v2
