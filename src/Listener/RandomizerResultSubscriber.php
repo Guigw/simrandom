@@ -3,6 +3,7 @@
 namespace Yrial\Simrandom\Listener;
 
 use JetBrains\PhpStorm\ArrayShape;
+use ReflectionException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,8 +22,8 @@ class RandomizerResultSubscriber extends AbstractControllerSubscriber
     private ?string $required;
 
     public function __construct(
-        private ContainerInterface         $container,
-        private RandomizerResultRepository $repository
+        private readonly ContainerInterface $container,
+        private readonly RandomizerResultRepository $repository
     )
     {
     }
@@ -42,6 +43,7 @@ class RandomizerResultSubscriber extends AbstractControllerSubscriber
 
     /**
      * @throws MissingConfigurationException
+     * @throws ReflectionException
      */
     public function onKernelController(ControllerEvent $event)
     {

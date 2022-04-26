@@ -19,7 +19,6 @@ class RandomizerResultTest extends TestCase
         $reflectionClass = new ReflectionClass(RandomizerResult::class);
         $entity = new RandomizerResult();
         $reflectionProperty = $reflectionClass->getProperty('id');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, 42);
         $this->assertEquals(42, $entity->getId());
     }

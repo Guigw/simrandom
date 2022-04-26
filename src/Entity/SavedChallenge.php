@@ -20,7 +20,7 @@ class SavedChallenge
     #[ORM\GeneratedValue(strategy: 'CUSTOM')]
     #[ORM\Column(type: 'uuid', unique: true)]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
-    private ?string $id;
+    public readonly ?string $id;
 
 
     #[ORM\OneToMany(mappedBy: 'savedChallenge', targetEntity: RandomizerResult::class)]

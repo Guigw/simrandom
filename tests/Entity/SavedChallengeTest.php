@@ -21,7 +21,6 @@ class SavedChallengeTest extends TestCase
         $collection = new ArrayCollection(array_map([$this, 'createRandomizerResult'], [1, 2, 3]));
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
         $reflectionProperty = $reflectionClass->getProperty('results');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, $collection);
         $new = $this->prophesize(RandomizerResult::class);
         $new->getId()->willReturn(4);
@@ -38,7 +37,6 @@ class SavedChallengeTest extends TestCase
         $collection = new ArrayCollection(array_map([$this, 'createRandomizerResult'], [1, 2, 3]));
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
         $reflectionProperty = $reflectionClass->getProperty('results');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, $collection);
         $new = $this->prophesize(RandomizerResult::class);
         $new->getId()->willReturn(4);
@@ -55,7 +53,6 @@ class SavedChallengeTest extends TestCase
         $collection = new ArrayCollection(array_map([$this, 'createRandomizerResult'], [1, 2, 3]));
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
         $reflectionProperty = $reflectionClass->getProperty('results');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, $collection);
         $new = $this->prophesize(RandomizerResult::class);
         $new->getId()->willReturn(4);
@@ -76,9 +73,8 @@ class SavedChallengeTest extends TestCase
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
         $entity = new SavedChallenge();
         $reflectionProperty = $reflectionClass->getProperty('id');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, 42);
-        $this->assertEquals(42, $entity->getId());
+        $this->assertEquals(42, $entity->id);
     }
 
     public function testGetResults()
@@ -87,7 +83,6 @@ class SavedChallengeTest extends TestCase
         $collection = new ArrayCollection([1, 2, 3]);
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
         $reflectionProperty = $reflectionClass->getProperty('results');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, $collection);
         $this->assertCount(3, $entity->getResults());
     }
@@ -104,7 +99,6 @@ class SavedChallengeTest extends TestCase
         $collection = new ArrayCollection(array_map([$this, 'createRandomizerResult'], [1, 2, 3]));
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
         $reflectionProperty = $reflectionClass->getProperty('results');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, $collection);
         $new = $this->prophesize(RandomizerResult::class);
         $new->getId()->willReturn(4);
@@ -119,7 +113,6 @@ class SavedChallengeTest extends TestCase
         $collection = new ArrayCollection(array_map([$this, 'createRandomizerResult'], [1, 2, 3]));
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
         $reflectionProperty = $reflectionClass->getProperty('results');
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($entity, $collection);
         $this->assertInstanceOf(SavedChallenge::class, $entity->addResult($collection->first()));
         $this->assertCount(3, $entity->getResults());

@@ -16,7 +16,7 @@ class KernelViewSubscriber extends AbstractControllerSubscriber
     private ?MapperInterface $mapper = null;
 
     public function __construct(
-        private ContainerInterface $container
+        private readonly ContainerInterface $container
     )
     {
     }
@@ -35,9 +35,14 @@ class KernelViewSubscriber extends AbstractControllerSubscriber
 
     public function onKernelController(ControllerEvent $event)
     {
-        if ($mapperInstance = $this->getInstance($event, OutputMapper::class)) {
-            $this->mapper = $this->container->get($mapperInstance->mapper);
+        try {
+            if ($mapperInstance = $this->getInstance($event, OutputMapper::class)) {
+                $this->mapper = $this->container->get($mapperInstance->mapper);
+            }
+        } catch (\ReflectionException) {
+            $this->mapper = null;
         }
+
     }
 
     public function onKernelView(ViewEvent $event)

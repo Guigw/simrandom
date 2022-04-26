@@ -60,7 +60,7 @@ class ChallengeController extends AbstractController
             $results = $data->getResultList();
             $challenge = $this->savedChallengeRepository->saveChallenge($data->getName());
             $this->savedChallengeRepository->finishedChallenge($results, $challenge);
-            return $this->json(['id' => $challenge->getId()], Response::HTTP_CREATED);
+            return $this->json(['id' => $challenge->id], Response::HTTP_CREATED);
         } else {
             return new JsonResponse(['message' => $form->getErrors()], Response::HTTP_BAD_REQUEST);
         }
