@@ -91,12 +91,28 @@ jobs:
         run: |
           rm -Rf var/cache/dev .git .github .gitignore node_modules tests assets .editorconfig .babelrc package.json README.md symfony.lock tsconfig.json webpack.config.js yarn.lock .env .env.prod phpunit.xml.dist docker-compose.yml docker-compose.override.yml
 
-      - name: deploy file
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+      - name: create archive
+        uses: thedoctor0/zip-release@master
         with:
-          username: ${{ secrets.SSH_USER }}
-          server: ${{ secrets.SSH_HOST }}
-          ssh_private_key: ${{ secrets.SSH_DEPLOY_KEY }}
-          local_path: './*'
-          remote_path: ${{ secrets.SSH_DEPLOY_PATH }}
-          args: '-o ConnectTimeout=5'
+          type: 'zip'
+          filename: 'simrandom.zip'
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: simrandom
+          path: ./simrandom.zip
+
+      - name: Display artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: simrandom
+      #- name: deploy file
+      #  uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+      #  with:
+      #    username: ${{ secrets.SSH_USER }}
+      #    server: ${{ secrets.SSH_HOST }}
+      #    ssh_private_key: ${{ secrets.SSH_DEPLOY_KEY }}
+      #    local_path: './*'
+      #    remote_path: ${{ secrets.SSH_DEPLOY_PATH }}
+      #    args: '-o ConnectTimeout=5'
