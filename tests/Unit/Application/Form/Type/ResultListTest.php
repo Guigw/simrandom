@@ -1,5 +1,4 @@
 <?php
-
 namespace Yrial\Simrandom\Tests\Unit\Application\Form\Type;
 
 use PHPUnit\Framework\TestCase;

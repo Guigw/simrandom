@@ -1,5 +1,4 @@
 <?php
-
 namespace Yrial\Simrandom\Tests\Unit\Infrastructure\DependencyInjection;
 
 use PHPUnit\Framework\TestCase;

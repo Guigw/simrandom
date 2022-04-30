@@ -1,5 +1,4 @@
 <?php
-
 namespace Yrial\Simrandom\Tests\Unit\Domain\Entity;
 
 use DateTimeImmutable;
