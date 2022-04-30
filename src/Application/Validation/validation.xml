@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="Yrial\Simrandom\Domain\Dto\Input\ResultListDTO">
+        <property name="name">
+            <constraint name="NotBlank"/>
+        </property>
+        <property name="resultList">
+            <constraint name="Count">
+                <option name="min">1</option>
+                <option name="minMessage">You must specify at least one result id</option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="Yrial\Simrandom\Domain\Entity\RandomizerResult" table="randomizer_result">
+        <unique-constraints>
+            <unique-constraint columns="id" name="PRIMARY"/>
+        </unique-constraints>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="setRollingDate"/>
+        </lifecycle-callbacks>
+
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="name" type="string" length="255"/>
+        <field name="result" type="string" length="1024"/>
+        <field name="rollingDate" column="rolling_date" type="datetime_immutable"/>
+
+        <many-to-one field="savedChallenge" target-entity="SavedChallenge" inversed-by="results"/>
+    </entity>
+</doctrine-mapping>
