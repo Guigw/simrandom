@@ -33,12 +33,24 @@ jobs:
         run: |
           echo $APP_ENV > .env.prod
           echo $APP_SECRET >> .env.prod
-          echo $DB_CONNECTION_STRING >> .env.prod
+          echo $DB_TABLE >> .env.prod
+          echo $DB_HOST >> .env.prod
+          echo $DB_PORT >> .env.prod
+          echo $DB_USER >> .env.prod
+          echo $DB_PASSWORD >> .env.prod
+          echo $DB_DRIVER >> .env.prod
+          echo $DB_VERSION >> .env.prod
           cat .env.prod
         env:
           APP_ENV: ${{ secrets.APP_ENV }}
           APP_SECRET: ${{ secrets.APP_SECRET }}
-          DB_CONNECTION_STRING: ${{ secrets.DB_CONNECTION_STRING }}
+          DB_TABLE: ${{ secrets.DB_TABLE }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT}}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DRIVER: ${{ secrets.DB_DRIVER }}
+          DB_VERSION: ${{ secrets.DB_VERSION }}
 
       - name: Export .env vars
         run: composer dump-env prod
