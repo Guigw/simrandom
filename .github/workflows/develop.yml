@@ -36,6 +36,11 @@ jobs:
       - name: Init Test Env
         run: composer dump-env test
 
+      - name: check .env file
+        shell: bash
+        run: |
+          cat .env.local.php
+
       - name: Init Test DB
         run: php bin/console --env=test d:d:c
 
