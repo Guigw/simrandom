@@ -74,7 +74,7 @@ class SavedChallengeTest extends TestCase
         $entity = new SavedChallenge();
         $reflectionProperty = $reflectionClass->getProperty('id');
         $reflectionProperty->setValue($entity, 42);
-        $this->assertEquals(42, $entity->id);
+        $this->assertEquals(42, $entity->getId());
     }
 
     public function testGetResults()
