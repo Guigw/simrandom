@@ -25,6 +25,23 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
+      - name: Generate .env file
+        shell: bash
+        run: |
+          echo DATABASE_TABLE="test_yrial" > .env.test
+          echo DATABASE_DRIVER="pdo_sqlite" >> .env.test
+          echo DATABASE_PATH="%kernel.cache_dir%/test.db" >> .env.test
+          cat .env.test
+
+      - name: Init Test Env
+        run: composer dump-env test
+
+      - name: Init Test DB
+        run: php bin/console --env=test d:d:c
+
+      - name: Init Schema
+        run: php bin/console --env=test d:s:c
+
       - name: PHPUnit Tests
         uses: php-actions/phpunit@v3
         with:

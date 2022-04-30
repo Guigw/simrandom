@@ -2,11 +2,12 @@
 
 namespace Yrial\Simrandom\Infrastructure\Repository;
 
+use Yrial\Simrandom\Domain\Contract\Repository\ChallengeRepositoryInterface;
 use Yrial\Simrandom\Domain\Exception\ChallengeNotFoundException;
 use Yrial\Simrandom\Domain\ValueObject\Challenge;
 use Yrial\Simrandom\Domain\ValueObject\Randomizer;
 
-class ChallengeRepositoryParameterAdapter implements \Yrial\Simrandom\Domain\Contract\Repository\ChallengeRepositoryInterface
+class ChallengeRepositoryParameterAdapter implements ChallengeRepositoryInterface
 {
 
     public function __construct(
