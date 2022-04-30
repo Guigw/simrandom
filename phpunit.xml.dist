@@ -19,8 +19,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
+        <testsuite name="Project Test Units Suite">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Project Test Integration Suite">
+            <directory>tests/Integration</directory>
         </testsuite>
     </testsuites>
 
@@ -42,6 +45,10 @@
             </arguments>
         </listener>
     </listeners>
+
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+    </extensions>
 
     <!-- Run `composer require symfony/panther` before enabling this extension -->
     <!--
