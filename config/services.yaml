@@ -6,54 +6,29 @@
 parameters:
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    Yrial\Simrandom\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
-    Yrial\Simrandom\Listener\KernelViewSubscriber:
-        arguments:
-            $container: '@service_container'
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  Yrial\Simrandom\:
+    resource: '../src/'
+    exclude:
+      - '../src/Infrastructure/DependencyInjection/'
+      - '../src/Domain/Dto/'
+      - '../src/Domain/Entity/'
+      - '../src/Domain/Exception/'
+      - '../src/Domain/Generator/'
+      - '../src/Domain/ValueObject/'
+      - '../src/Kernel.php'
+      - '../tests/'
 
-    Yrial\Simrandom\Listener\RandomizerResultSubscriber:
-        arguments:
-            $container: '@service_container'
+  Yrial\Simrandom\Infrastructure\Repository\ChallengeRepositoryParameterAdapter:
+    arguments:
+      $challenges: '%generator.challenges%'
 
-    Yrial\Simrandom\Generator\ShapeLetterGenerator:
-        public: true,
-        arguments:
-            $params: '%generator.randomizers.letter%'
-
-    Yrial\Simrandom\Generator\RoomsGenerator:
-        public: true,
-        arguments:
-            $params: '%generator.randomizers.rooms%'
-
-    Yrial\Simrandom\Generator\BudgetGenerator:
-        public: true,
-        arguments:
-            $params: '%generator.randomizers.budget%'
-
-    Yrial\Simrandom\Generator\BuildingsGenerator:
-        public: true,
-        arguments:
-            $params: '%generator.randomizers.buildings%'
-
-    Yrial\Simrandom\Generator\ColorsGenerator:
-        public: true,
-        arguments:
-            $params: '%generator.randomizers.colors%'
-
-    Yrial\Simrandom\Logic\Transformer\SavedChallengeResultsMapper:
-        public: true
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+  Yrial\Simrandom\Infrastructure\Configuration\RandomizerConfigurationAdapter:
+    arguments:
+      $configurations: '%generator.randomizers%'
