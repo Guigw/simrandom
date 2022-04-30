@@ -17,6 +17,9 @@
         <server name="DATABASE_TABLE" value="test_yrial" force="true"/>
         <server name="DATABASE_PATH" value="%kernel.cache_dir%/test.db" force="true"/>
         <server name="DATABASE_HOST" value="" force="true"/>
+        <server name="DATABASE_PORT" value="" force="true"/>
+        <server name="DATABASE_USER" value="" force="true"/>
+        <server name="DATABASE_PASS" value="" force="true"/>
         <server name="SHELL_VERBOSITY" value="-1"/>
         <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5"/>
