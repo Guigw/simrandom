@@ -1,13 +1,13 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import NewChallenge from "../../pages/NewChallenge";
-import SavedChallenge from "../../pages/SavedChallenge";
-import Home from "../../pages/Home";
+import NewChallenge from "../../../pages/NewChallenge";
+import SavedChallenge from "../../../pages/SavedChallenge";
+import Home from "../../../pages/Home";
 import Box from "@mui/material/Box";
-import Licence from "./Licence";
+import Licence from "../Licence/Licence";
 import * as React from "react";
-import {Challenge, DefaultApi} from "../../gen";
+import {Challenge, DefaultApi} from "../../../gen";
 import {Route, Switch} from "react-router";
 import {styled, useTheme} from "@mui/material";
 

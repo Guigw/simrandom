@@ -7,6 +7,7 @@ use Yrial\Simrandom\Domain\Contract\UseCase\ResultServiceInterface;
 use Yrial\Simrandom\Domain\Contract\UseCase\SavedResultServiceInterface;
 use Yrial\Simrandom\Domain\Dto\ResultResponseDto;
 use Yrial\Simrandom\Domain\Exception\RandomizerConfigurationNotFoundException;
+use Yrial\Simrandom\Domain\Exception\RandomizerNotFoundException;
 use Yrial\Simrandom\Domain\Generator\Generators;
 
 class ResultService implements ResultServiceInterface
@@ -23,15 +24,30 @@ class ResultService implements ResultServiceInterface
      * @param mixed $params
      * @return ResultResponseDto
      * @throws RandomizerConfigurationNotFoundException
+     * @throws RandomizerNotFoundException
      */
     public function generate(string $title, mixed ...$params): ResultResponseDto
     {
         $generatorType = Generators::tryFrom($title);
+        if (is_null($generatorType)) {
+            throw new RandomizerNotFoundException();
+        }
         $generator = $generatorType->getGenerator();
         $generator->configure($this->randomizerConfiguration->find($generatorType->value));
-        $result = new ResultResponseDto($title, $generator->getRandom($params[0] ?? 1), $generator->getDependencies());
+        $result = new ResultResponseDto($title, $generator->getRandom($this->getResponseNumber($params, empty($generator->getDependencies()))), $generator->getDependencies());
         $this->savedResultService->save($result);
         return $result;
+    }
+
+    private function getResponseNumber(array $params, bool $hasDependencies): int
+    {
+        $num = 0;
+        if (isset($params[0])) {
+            $num = $params[0];
+        } elseif ($hasDependencies) {
+            $num = 1;
+        }
+        return $num;
     }
 
 

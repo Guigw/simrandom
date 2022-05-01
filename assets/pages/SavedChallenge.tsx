@@ -1,8 +1,8 @@
-import Title from "../components/Title";
+import Title from "../components/Title/Title";
 import * as React from "react";
 import {Fragment, useEffect, useState} from "react";
 import {DefaultApi, SavedChallengeDetails} from "../gen";
-import {default as ComponentSavedChallenge} from "../components/SavedChallenge";
+import {default as ComponentSavedChallenge} from "../components/SavedChallenge/SavedChallenge";
 import {useParams} from "react-router";
 
 interface SavedChallengeProps{

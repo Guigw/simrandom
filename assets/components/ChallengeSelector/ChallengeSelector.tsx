@@ -9,7 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
-import {Challenge} from "../gen";
+import {Challenge} from "../../gen";
 import {Link} from 'react-router-dom';
 import {styled, useTheme} from "@mui/material";
 

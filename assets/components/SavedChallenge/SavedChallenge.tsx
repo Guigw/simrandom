@@ -1,7 +1,7 @@
 import * as React from "react";
 import List from '@mui/material/List';
-import {RandomizerResult} from "../gen";
-import RandomizerListItem from "./RandomizerListItem";
+import {RandomizerResult} from "../../gen";
+import RandomizerListItem from "../RandomizerListItem/RandomizerListItem";
 import {styled} from "@mui/material";
 
 type SavedChallengeProps = {

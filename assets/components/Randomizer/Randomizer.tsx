@@ -1,7 +1,7 @@
-import {DefaultApi, RandomizerResult} from "../gen";
+import {DefaultApi, RandomizerResult} from "../../gen";
 import * as React from "react";
 import {forwardRef, useEffect, useImperativeHandle, useState} from "react";
-import RandomizerListItem from "./RandomizerListItem";
+import RandomizerListItem from "../RandomizerListItem/RandomizerListItem";
 
 type RandomizerProps = {
     name: string,
