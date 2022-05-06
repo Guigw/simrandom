@@ -45,7 +45,7 @@ class RandomizerResultRepositoryDoctrineAdapterTest extends KernelTestCase
         $em->remove(Argument::any())->shouldBeCalledTimes(3);
         $em->flush()->shouldBeCalledOnce();
         $query = $this->prophesize(AbstractQuery::class);
-        $query->getResult()->willReturn([1, 2, 3]);
+        $query->getResult()->willReturn([new RandomizerResult(), new RandomizerResult(), new RandomizerResult()]);
         $queryB = $this->prophesize(QueryBuilder::class);
         $queryB->select(Argument::any())->willReturn($queryB);
         $queryB->from(Argument::any(), Argument::any(), Argument::any())->willReturn($queryB);

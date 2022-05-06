@@ -3,10 +3,13 @@
 namespace Yrial\Simrandom\Application\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Yrial\Simrandom\Domain\Contract\UseCase\ResultServiceInterface;
+use Yrial\Simrandom\Domain\Exception\RandomizerConfigurationNotFoundException;
+use Yrial\Simrandom\Domain\Exception\RandomizerNotFoundException;
 
 class RandomizerController extends AbstractController
 {
@@ -16,33 +19,13 @@ class RandomizerController extends AbstractController
     {
     }
 
-    #[Route('/randomizer/letter', name: 'randomizer_letter', methods: ['GET'])]
-    public function letter(): Response
+    #[Route('/randomizer/{type}', name: 'randomizer_type', defaults: ['number' => 1], methods: ['GET'])]
+    public function index(Request $request, string $type): Response
     {
-        return $this->json($this->resultService->generate('letter'));
-    }
-
-    #[Route('/randomizer/rooms', name: 'randomizer_rooms', methods: ['GET'])]
-    public function rooms(): Response
-    {
-        return $this->json($this->resultService->generate('rooms'));
-    }
-
-    #[Route('/randomizer/budget', name: 'randomizer_budget', methods: ['GET'])]
-    public function budget(): Response
-    {
-        return $this->json($this->resultService->generate('budget'));
-    }
-
-    #[Route('/randomizer/buildings', name: 'randomizer_buildings', methods: ['GET'])]
-    public function buildings(): Response
-    {
-        return $this->json($this->resultService->generate('buildings'));
-    }
-
-    #[Route('/randomizer/colors', name: 'randomizer_colors', defaults: ['number' => 0], methods: ['GET'])]
-    public function colors(Request $request, int $number): Response
-    {
-        return $this->json($this->resultService->generate('colors', $request->query->get('number') ?? $number));
+        try {
+            return $this->json($this->resultService->generate($type, $request->query->get('number') ?? null));
+        } catch (RandomizerConfigurationNotFoundException|RandomizerNotFoundException $e) {
+            return new JsonResponse([], Response::HTTP_NOT_FOUND);
+        }
     }
 }

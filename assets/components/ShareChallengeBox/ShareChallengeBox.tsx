@@ -1,6 +1,6 @@
 import * as React from "react";
 import {FocusEvent, useEffect, useState} from "react";
-import {DefaultApi, ResultsChallenge} from "../gen";
+import {DefaultApi, ResultsChallenge} from "../../gen";
 import {Card, Dialog, DialogTitle, styled, TextField} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import AssignmentReturnedIcon from '@mui/icons-material/AssignmentReturned';

@@ -26,7 +26,7 @@ class ChallengeRepositoryDoctrineAdapterTest extends TestCase
         $em->remove(Argument::any())->shouldBeCalledTimes(3);
         $em->flush()->shouldBeCalledOnce();
         $query = $this->prophesize(AbstractQuery::class);
-        $query->getResult()->willReturn([1, 2, 3]);
+        $query->getResult()->willReturn([new SavedChallenge(), new SavedChallenge(), new SavedChallenge()]);
         $queryB = $this->prophesize(QueryBuilder::class);
         $queryB->select(Argument::any())->willReturn($queryB);
         $queryB->from(Argument::any(), Argument::any(), Argument::any())->willReturn($queryB);
@@ -65,12 +65,15 @@ class ChallengeRepositoryDoctrineAdapterTest extends TestCase
         $meta = $this->prophesize(ClassMetadata::class);
         $em = $this->prophesize(EntityManagerInterface::class);
         $em->getClassMetadata(Argument::is(SavedChallenge::class))->willReturn($meta->reveal());
-        $em->find(Argument::is(null), Argument::is("42"), Argument::any(), Argument::any())->shouldBeCalledTimes(1)
+        $em->find(Argument::is(SavedChallenge::class), Argument::is("42"), Argument::any(), Argument::any())->shouldBeCalledTimes(1)
             ->willReturn($challenge);
 
         $objectManager = $this->prophesize(ManagerRegistry::class);
         $objectManager->getManagerForClass(Argument::is(SavedChallenge::class))->willReturn($em->reveal());
         $repo = new ChallengeRepositoryDoctrineAdapter($objectManager->reveal());
+        $reflectionClass = new \ReflectionClass($repo);
+        $reflectionProperty = $reflectionClass->getProperty('_entityName');
+        $reflectionProperty->setValue($repo, SavedChallenge::class);
         $result = $repo->load(42);
         $this->assertInstanceOf(SavedChallenge::class, $result);
         $this->assertEquals($challenge, $result);

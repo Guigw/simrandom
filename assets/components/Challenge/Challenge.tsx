@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {createRef, Fragment, RefObject, useEffect, useState} from 'react';
-import {DefaultApi, RandomizerResult} from "../gen";
-import Randomizer from "./Randomizer";
-import RandomizerListItem from "./RandomizerListItem";
+import {DefaultApi, RandomizerResult} from "../../gen";
+import Randomizer from "../Randomizer/Randomizer";
+import RandomizerListItem from "../RandomizerListItem/RandomizerListItem";
 import List from '@mui/material/List';
-import ShareChallengeBox from "./ShareChallengeBox";
+import ShareChallengeBox from "../ShareChallengeBox/ShareChallengeBox";
 import IconButton from "@mui/material/IconButton";
 import CasinoIcon from '@mui/icons-material/Casino';
 import ShareIcon from '@mui/icons-material/Share';

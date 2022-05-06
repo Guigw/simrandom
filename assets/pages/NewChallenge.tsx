@@ -1,5 +1,5 @@
-import Title from "../components/Title";
-import {default as ChallengeComponent} from "../components/Challenge";
+import Title from "../components/Title/Title";
+import {default as ChallengeComponent} from "../components/Challenge/Challenge";
 import * as React from "react";
 import {Challenge, DefaultApi} from "../gen";
 
