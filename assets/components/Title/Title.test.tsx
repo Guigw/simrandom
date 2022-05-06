@@ -1,10 +1,12 @@
 import * as React from "react";
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Licence from "./Licence";
+import Title from "./Title";
 
-test('Licence exists', () => {
-    render(<Licence/>);
-    const linkElement = screen.getByText(new Date().getFullYear() + ".");
+test("title exists", () => {
+    render(<Title>
+        <div>coucou</div>
+    </Title>);
+    const linkElement = screen.getByText("coucou");
     expect(linkElement).toBeInTheDocument();
 });
