@@ -9,8 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Yrial\Simrandom\Application\Command\YrialSimrandomCleanSavedResultAndLinkCommand;
-use Yrial\Simrandom\Domain\Contract\UseCase\SavedChallengeServiceInterface;
-use Yrial\Simrandom\Domain\Contract\UseCase\SavedResultServiceInterface;
+use Yrial\Simrandom\Domain\Contract\UseCase\CleanDataInterface;
 
 class YrialSimrandomCleanSavedResultAndLinkCommandTest extends TestCase
 {
@@ -21,12 +20,10 @@ class YrialSimrandomCleanSavedResultAndLinkCommandTest extends TestCase
      */
     public function test__construct()
     {
-        $mockedRandomRepository = $this->prophesize(SavedResultServiceInterface::class);
-        $mockedRandomRepository->cleanResults()->shouldBeCalledOnce();
-        $mockedChallengeRepository = $this->prophesize(SavedChallengeServiceInterface::class);
-        $mockedChallengeRepository->cleanResults()->shouldBeCalledOnce();
+        $mockedCleanData = $this->prophesize(CleanDataInterface::class);
+        $mockedCleanData->cleanResults()->shouldBeCalledOnce();
 
-        $command = new YrialSimrandomCleanSavedResultAndLinkCommand($mockedRandomRepository->reveal(), $mockedChallengeRepository->reveal());
+        $command = new YrialSimrandomCleanSavedResultAndLinkCommand($mockedCleanData->reveal());
         $ref = new ReflectionClass($command);
         $refMethod = $ref->getMethod('execute');
         $mockedInput = $this->prophesize(InputInterface::class);

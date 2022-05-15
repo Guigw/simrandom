@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Yrial\Simrandom\Application\Controller\RandomizerController;
-use Yrial\Simrandom\Domain\Contract\UseCase\ResultServiceInterface;
+use Yrial\Simrandom\Domain\Contract\UseCase\SavedResultServiceInterface;
 use Yrial\Simrandom\Domain\Dto\ResultResponseDto;
 use Yrial\Simrandom\Domain\Exception\RandomizerConfigurationNotFoundException;
 use Yrial\Simrandom\Domain\Exception\RandomizerNotFoundException;
@@ -21,7 +21,7 @@ class RandomizerControllerTest extends TestCase
     public function testBudget()
     {
         $responseDto = new ResultResponseDto('budget', [12345]);
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('budget'), Argument::is(null))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
@@ -36,7 +36,7 @@ class RandomizerControllerTest extends TestCase
     public function testLetter()
     {
         $responseDto = new ResultResponseDto('letter', ['X']);
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('letter'), Argument::is(null))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
@@ -51,7 +51,7 @@ class RandomizerControllerTest extends TestCase
     public function testColors()
     {
         $responseDto = new ResultResponseDto('colors', [1, 2, 3, 4, 5]);
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('colors'), Argument::is(42))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
@@ -67,7 +67,7 @@ class RandomizerControllerTest extends TestCase
     public function testColorsDefaultNumber()
     {
         $responseDto = new ResultResponseDto('colors', []);
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('colors'), Argument::is(null))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
@@ -83,7 +83,7 @@ class RandomizerControllerTest extends TestCase
     public function testRooms()
     {
         $responseDto = new ResultResponseDto('rooms', [12]);
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('rooms'), Argument::is(null))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
@@ -98,7 +98,7 @@ class RandomizerControllerTest extends TestCase
     public function testBuildings()
     {
         $responseDto = new ResultResponseDto('buildings', ['Empire State Building']);
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('buildings'), Argument::is(null))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
@@ -112,7 +112,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testRandomizerUnknown()
     {
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('titouti'), Argument::is(null))->willThrow(new RandomizerNotFoundException());
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
@@ -124,7 +124,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testRandomizerMisconfiguration()
     {
-        $mockedService = $this->prophesize(ResultServiceInterface::class);
+        $mockedService = $this->prophesize(SavedResultServiceInterface::class);
         $mockedService->generate(Argument::is('titouti'), Argument::is(null))->willThrow(new RandomizerConfigurationNotFoundException());
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);

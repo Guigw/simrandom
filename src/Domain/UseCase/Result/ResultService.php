@@ -4,7 +4,6 @@ namespace Yrial\Simrandom\Domain\UseCase\Result;
 
 use Yrial\Simrandom\Domain\Contract\Configuration\RandomizerConfigurationInterface;
 use Yrial\Simrandom\Domain\Contract\UseCase\ResultServiceInterface;
-use Yrial\Simrandom\Domain\Contract\UseCase\SavedResultServiceInterface;
 use Yrial\Simrandom\Domain\Dto\ResultResponseDto;
 use Yrial\Simrandom\Domain\Exception\RandomizerConfigurationNotFoundException;
 use Yrial\Simrandom\Domain\Exception\RandomizerNotFoundException;
@@ -14,7 +13,6 @@ class ResultService implements ResultServiceInterface
 {
     public function __construct(
         private readonly RandomizerConfigurationInterface $randomizerConfiguration,
-        private readonly SavedResultServiceInterface $savedResultService,
     )
     {
     }
@@ -34,9 +32,7 @@ class ResultService implements ResultServiceInterface
         }
         $generator = $generatorType->getGenerator();
         $generator->configure($this->randomizerConfiguration->find($generatorType->value));
-        $result = new ResultResponseDto($title, $generator->getRandom($this->getResponseNumber($params, empty($generator->getDependencies()))), $generator->getDependencies());
-        $this->savedResultService->save($result);
-        return $result;
+        return new ResultResponseDto($title, $generator->getRandom($this->getResponseNumber($params, !empty($generator->getDependencies()))), $generator->getDependencies());
     }
 
     private function getResponseNumber(array $params, bool $hasDependencies): int
@@ -44,7 +40,7 @@ class ResultService implements ResultServiceInterface
         $num = 0;
         if (isset($params[0])) {
             $num = $params[0];
-        } elseif ($hasDependencies) {
+        } elseif (!$hasDependencies) {
             $num = 1;
         }
         return $num;

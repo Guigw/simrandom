@@ -7,14 +7,14 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Yrial\Simrandom\Domain\Contract\UseCase\ResultServiceInterface;
+use Yrial\Simrandom\Domain\Contract\UseCase\SavedResultServiceInterface;
 use Yrial\Simrandom\Domain\Exception\RandomizerConfigurationNotFoundException;
 use Yrial\Simrandom\Domain\Exception\RandomizerNotFoundException;
 
 class RandomizerController extends AbstractController
 {
     public function __construct(
-        private readonly ResultServiceInterface $resultService
+        private readonly SavedResultServiceInterface $resultService
     )
     {
     }

@@ -49,15 +49,4 @@ class SavedChallengeServiceTest extends TestCase
         $mockedRepo = $this->prophesize(SavedChallengeRepositoryInterface::class);
         $this->assertInstanceOf(SavedChallengeService::class, new SavedChallengeService($mockedRepo->reveal()));
     }
-
-    public function testCleanResults()
-    {
-        $date = (new \DateTimeImmutable())->sub(new \DateInterval('P3M'));
-        $mockedRepo = $this->prophesize(SavedChallengeRepositoryInterface::class);
-        $mockedRepo->removeOldChallenge(Argument::that(function ($input) use ($date) {
-            return $input->getTimestamp() == $date->getTimestamp();
-        }))->shouldBeCalledTimes(1);
-        $service = new SavedChallengeService($mockedRepo->reveal());
-        $service->cleanResults();
-    }
 }

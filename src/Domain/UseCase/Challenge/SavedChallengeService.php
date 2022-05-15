@@ -15,12 +15,6 @@ class SavedChallengeService implements SavedChallengeServiceInterface
     {
     }
 
-    public function cleanResults(): void
-    {
-        $lastThreeMonth = (new \DateTimeImmutable())->sub(new \DateInterval('P3M'));
-        $this->challengeRepository->removeOldChallenge($lastThreeMonth);
-    }
-
     public function save(string $name, array $savedResults): SavedChallengeDto
     {
         $challenge = new SavedChallenge();

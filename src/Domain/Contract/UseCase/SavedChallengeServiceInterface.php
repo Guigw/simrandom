@@ -5,7 +5,7 @@ namespace Yrial\Simrandom\Domain\Contract\UseCase;
 use Yrial\Simrandom\Domain\Dto\SavedChallengeDto;
 use Yrial\Simrandom\Domain\Entity\RandomizerResult;
 
-interface SavedChallengeServiceInterface extends CleanDataInterface
+interface SavedChallengeServiceInterface
 {
     /**
      * @param string $name

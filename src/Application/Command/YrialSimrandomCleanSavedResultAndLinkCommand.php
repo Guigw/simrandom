@@ -6,8 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Yrial\Simrandom\Domain\Contract\UseCase\SavedChallengeServiceInterface;
-use Yrial\Simrandom\Domain\Contract\UseCase\SavedResultServiceInterface;
+use Yrial\Simrandom\Domain\Contract\UseCase\CleanDataInterface;
 
 class YrialSimrandomCleanSavedResultAndLinkCommand extends Command
 {
@@ -15,8 +14,7 @@ class YrialSimrandomCleanSavedResultAndLinkCommand extends Command
     protected static $defaultDescription = 'remove unused results';
 
     public function __construct(
-        private readonly SavedResultServiceInterface $savedResultService,
-        private readonly SavedChallengeServiceInterface $savedChallengeService)
+        private readonly CleanDataInterface $cleanDataService,)
     {
         parent::__construct();
     }
@@ -24,9 +22,7 @@ class YrialSimrandomCleanSavedResultAndLinkCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $this->savedChallengeService->cleanResults();
-        $io->info('old links removed');
-        $this->savedResultService->cleanResults();
+        $this->cleanDataService->cleanResults();
         $io->info('unused results removed');
         $io->success('cleaning successful');
 
