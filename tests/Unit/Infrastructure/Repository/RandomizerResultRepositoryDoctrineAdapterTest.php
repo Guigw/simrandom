@@ -31,10 +31,13 @@ class RandomizerResultRepositoryDoctrineAdapterTest extends KernelTestCase
 
 
         $repo = new RandomizerResultRepositoryDoctrineAdapter($objectManager->reveal());
-        $result = $repo->save('pouic', 'pic');
+        $rando = new RandomizerResult();
+        $rando->setName('pouic')
+            ->pushResults(['pic']);
+        $result = $repo->save($rando);
         $this->assertInstanceOf(RandomizerResult::class, $result);
         $this->assertEquals('pouic', $result->getName());
-        $this->assertEquals('pic', $result->getResult());
+        $this->assertEquals(['pic'], $result->getResults());
     }
 
     public function testRemoveUnusedResult()

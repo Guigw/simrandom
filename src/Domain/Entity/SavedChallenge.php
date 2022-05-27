@@ -2,7 +2,6 @@
 
 namespace Yrial\Simrandom\Domain\Entity;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,9 +19,12 @@ class SavedChallenge
     private ?string $name;
 
     #[Pure]
-    public function __construct()
+    public function __construct(?DateTimeInterface $sharingDate = null)
     {
         $this->results = new ArrayCollection();
+        if ($sharingDate) {
+            $this->sharingDate = $sharingDate;
+        }
     }
 
     public function getId(): ?string
@@ -60,9 +62,9 @@ class SavedChallenge
         return $this->sharingDate;
     }
 
-    public function setSharingDate(): self
+    public function setSharingDate(DateTimeInterface $dateTime): self
     {
-        $this->sharingDate = new DateTimeImmutable();
+        $this->sharingDate = $dateTime;
 
         return $this;
     }

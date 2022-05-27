@@ -6,6 +6,8 @@
 parameters:
 
 services:
+  Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
+
   # default configuration for services in *this* file
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
@@ -17,13 +19,18 @@ services:
     resource: '../src/'
     exclude:
       - '../src/Infrastructure/DependencyInjection/'
-      - '../src/Domain/Dto/'
+      - '../src/Application/Dto/'
+      - '../src/Application/Exception/'
       - '../src/Domain/Entity/'
       - '../src/Domain/Exception/'
       - '../src/Domain/Generator/'
       - '../src/Domain/ValueObject/'
       - '../src/Kernel.php'
       - '../tests/'
+
+  Yrial\Simrandom\Application\Handler\:
+    resource: '../src/Application/Handler/'
+    public: true
 
   Yrial\Simrandom\Infrastructure\Repository\ChallengeRepositoryParameterAdapter:
     arguments:
