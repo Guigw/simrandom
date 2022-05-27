@@ -1,6 +1,6 @@
 controllers:
   resource: ../../src/Framework/Controller/
-    type: annotation
+  type: annotation
 
 kernel:
   resource: ../../src/Kernel.php
