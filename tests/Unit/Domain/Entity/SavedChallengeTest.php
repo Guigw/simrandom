@@ -14,6 +14,13 @@ class SavedChallengeTest extends TestCase
 {
     use ProphecyTrait;
 
+    public function testConstruct()
+    {
+        $date = new DateTimeImmutable();
+        $entity = new SavedChallenge($date);
+        $this->assertEquals($date, $entity->getSharingDate());
+    }
+
     public function testRemoveResult()
     {
         $entity = new SavedChallenge();
@@ -67,6 +74,14 @@ class SavedChallengeTest extends TestCase
         $this->assertEquals('coucou', $entity->setName('coucou')->getName());
     }
 
+    public function testSetSharingDate()
+    {
+        $date = new DateTimeImmutable();
+        $entity = new SavedChallenge();
+        $this->assertEquals($date, $entity->setSharingDate($date)->getSharingDate());
+    }
+
+
     public function testGetId()
     {
         $reflectionClass = new ReflectionClass(SavedChallenge::class);
@@ -88,8 +103,10 @@ class SavedChallengeTest extends TestCase
 
     public function testGetSharingDate()
     {
-        $entity = new SavedChallenge();
-        $this->assertInstanceOf(DateTimeImmutable::class, $entity->setSharingDate()->getSharingDate());
+        $date = new DateTimeImmutable();
+        $entity = new SavedChallenge($date);
+        $this->assertInstanceOf(DateTimeImmutable::class, $entity->getSharingDate());
+        $this->assertEquals($date, $entity->getSharingDate());
     }
 
     public function testAddResult()

@@ -14,11 +14,8 @@ class RandomizerResultRepositoryDoctrineAdapter extends ServiceEntityRepository 
         parent::__construct($registry, RandomizerResult::class);
     }
 
-    public function save(string $key, string $value): RandomizerResult
+    public function save(RandomizerResult $result): RandomizerResult
     {
-        $result = new RandomizerResult();
-        $result->setName($key)
-            ->setResult($value ?? '');
         $this->_em->persist($result);
         $this->_em->flush($result);
         return $result;

@@ -16,6 +16,9 @@ class ChallengeRepositoryParameterAdapter implements ChallengeRepositoryInterfac
     {
     }
 
+    /**
+     * @return Challenge[]
+     */
     public function get(): array
     {
         return array_map([$this, 'hydrateChallenge'], $this->challenges);
