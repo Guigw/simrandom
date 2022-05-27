@@ -21,7 +21,7 @@ framework:
     enable_annotations: false
     mapping:
       paths:
-        - '%kernel.project_dir%/src/Application/Validation'
+        - '%kernel.project_dir%/src/Framework/Validation'
 when@test:
   framework:
     test: true

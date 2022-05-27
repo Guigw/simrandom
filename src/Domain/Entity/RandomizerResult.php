@@ -2,11 +2,13 @@
 
 namespace Yrial\Simrandom\Domain\Entity;
 
-use DateTimeImmutable;
 use DateTimeInterface;
+use Yrial\Simrandom\Domain\Exception\EmptyResultException;
 
 class RandomizerResult
 {
+    public const IMPLODE_SEPARATOR = ",";
+
     private ?int $id;
 
     private ?string $name;
@@ -16,6 +18,13 @@ class RandomizerResult
     private ?DateTimeInterface $rollingDate;
 
     private ?SavedChallenge $savedChallenge;
+
+    public function __construct(?DateTimeInterface $rollingDate = null)
+    {
+        if ($rollingDate) {
+            $this->setRollingDate($rollingDate);
+        }
+    }
 
 
     public function getId(): ?int
@@ -35,15 +44,38 @@ class RandomizerResult
         return $this;
     }
 
-    public function getResult(): ?string
+    private function getResult(): ?string
     {
         return $this->result;
     }
 
-    public function setResult(string $result): self
+    public function getResults(): array
+    {
+        if (!empty($this->result)) {
+            return explode(self::IMPLODE_SEPARATOR, $this->result);
+        }
+        return [];
+    }
+
+    private function setResult(string $result): self
     {
         $this->result = $result;
 
+        return $this;
+    }
+
+    /**
+     * @param array $results
+     * @return $this
+     * @throws EmptyResultException
+     */
+    public function pushResults(array $results): self
+    {
+        if (!empty($results)) {
+            $this->result = implode(self::IMPLODE_SEPARATOR, $results);
+        } else {
+            throw new EmptyResultException($this->name ?? '');
+        }
         return $this;
     }
 
@@ -52,9 +84,9 @@ class RandomizerResult
         return $this->rollingDate;
     }
 
-    public function setRollingDate(): self
+    public function setRollingDate(DateTimeInterface $date): self
     {
-        $this->rollingDate = new DateTimeImmutable();
+        $this->rollingDate = $date;
 
         return $this;
     }
