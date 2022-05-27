@@ -7,17 +7,9 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "Node",
-    "sourceMap": true,
-    "baseUrl": "types",
-    "typeRoots": [
-      "types"
-    ]
+    "sourceMap": true
   },
   "exclude": [
     "node_modules",
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "**/*.test.ts",
-    "**/*.test.tsx"
   ]
 }
