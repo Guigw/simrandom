@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Yrial\Simrandom\Application\Contract\Bus\CommandBusInterface;
 use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonFindSavedChallenge;
 use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonRememberedChallengeCommand;
-use Yrial\Simrandom\Domain\Contract\UseCase\SavedChallengeServiceInterface;
 use Yrial\Simrandom\Framework\Form\Input\ResultListDTO;
 use Yrial\Simrandom\Framework\Form\Type\ResultList;
 
