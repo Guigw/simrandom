@@ -9,7 +9,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Yrial\Simrandom\Application\Contract\Bus\CommandBusInterface;
 use Yrial\Simrandom\Domain\Command\Challenge\FindChallenge\JsonDetailChallengeCommand;
 use Yrial\Simrandom\Domain\Command\Challenge\GetChallenge\JsonListChallengeCommand;
-use Yrial\Simrandom\Domain\Contract\UseCase\ChallengeServiceInterface;
 use Yrial\Simrandom\Domain\Exception\ChallengeNotFoundException;
 
 class ChallengeController extends AbstractController
