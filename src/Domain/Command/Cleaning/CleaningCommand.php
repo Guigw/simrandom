@@ -18,5 +18,4 @@ class CleaningCommand extends BaseCommand
         $this->lastResultWithoutSavedChallengeDate = (new DateTimeImmutable())->sub(new DateInterval('P1D'));
         $this->lastSavedChallengeDate = (new DateTimeImmutable())->sub(new DateInterval('P3M'));
     }
-
 }

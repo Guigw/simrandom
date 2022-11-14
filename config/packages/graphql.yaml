@@ -1,0 +1,17 @@
+overblog_graphql:
+  definitions:
+    schema:
+      mutation: RootMutation
+      query: RootQuery
+    mappings:
+      types:
+        - type: graphql
+          dir: "%kernel.project_dir%/config/graphql/types"
+          suffix: ~
+  errors_handler:
+    enabled: true # false will totally disabled errors handling
+    internal_error_message: 'Internal error occured' # custom generic error message
+    rethrow_internal_exceptions: false # re-throw internal exception
+    debug: true # will add trace stack and debugMessage to error
+    log: true # false will disabled the default logging behavior
+    logger_service: monolog.logger # the service to use to log

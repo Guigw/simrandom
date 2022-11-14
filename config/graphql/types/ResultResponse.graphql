@@ -1,0 +1,19 @@
+union Results = ResultResponse | RandomizerMissingArgs | UnknownRandomizer
+
+type ResultResponse {
+    title: String!
+    results: [String]
+    id: ID
+}
+
+type RandomizerMissingArgs {
+    args: [String]
+}
+
+type UnknownRandomizer {
+    title: String!
+}
+
+input ResponseToSave {
+    id: ID
+}

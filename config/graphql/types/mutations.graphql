@@ -1,0 +1,3 @@
+type RootMutation {
+    save(name: ChallengeToSave!, results: [ResponseToSave!]!): SavedChallenge!
+}

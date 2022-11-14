@@ -1,0 +1,6 @@
+type RootQuery {
+    challenge(id: ID!): ChallengeResult
+    challenges: [ChallengeResponse!]!
+    getRandomizerResult(title: String!, number: Int) : Results!
+    findSavedChallenge(id: ID!) : SavedChallenge!
+}

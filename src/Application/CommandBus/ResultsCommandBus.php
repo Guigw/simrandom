@@ -2,7 +2,7 @@
 
 namespace Yrial\Simrandom\Application\CommandBus;
 
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Contract\UseCase\CommandInterface;
 
 class ResultsCommandBus extends AbstractCommandBusInterface

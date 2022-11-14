@@ -32,6 +32,10 @@ services:
     resource: '../src/Application/Handler/'
     public: true
 
+  Yrial\Simrandom\Domain\Handler\:
+    resource: '../src/Domain/Handler/'
+    public: true
+
   Yrial\Simrandom\Infrastructure\Repository\ChallengeRepositoryParameterAdapter:
     arguments:
       $challenges: '%generator.challenges%'
@@ -39,3 +43,7 @@ services:
   Yrial\Simrandom\Infrastructure\Configuration\RandomizerConfigurationAdapter:
     arguments:
       $configurations: '%generator.randomizers%'
+
+  Yrial\Simrandom\Framework\Resolver\GraphQLResolverMap:
+    tags:
+      - { name: overblog_graphql.resolver_map, schema: default }

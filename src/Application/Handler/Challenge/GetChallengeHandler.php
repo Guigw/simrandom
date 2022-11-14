@@ -2,24 +2,17 @@
 
 namespace Yrial\Simrandom\Application\Handler\Challenge;
 
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
-use Yrial\Simrandom\Domain\Command\Challenge\GetChallenge\GetChallengeCommand;
-use Yrial\Simrandom\Domain\Contract\Repository\ChallengeRepositoryInterface;
+use Yrial\Simrandom\Application\Dto\Challenge\ChallengeDto;
+use Yrial\Simrandom\Application\Query\GetChallengeQuery;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
+use Yrial\Simrandom\Domain\ValueObject\Challenge;
 
 class GetChallengeHandler implements HandlerInterface
 {
-    public function __construct(
-        private readonly ChallengeRepositoryInterface $challengeRepository
-    )
+    public function handle(GetChallengeQuery $command, array $results): array
     {
-    }
-
-    /**
-     * @param GetChallengeCommand $command
-     * @return array
-     */
-    public function handle(GetChallengeCommand $command): array
-    {
-        return $this->challengeRepository->get();
+        return array_map(function (Challenge $challenge) {
+            return new ChallengeDto($challenge->getId(), $challenge->getName(), $challenge->getRandomizers());
+        }, $results);
     }
 }

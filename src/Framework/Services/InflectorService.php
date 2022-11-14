@@ -3,9 +3,9 @@
 namespace Yrial\Simrandom\Framework\Services;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
 use Yrial\Simrandom\Application\Contract\Inflector\ServiceInflectorInterface;
 use Yrial\Simrandom\Application\Exception\HandlerImplementationException;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 
 class InflectorService implements ServiceInflectorInterface
 {

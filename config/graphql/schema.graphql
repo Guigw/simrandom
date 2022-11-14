@@ -1,0 +1,72 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: RootQuery
+    mutation: RootMutation
+}
+
+union ChallengeResult = ChallengeNotFound | ChallengeResponse
+
+union Results = RandomizerMissingArgs | ResultResponse | UnknownRandomizer
+
+type ChallengeNotFound {
+    message: String
+}
+
+type ChallengeResponse {
+    id: ID!
+    name: String!
+    randomizers: Randomizers
+}
+
+type Meta {
+    count: Int!
+}
+
+type Randomizer {
+    name: String!
+}
+
+type RandomizerMissingArgs {
+    args: [String]
+}
+
+type Randomizers {
+    data: [Randomizer]
+    meta: Meta
+}
+
+type ResultResponse {
+    id: ID
+    results: [String]
+    title: String!
+}
+
+type RootMutation {
+    save(name: ChallengeToSave!, results: [ResponseToSave!]!): SavedChallenge!
+}
+
+type RootQuery {
+    challenge(id: ID!): ChallengeResult
+    challenges: [ChallengeResponse!]!
+    findSavedChallenge(id: ID!): SavedChallenge!
+    getRandomizerResult(number: Int, title: String!): Results!
+}
+
+type SavedChallenge {
+    id: ID!
+    name: String!
+    results: [ResultResponse!]
+}
+
+type UnknownRandomizer {
+    title: String!
+}
+
+input ChallengeToSave {
+    name: String!
+}
+
+input ResponseToSave {
+    id: ID
+}

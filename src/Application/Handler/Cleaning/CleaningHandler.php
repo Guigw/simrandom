@@ -2,8 +2,8 @@
 
 namespace Yrial\Simrandom\Application\Handler\Cleaning;
 
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Command\Cleaning\CleaningCommand;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
 use Yrial\Simrandom\Domain\Contract\Repository\SavedChallengeRepositoryInterface;
 

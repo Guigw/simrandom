@@ -44,6 +44,4 @@ class Challenge
     {
         return $this->randomizers;
     }
-
-
 }

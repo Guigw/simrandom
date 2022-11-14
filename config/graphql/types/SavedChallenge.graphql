@@ -1,0 +1,5 @@
+type SavedChallenge {
+    id: ID!
+    name: String!
+    results: [ResultResponse!]
+}

@@ -1,0 +1,13 @@
+type ChallengeResponse {
+    id: ID!
+    name: String!
+    randomizers: Randomizers
+}
+
+type ChallengeNotFound {
+    message: String
+}
+
+input ChallengeToSave {
+    name: String!
+}

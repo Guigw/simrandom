@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Yrial\Simrandom\Application\Contract\Bus\CommandBusInterface;
-use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonFindSavedChallenge;
+use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonFindSavedChallengeCommand;
 use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonRememberedChallengeCommand;
 use Yrial\Simrandom\Framework\Form\Input\ResultListDTO;
 use Yrial\Simrandom\Framework\Form\Type\ResultList;
@@ -40,7 +40,7 @@ class SavedChallengeController extends AbstractController
     #[Route('/challenge/{id}/results', name: 'get_saved_challenge', methods: ['GET'])]
     public function findSavedChallenge(string $id): Response
     {
-        $challenge = $this->commandBus->execute(new JsonFindSavedChallenge($id));
+        $challenge = $this->commandBus->execute(new JsonFindSavedChallengeCommand($id));
         if (empty($challenge)) {
             return new JsonResponse([], Response::HTTP_NOT_FOUND);
         }

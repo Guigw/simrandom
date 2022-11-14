@@ -34,17 +34,18 @@ class ChallengeRepositoryParameterAdapter implements ChallengeRepositoryInterfac
         $rawChallenge = array_filter($this->challenges, function ($challenge) use ($id) {
             return $challenge['id'] == $id;
         });
-
         if (empty($rawChallenge)) {
             throw new ChallengeNotFoundException();
         }
-
         return $this->hydrateChallenge($rawChallenge[0]);
     }
 
     private function hydrateChallenge($challenge): Challenge
     {
-        return new Challenge($challenge['id'], $challenge['name'], ...array_map(function ($rando) {
+        return new Challenge(
+            $challenge['id'],
+            $challenge['name'],
+            ...array_map(function ($rando) {
             return new Randomizer($rando);
         }, $challenge['randomizers']));
     }

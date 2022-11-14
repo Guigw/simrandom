@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yrial\Simrandom\Application\Contract\Bus\CommandBusInterface;
 use Yrial\Simrandom\Application\Dto\SavedChallengeDto;
-use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonFindSavedChallenge;
+use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonFindSavedChallengeCommand;
 use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonRememberedChallengeCommand;
 use Yrial\Simrandom\Domain\Entity\SavedChallenge;
 use Yrial\Simrandom\Framework\Controller\SavedChallengeController;
@@ -39,7 +39,7 @@ class SavedChallengeControllerTest extends TestCase
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
-        $mockedCommandBus->execute(Argument::type(JsonFindSavedChallenge::class))->willReturn($savedReturn);
+        $mockedCommandBus->execute(Argument::type(JsonFindSavedChallengeCommand::class))->willReturn($savedReturn);
         $controller = new SavedChallengeController($mockedCommandBus->reveal());
         $controller->setContainer($mockedContainer->reveal());
         $response = $controller->findSavedChallenge('titouti');
@@ -52,7 +52,7 @@ class SavedChallengeControllerTest extends TestCase
         $mockedContainer = $this->prophesize(ContainerInterface::class);
         $mockedContainer->has(Argument::is('serializer'))->willReturn(false);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
-        $mockedCommandBus->execute(Argument::type(JsonFindSavedChallenge::class))->willReturn(null);
+        $mockedCommandBus->execute(Argument::type(JsonFindSavedChallengeCommand::class))->willReturn(null);
         $controller = new SavedChallengeController($mockedCommandBus->reveal());
         $controller->setContainer($mockedContainer->reveal());
         $response = $controller->findSavedChallenge('titouti');

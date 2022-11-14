@@ -5,10 +5,10 @@ namespace Yrial\Simrandom\Tests\Unit\Application\Inflector;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
 use Yrial\Simrandom\Application\Contract\Inflector\ServiceInflectorInterface;
 use Yrial\Simrandom\Application\Inflector\CommandInflector;
 use Yrial\Simrandom\Domain\Command\Challenge\GetChallenge\GetChallengeCommand;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 
 class CommandInflectorTest extends TestCase
 {

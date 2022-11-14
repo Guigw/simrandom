@@ -3,8 +3,8 @@
 namespace Yrial\Simrandom\Application\CommandBus;
 
 use Yrial\Simrandom\Application\Contract\Bus\CommandBusInterface;
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
 use Yrial\Simrandom\Application\Inflector\CommandInflector;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Contract\UseCase\CommandInterface;
 
 abstract class AbstractCommandBusInterface implements CommandBusInterface

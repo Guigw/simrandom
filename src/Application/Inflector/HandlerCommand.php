@@ -2,44 +2,42 @@
 
 namespace Yrial\Simrandom\Application\Inflector;
 
+use Yrial\Simrandom\Application\Command\ChallengeDraw\ChallengeDrawCommand;
 use Yrial\Simrandom\Application\Handler\Challenge\FindChallengeHandler;
 use Yrial\Simrandom\Application\Handler\Challenge\GetChallengeHandler;
-use Yrial\Simrandom\Application\Handler\Challenge\JsonChallengeDetailHandler;
-use Yrial\Simrandom\Application\Handler\Challenge\JsonChallengeListHandler;
-use Yrial\Simrandom\Application\Handler\Cleaning\CleaningHandler;
-use Yrial\Simrandom\Application\Handler\Result\GenerateResultHandler;
-use Yrial\Simrandom\Application\Handler\Result\JsonResultHandler;
-use Yrial\Simrandom\Application\Handler\Result\SavedResultHandler;
-use Yrial\Simrandom\Application\Handler\SavedChallenge\FindSavedChallengeHandler;
-use Yrial\Simrandom\Application\Handler\SavedChallenge\JsonSavingChallengeHandler;
-use Yrial\Simrandom\Application\Handler\SavedChallenge\SaveChallengeHandler;
-use Yrial\Simrandom\Domain\Command\Challenge\FindChallenge\FindChallengeCommand;
-use Yrial\Simrandom\Domain\Command\Challenge\FindChallenge\JsonDetailChallengeCommand;
-use Yrial\Simrandom\Domain\Command\Challenge\GetChallenge\GetChallengeCommand;
-use Yrial\Simrandom\Domain\Command\Challenge\GetChallenge\JsonListChallengeCommand;
-use Yrial\Simrandom\Domain\Command\Cleaning\CleaningCommand;
-use Yrial\Simrandom\Domain\Command\Result\GenerateResultCommand;
-use Yrial\Simrandom\Domain\Command\Result\JsonResultCommand;
-use Yrial\Simrandom\Domain\Command\Result\SavedResultCommand;
-use Yrial\Simrandom\Domain\Command\SavedChallenge\FindSavedChallengeCommand;
-use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonFindSavedChallenge;
-use Yrial\Simrandom\Domain\Command\SavedChallenge\JsonRememberedChallengeCommand;
-use Yrial\Simrandom\Domain\Command\SavedChallenge\RememberChallengeCommand;
+use Yrial\Simrandom\Application\Handler\ChallengeDraw\ChallengeDrawCommandHandler;
+use Yrial\Simrandom\Application\Handler\ChallengeDraw\FindChallengeDrawHandler;
+use Yrial\Simrandom\Application\Handler\Draw\DrawHandler;
+use Yrial\Simrandom\Application\Query\DrawQuery;
+use Yrial\Simrandom\Application\Query\FindChallengeDrawQuery;
+use Yrial\Simrandom\Application\Query\FindChallengeQuery;
+use Yrial\Simrandom\Application\Query\GetChallengeQuery;
+use Yrial\Simrandom\Domain\Command\ChallengeDraw\ChallengeDrawCommand as DomainChallengeDrawCommand;
+use Yrial\Simrandom\Domain\Handler\Challenge\FindChallengeHandler as DomainFindChallengeHandler;
+use Yrial\Simrandom\Domain\Handler\Challenge\GetChallengeHandler as DomainGetChallengeHandler;
+use Yrial\Simrandom\Domain\Handler\ChallengeDraw\FindChallengeDrawHandler as DomainFindChallengeDrawHandler;
+use Yrial\Simrandom\Domain\Handler\ChallengeDraw\SaveChallengeDrawHandler;
+use Yrial\Simrandom\Domain\Handler\Draw\DrawHandler as DomainDrawHandler;
+use Yrial\Simrandom\Domain\Handler\Draw\SaveDrawHandler;
+use Yrial\Simrandom\Domain\Query\Challenge\Find\ChallengeFindQuery as DomainChallengeFindQuery;
+use Yrial\Simrandom\Domain\Query\Challenge\Get\ChallengeGetQuery as DomainChallengeGetQuery;
+use Yrial\Simrandom\Domain\Query\ChallengeDraw\FindChallengeDrawQuery as DomainFindChallengeDrawQuery;
+use Yrial\Simrandom\Domain\Query\Draw\DrawQuery as DomainDrawQuery;
+use Yrial\Simrandom\Domain\Query\Draw\SaveDrawQuery;
 
 enum HandlerCommand: string
 {
-    case GenerateResultCommand = GenerateResultCommand::class;
-    case SavedResultCommand = SavedResultCommand::class;
-    case JsonResultCommand = JsonResultCommand::class;
-    case GetChallengeCommand = GetChallengeCommand::class;
-    case JsonListChallengeCommand = JsonListChallengeCommand::class;
-    case FindChallengeCommand = FindChallengeCommand::class;
-    case JsonDetailChallengeCommand = JsonDetailChallengeCommand::class;
-    case SaveChallengeCommand = RememberChallengeCommand::class;
-    case JsonSavingChallengeCommand = JsonRememberedChallengeCommand::class;
-    case FindSavedChallengeCommand = FindSavedChallengeCommand::class;
-    case JsonFindSavedChallengeCommand = JsonFindSavedChallenge::class;
-    case CleaningCommand = CleaningCommand::class;
+    case DomainChallengeGetQuery = DomainChallengeGetQuery::class;
+    case DomainChallengeFindQuery = DomainChallengeFindQuery::class;
+    case DomainDrawQuery = DomainDrawQuery::class;
+    case DomainSaveDrawQuery = SaveDrawQuery::class;
+    case DomainFindChallengeDrawQuery = DomainFindChallengeDrawQuery::class;
+    case DomainChallengeDrawCommand = DomainChallengeDrawCommand::class;
+    case ChallengeGetQuery = GetChallengeQuery::class;
+    case FindChallengeQuery = FindChallengeQuery::class;
+    case DrawQuery = DrawQuery::class;
+    case FindChallengeDrawQuery = FindChallengeDrawQuery::class;
+    case ChallengeDrawCommand = ChallengeDrawCommand::class;
 
     /**
      * @return string
@@ -47,17 +45,17 @@ enum HandlerCommand: string
     public function getHandlerClass(): string
     {
         return match ($this) {
-            HandlerCommand::GenerateResultCommand => GenerateResultHandler::class,
-            HandlerCommand::SavedResultCommand => SavedResultHandler::class,
-            HandlerCommand::JsonResultCommand => JsonResultHandler::class,
-            HandlerCommand::GetChallengeCommand => GetChallengeHandler::class,
-            HandlerCommand::JsonListChallengeCommand => JsonChallengeListHandler::class,
-            HandlerCommand::FindChallengeCommand => FindChallengeHandler::class,
-            HandlerCommand::JsonDetailChallengeCommand => JsonChallengeDetailHandler::class,
-            HandlerCommand::SaveChallengeCommand => SaveChallengeHandler::class,
-            HandlerCommand::JsonSavingChallengeCommand, HandlerCommand::JsonFindSavedChallengeCommand => JsonSavingChallengeHandler::class,
-            HandlerCommand::FindSavedChallengeCommand => FindSavedChallengeHandler::class,
-            HandlerCommand::CleaningCommand => CleaningHandler::class,
+            HandlerCommand::DomainChallengeGetQuery => DomainGetChallengeHandler::class,
+            HandlerCommand::DomainChallengeFindQuery => DomainFindChallengeHandler::class,
+            HandlerCommand::ChallengeGetQuery => GetChallengeHandler::class,
+            HandlerCommand::FindChallengeQuery => FindChallengeHandler::class,
+            HandlerCommand::DomainDrawQuery => DomainDrawHandler::class,
+            HandlerCommand::DomainSaveDrawQuery => SaveDrawHandler::class,
+            HandlerCommand::DrawQuery => DrawHandler::class,
+            HandlerCommand::DomainFindChallengeDrawQuery => DomainFindChallengeDrawHandler::class,
+            HandlerCommand::FindChallengeDrawQuery => FindChallengeDrawHandler::class,
+            HandlerCommand::DomainChallengeDrawCommand => SaveChallengeDrawHandler::class,
+            HandlerCommand::ChallengeDrawCommand => ChallengeDrawCommandHandler::class
         };
     }
 }

@@ -1,0 +1,4 @@
+type Randomizers {
+    data: [Randomizer]
+    meta : Meta
+}

@@ -4,7 +4,7 @@ namespace Yrial\Simrandom\Domain\ValueObject;
 
 class Randomizer
 {
-    private string $name;
+    public readonly string $name;
 
     /**
      * @param string $name

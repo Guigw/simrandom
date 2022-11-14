@@ -2,9 +2,9 @@
 
 namespace Yrial\Simrandom\Application\Inflector;
 
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
 use Yrial\Simrandom\Application\Contract\Inflector\ServiceInflectorInterface;
 use Yrial\Simrandom\Application\Exception\HandlerImplementationException;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Contract\UseCase\CommandInterface;
 
 class CommandInflector

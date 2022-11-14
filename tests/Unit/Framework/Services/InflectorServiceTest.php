@@ -7,8 +7,8 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
 use Yrial\Simrandom\Application\Exception\HandlerImplementationException;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Framework\Services\InflectorService;
 
 class InflectorServiceTest extends TestCase

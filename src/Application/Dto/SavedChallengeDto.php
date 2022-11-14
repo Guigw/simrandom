@@ -4,14 +4,16 @@ namespace Yrial\Simrandom\Application\Dto;
 
 use JetBrains\PhpStorm\ArrayShape;
 use JsonSerializable;
+use ReflectionProperty;
+use Yrial\Simrandom\Application\Dto\Draw\DrawDto;
 use Yrial\Simrandom\Domain\Entity\RandomizerResult;
 use Yrial\Simrandom\Domain\Entity\SavedChallenge;
 
 class SavedChallengeDto implements JsonSerializable
 {
-    private string $id;
-    private string $name;
-    private array $results = [];
+    public readonly string $id;
+    public readonly string $name;
+    public array $results;
 
     public function __construct(SavedChallenge $challenge)
     {
@@ -19,13 +21,13 @@ class SavedChallengeDto implements JsonSerializable
         $this->name = $challenge->getName();
         /** @var RandomizerResult $result */
         foreach ($challenge->getResults() as $result) {
-            $this->results[] = new ResultResponseDto($result->getName(), $result->getResults(), null, $result->getId());
+            $this->results[] = new DrawDto($result->getName(), $result->getResults(), null, $result->getId());
         }
     }
 
     private function checkChallengeId(SavedChallenge $challenge): void
     {
-        $rp = new \ReflectionProperty(SavedChallenge::class, 'id');
+        $rp = new ReflectionProperty(SavedChallenge::class, 'id');
         if ($rp->isInitialized($challenge)) {
             $this->id = $challenge->getId();
         } else {
@@ -48,5 +50,4 @@ class SavedChallengeDto implements JsonSerializable
             }, $this->results)
         ];
     }
-
 }

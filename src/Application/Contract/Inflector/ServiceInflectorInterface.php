@@ -2,8 +2,8 @@
 
 namespace Yrial\Simrandom\Application\Contract\Inflector;
 
-use Yrial\Simrandom\Application\Contract\HandlerInterface;
 use Yrial\Simrandom\Application\Exception\HandlerImplementationException;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 
 interface ServiceInflectorInterface
 {

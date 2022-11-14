@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Yrial\Simrandom\Application\Contract\Bus\CommandBusInterface;
-use Yrial\Simrandom\Application\Dto\ResultResponseDto;
+use Yrial\Simrandom\Application\Dto\Draw\DrawDto;
 use Yrial\Simrandom\Domain\Command\Result\JsonResultCommand;
 use Yrial\Simrandom\Domain\Exception\RandomizerConfigurationNotFoundException;
 use Yrial\Simrandom\Domain\Exception\RandomizerNotFoundException;
@@ -21,7 +21,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testBudget()
     {
-        $responseDto = new ResultResponseDto('budget', [12345]);
+        $responseDto = new DrawDto('budget', [12345]);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
         $mockedCommandBus->execute(Argument::type(JsonResultCommand::class))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
@@ -36,7 +36,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testLetter()
     {
-        $responseDto = new ResultResponseDto('letter', ['X']);
+        $responseDto = new DrawDto('letter', ['X']);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
         $mockedCommandBus->execute(Argument::type(JsonResultCommand::class))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
@@ -51,7 +51,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testColors()
     {
-        $responseDto = new ResultResponseDto('colors', [1, 2, 3, 4, 5]);
+        $responseDto = new DrawDto('colors', [1, 2, 3, 4, 5]);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
         $mockedCommandBus->execute(Argument::type(JsonResultCommand::class))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
@@ -67,7 +67,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testColorsDefaultNumber()
     {
-        $responseDto = new ResultResponseDto('colors', []);
+        $responseDto = new DrawDto('colors', []);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
         $mockedCommandBus->execute(Argument::type(JsonResultCommand::class))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
@@ -83,7 +83,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testRooms()
     {
-        $responseDto = new ResultResponseDto('rooms', [12]);
+        $responseDto = new DrawDto('rooms', [12]);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
         $mockedCommandBus->execute(Argument::type(JsonResultCommand::class))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
@@ -98,7 +98,7 @@ class RandomizerControllerTest extends TestCase
 
     public function testBuildings()
     {
-        $responseDto = new ResultResponseDto('buildings', ['Empire State Building']);
+        $responseDto = new DrawDto('buildings', ['Empire State Building']);
         $mockedCommandBus = $this->prophesize(CommandBusInterface::class);
         $mockedCommandBus->execute(Argument::type(JsonResultCommand::class))->willReturn($responseDto);
         $mockedContainer = $this->prophesize(ContainerInterface::class);
