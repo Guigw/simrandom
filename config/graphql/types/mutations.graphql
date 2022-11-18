@@ -1,3 +1,9 @@
 type RootMutation {
-    save(name: ChallengeToSave!, results: [ResponseToSave!]!): SavedChallenge!
+    save(name: ChallengeToSave!, results: [ResponseToSave!]!): SaveChallengeDrawResponse!
 }
+
+type ChallengeDrawFormError {
+    error: String
+}
+
+union SaveChallengeDrawResponse = SavedChallenge | ChallengeDrawFormError

@@ -4,9 +4,10 @@ namespace Yrial\Simrandom\Application\Handler\ChallengeDraw;
 
 use Yrial\Simrandom\Application\Command\ChallengeDraw\ChallengeDrawCommand;
 use Yrial\Simrandom\Application\Dto\SavedChallengeDto;
+use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Entity\SavedChallenge;
 
-class ChallengeDrawCommandHandler
+class ChallengeDrawCommandHandler implements HandlerInterface
 {
     public function handle(ChallengeDrawCommand $command, SavedChallenge $savedChallenge): SavedChallengeDto
     {

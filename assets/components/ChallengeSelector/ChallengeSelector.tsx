@@ -41,7 +41,7 @@ const ChallengeSelector = ({onSelect, list, selectedItem}: ChallengerSelectorPro
     return (
         <Fragment>
             {list.map((item: Challenge, index: number) =>
-                <CustomLink to={'/randomize/challenge/' + item.name.toLowerCase()} key={item.id}>
+                <CustomLink to={'/randomize/challenge/' + item.name.toLowerCase()} key={item.id} >
                     <ListItem button key={item.id} onClick={selectChange}
                               sx={{
                                   ...(selectedItem && compName(selectedItem, item.name) && {

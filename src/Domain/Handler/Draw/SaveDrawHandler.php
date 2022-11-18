@@ -2,7 +2,6 @@
 
 namespace Yrial\Simrandom\Domain\Handler\Draw;
 
-use Yrial\Simrandom\Domain\Command\Result\SavedResultCommand;
 use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
 use Yrial\Simrandom\Domain\Entity\RandomizerResult;
