@@ -1,10 +1,10 @@
 <?php
 
-namespace Yrial\Simrandom\Domain\Query\ChallengeDraw;
+namespace Yrial\Simrandom\Domain\Query\ChallengeTry;
 
 use Yrial\Simrandom\Domain\Command\BaseCommand;
 
-class FindChallengeDrawQuery extends BaseCommand
+class FindChallengeTryQuery extends BaseCommand
 {
     public function __construct(
         public readonly string $id)

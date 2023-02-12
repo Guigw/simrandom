@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
+use Yrial\Simrandom\Domain\Entity\Draw;
 use Yrial\Simrandom\Framework\Form\Input\ResultListDTO;
 
 class ResultList extends AbstractType
@@ -17,7 +17,7 @@ class ResultList extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('resultList', EntityType::class, [
-                'class' => RandomizerResult::class,
+                'class' => Draw::class,
                 'multiple' => true,
                 'mapped' => true,
             ]);

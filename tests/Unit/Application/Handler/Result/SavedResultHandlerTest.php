@@ -8,7 +8,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Yrial\Simrandom\Application\Handler\Result\SavedResultHandler;
 use Yrial\Simrandom\Domain\Command\Result\SavedResultCommand;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
+use Yrial\Simrandom\Domain\Entity\Draw;
 
 class SavedResultHandlerTest extends TestCase
 {
@@ -17,18 +17,18 @@ class SavedResultHandlerTest extends TestCase
     public function testHandle()
     {
         $MockedRandomizerResultRepository = $this->prophesize(RandomizerResultRepositoryInterface::class);
-        $MockedRandomizerResultRepository->save(Argument::type(RandomizerResult::class))->shouldBeCalledOnce();
+        $MockedRandomizerResultRepository->save(Argument::type(Draw::class))->shouldBeCalledOnce();
         $command = new SavedResultCommand('buildings');
         $handler = new SavedResultHandler($MockedRandomizerResultRepository->reveal());
-        $this->assertInstanceOf(RandomizerResult::class, $handler->handle($command, ['riri', 'fifi', 'loulou']));
+        $this->assertInstanceOf(Draw::class, $handler->handle($command, ['riri', 'fifi', 'loulou']));
     }
 
     public function testHandleEmptyResult()
     {
         $MockedRandomizerResultRepository = $this->prophesize(RandomizerResultRepositoryInterface::class);
-        $MockedRandomizerResultRepository->save(Argument::type(RandomizerResult::class))->shouldNotBeCalled();
+        $MockedRandomizerResultRepository->save(Argument::type(Draw::class))->shouldNotBeCalled();
         $command = new SavedResultCommand('buildings');
         $handler = new SavedResultHandler($MockedRandomizerResultRepository->reveal());
-        $this->assertInstanceOf(RandomizerResult::class, $handler->handle($command, []));
+        $this->assertInstanceOf(Draw::class, $handler->handle($command, []));
     }
 }

@@ -8,7 +8,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Yrial\Simrandom\Application\Handler\Cleaning\CleaningHandler;
 use Yrial\Simrandom\Domain\Command\Cleaning\CleaningCommand;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
-use Yrial\Simrandom\Domain\Contract\Repository\SavedChallengeRepositoryInterface;
+use Yrial\Simrandom\Domain\Contract\Repository\TryRepositoryInterface;
 
 class CleaningHandlerTest extends TestCase
 {
@@ -16,7 +16,7 @@ class CleaningHandlerTest extends TestCase
 
     public function testHandle()
     {
-        $mockedSavedChallengeRepository = $this->prophesize(SavedChallengeRepositoryInterface::class);
+        $mockedSavedChallengeRepository = $this->prophesize(TryRepositoryInterface::class);
         $mockedRandomizerResultRepository = $this->prophesize(RandomizerResultRepositoryInterface::class);
         $mockedSavedChallengeRepository->removeOldChallenge(Argument::type(\DateTimeImmutable::class))->shouldBeCalledOnce();
         $mockedRandomizerResultRepository->removeUnusedResult(Argument::type(\DateTimeImmutable::class))->shouldBeCalledOnce();

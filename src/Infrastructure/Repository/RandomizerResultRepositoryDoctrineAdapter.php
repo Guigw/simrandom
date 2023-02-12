@@ -5,16 +5,17 @@ namespace Yrial\Simrandom\Infrastructure\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
+use Yrial\Simrandom\Domain\Entity\Draw;
 
-class RandomizerResultRepositoryDoctrineAdapter extends ServiceEntityRepository implements RandomizerResultRepositoryInterface
+class RandomizerResultRepositoryDoctrineAdapter extends ServiceEntityRepository
+    implements RandomizerResultRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RandomizerResult::class);
+        parent::__construct($registry, Draw::class);
     }
 
-    public function save(RandomizerResult $result): RandomizerResult
+    public function save(Draw $result): Draw
     {
         $this->_em->persist($result);
         $this->_em->flush($result);

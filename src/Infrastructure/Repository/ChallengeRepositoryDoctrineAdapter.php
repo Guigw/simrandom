@@ -4,16 +4,16 @@ namespace Yrial\Simrandom\Infrastructure\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Yrial\Simrandom\Domain\Contract\Repository\SavedChallengeRepositoryInterface;
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
-use Yrial\Simrandom\Domain\Entity\SavedChallenge;
+use Yrial\Simrandom\Domain\Contract\Repository\TryRepositoryInterface;
+use Yrial\Simrandom\Domain\Entity\ChallengeTry;
+use Yrial\Simrandom\Domain\Entity\Draw;
 
-class ChallengeRepositoryDoctrineAdapter extends ServiceEntityRepository implements SavedChallengeRepositoryInterface
+class ChallengeRepositoryDoctrineAdapter extends ServiceEntityRepository implements TryRepositoryInterface
 {
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, SavedChallenge::class);
+        parent::__construct($registry, ChallengeTry::class);
     }
 
     public function removeOldChallenge(\DateTimeImmutable $lastDay): void
@@ -30,23 +30,23 @@ class ChallengeRepositoryDoctrineAdapter extends ServiceEntityRepository impleme
     }
 
     /**
-     * @param SavedChallenge $savedChallenge
+     * @param ChallengeTry $challengeTry
      * @param array $randomizerResults
-     * @return SavedChallenge
+     * @return ChallengeTry
      */
-    public function saveChallenge(SavedChallenge $savedChallenge, array $randomizerResults): SavedChallenge
+    public function saveChallenge(ChallengeTry $challengeTry, array $randomizerResults): ChallengeTry
     {
-        $this->_em->persist($savedChallenge);
-        /** @var RandomizerResult $randomizerResult */
+        $this->_em->persist($challengeTry);
+        /** @var Draw $randomizerResult */
         foreach ($randomizerResults as $randomizerResult) {
-            $randomizerResult->setSavedChallenge($savedChallenge);
+            $randomizerResult->setTry($challengeTry);
             $this->_em->persist($randomizerResult);
         }
         $this->_em->flush();
-        return $savedChallenge;
+        return $challengeTry;
     }
 
-    public function load(string $id): ?SavedChallenge
+    public function load(string $id): ?ChallengeTry
     {
         return $this->find($id);
     }

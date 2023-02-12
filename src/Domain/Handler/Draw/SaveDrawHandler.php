@@ -4,7 +4,7 @@ namespace Yrial\Simrandom\Domain\Handler\Draw;
 
 use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
+use Yrial\Simrandom\Domain\Entity\Draw;
 use Yrial\Simrandom\Domain\Exception\EmptyResultException;
 use Yrial\Simrandom\Domain\Query\Draw\SaveDrawQuery;
 
@@ -19,11 +19,11 @@ class SaveDrawHandler implements HandlerInterface
     /**
      * @param SaveDrawQuery $command
      * @param mixed $result
-     * @return RandomizerResult
+     * @return Draw
      */
-    public function handle(SaveDrawQuery $command, mixed $result): RandomizerResult
+    public function handle(SaveDrawQuery $command, mixed $result): Draw
     {
-        $randomizerResult = new RandomizerResult($command->rollingDate);
+        $randomizerResult = new Draw($command->rollingDate);
         try {
             $randomizerResult->setName($command->drawQuery->type->value)
                 ->pushResults($result);

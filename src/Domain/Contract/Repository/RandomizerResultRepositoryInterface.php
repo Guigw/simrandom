@@ -2,11 +2,11 @@
 
 namespace Yrial\Simrandom\Domain\Contract\Repository;
 
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
+use Yrial\Simrandom\Domain\Entity\Draw;
 
 interface RandomizerResultRepositoryInterface
 {
-    public function save(RandomizerResult $result): RandomizerResult;
+    public function save(Draw $result): Draw;
 
     public function removeUnusedResult(\DateTimeImmutable $lastDay): void;
 }

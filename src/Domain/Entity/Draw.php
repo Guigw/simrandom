@@ -5,7 +5,7 @@ namespace Yrial\Simrandom\Domain\Entity;
 use DateTimeInterface;
 use Yrial\Simrandom\Domain\Exception\EmptyResultException;
 
-class RandomizerResult
+class Draw
 {
     public const IMPLODE_SEPARATOR = ",";
 
@@ -17,7 +17,7 @@ class RandomizerResult
 
     private ?DateTimeInterface $rollingDate;
 
-    private ?SavedChallenge $savedChallenge;
+    private ?ChallengeTry $try;
 
     public function __construct(?DateTimeInterface $rollingDate = null)
     {
@@ -91,14 +91,14 @@ class RandomizerResult
         return $this;
     }
 
-    public function getSavedChallenge(): ?SavedChallenge
+    public function getTry(): ?ChallengeTry
     {
-        return $this->savedChallenge;
+        return $this->try;
     }
 
-    public function setSavedChallenge(?SavedChallenge $savedChallenge): self
+    public function setTry(?ChallengeTry $try): self
     {
-        $this->savedChallenge = $savedChallenge;
+        $this->try = $try;
 
         return $this;
     }

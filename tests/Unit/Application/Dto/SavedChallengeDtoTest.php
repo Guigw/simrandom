@@ -4,7 +4,7 @@ namespace Yrial\Simrandom\Tests\Unit\Application\Dto;
 
 use PHPUnit\Framework\TestCase;
 use Yrial\Simrandom\Application\Dto\SavedChallengeDto;
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
+use Yrial\Simrandom\Domain\Entity\Draw;
 use Yrial\Simrandom\Domain\Entity\SavedChallenge;
 
 class SavedChallengeDtoTest extends TestCase
@@ -32,7 +32,7 @@ class SavedChallengeDtoTest extends TestCase
 
     public function testJsonSerialize()
     {
-        $result = new RandomizerResult();
+        $result = new Draw();
         $ref = new \ReflectionProperty($result, 'id');
         $ref->setValue($result, 43);
         $result->setName('result');

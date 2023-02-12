@@ -3,7 +3,7 @@
 namespace Yrial\Simrandom\Application\Query;
 
 use Yrial\Simrandom\Domain\Contract\UseCase\CommandInterface;
-use Yrial\Simrandom\Domain\Query\ChallengeDraw\FindChallengeDrawQuery as DomainQuery;
+use Yrial\Simrandom\Domain\Query\ChallengeTry\FindChallengeTryQuery as DomainQuery;
 
 class FindChallengeDrawQuery implements CommandInterface
 {

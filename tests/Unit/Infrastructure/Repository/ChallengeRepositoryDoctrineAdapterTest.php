@@ -10,7 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
-use Yrial\Simrandom\Domain\Entity\RandomizerResult;
+use Yrial\Simrandom\Domain\Entity\Draw;
 use Yrial\Simrandom\Domain\Entity\SavedChallenge;
 use Yrial\Simrandom\Infrastructure\Repository\ChallengeRepositoryDoctrineAdapter;
 
@@ -56,7 +56,7 @@ class ChallengeRepositoryDoctrineAdapterTest extends TestCase
         $objectManager->getManagerForClass(Argument::is(SavedChallenge::class))->willReturn($em->reveal());
 
         $repo = new ChallengeRepositoryDoctrineAdapter($objectManager->reveal());
-        $this->assertInstanceOf(SavedChallenge::class, $repo->saveChallenge(new SavedChallenge(), [new RandomizerResult(), new RandomizerResult()]));
+        $this->assertInstanceOf(SavedChallenge::class, $repo->saveChallenge(new SavedChallenge(), [new Draw(), new Draw()]));
     }
 
     public function testLoad()

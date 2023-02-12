@@ -5,12 +5,12 @@ namespace Yrial\Simrandom\Application\Handler\Cleaning;
 use Yrial\Simrandom\Domain\Command\Cleaning\CleaningCommand;
 use Yrial\Simrandom\Domain\Contract\HandlerInterface;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
-use Yrial\Simrandom\Domain\Contract\Repository\SavedChallengeRepositoryInterface;
+use Yrial\Simrandom\Domain\Contract\Repository\TryRepositoryInterface;
 
 class CleaningHandler implements HandlerInterface
 {
     public function __construct(
-        private readonly SavedChallengeRepositoryInterface   $savedChallengeRepository,
+        private readonly TryRepositoryInterface              $savedChallengeRepository,
         private readonly RandomizerResultRepositoryInterface $randomizerResultRepository
     )
     {

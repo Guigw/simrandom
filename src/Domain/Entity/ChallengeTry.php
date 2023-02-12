@@ -7,12 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use JetBrains\PhpStorm\Pure;
 
-class SavedChallenge
+class ChallengeTry
 {
 
     private ?string $id;
 
-    private Collection $results;
+    private Collection $draws;
 
     private ?DateTimeInterface $sharingDate;
 
@@ -21,7 +21,7 @@ class SavedChallenge
     #[Pure]
     public function __construct(?DateTimeInterface $sharingDate = null)
     {
-        $this->results = new ArrayCollection();
+        $this->draws = new ArrayCollection();
         if ($sharingDate) {
             $this->sharingDate = $sharingDate;
         }
@@ -32,26 +32,26 @@ class SavedChallenge
         return $this->id;
     }
 
-    public function getResults(): Collection
+    public function getDraws(): Collection
     {
-        return $this->results;
+        return $this->draws;
     }
 
-    public function addResult(RandomizerResult $result): self
+    public function addDraw(Draw $result): self
     {
-        if (!$this->results->contains($result)) {
-            $this->results[] = $result;
-            $result->setSavedChallenge($this);
+        if (!$this->draws->contains($result)) {
+            $this->draws[] = $result;
+            $result->setTry($this);
         }
 
         return $this;
     }
 
-    public function removeResult(RandomizerResult $result): self
+    public function removeDraw(Draw $result): self
     {
-        if ($this->results->removeElement($result) && $result->getSavedChallenge() === $this) {
+        if ($this->draws->removeElement($result) && $result->getTry() === $this) {
             // set the owning side to null (unless already changed)
-            $result->setSavedChallenge(null);
+            $result->setTry(null);
         }
 
         return $this;
