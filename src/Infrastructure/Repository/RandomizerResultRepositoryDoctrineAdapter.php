@@ -2,13 +2,13 @@
 
 namespace Yrial\Simrandom\Infrastructure\Repository;
 
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Yrial\Simrandom\Domain\Contract\Repository\RandomizerResultRepositoryInterface;
 use Yrial\Simrandom\Domain\Entity\Draw;
 
-class RandomizerResultRepositoryDoctrineAdapter extends ServiceEntityRepository
-    implements RandomizerResultRepositoryInterface
+class RandomizerResultRepositoryDoctrineAdapter extends ServiceEntityRepository implements RandomizerResultRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -22,7 +22,7 @@ class RandomizerResultRepositoryDoctrineAdapter extends ServiceEntityRepository
         return $result;
     }
 
-    public function removeUnusedResult(\DateTimeImmutable $lastDay): void
+    public function removeUnusedResult(DateTimeImmutable $lastDay): void
     {
         $qb = $this->createQueryBuilder('r')
             ->andWhere('r.rollingDate <= :lastDay')
